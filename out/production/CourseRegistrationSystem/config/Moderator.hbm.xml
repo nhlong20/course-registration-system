@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Moderator" table="moderator" schema="public" catalog="coursesDB">
+        <id name="moderatorId">
+            <column name="moderator_id" sql-type="integer"/>
+        </id>
+        <property name="fullname">
+            <column name="fullname" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="gender">
+            <column name="gender" sql-type="varchar(3)" length="3"/>
+        </property>
+        <property name="dob">
+            <column name="dob" sql-type="date"/>
+        </property>
+        <property name="modAddress">
+            <column name="mod_address" sql-type="varchar(100)" length="100" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

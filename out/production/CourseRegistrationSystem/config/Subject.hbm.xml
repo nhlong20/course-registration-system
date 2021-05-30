@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Subject" table="subject" schema="public" catalog="coursesDB">
+        <id name="subjectId">
+            <column name="subject_id" sql-type="varchar(10)" length="10"/>
+        </id>
+        <property name="subjectName">
+            <column name="subject_name" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="credits">
+            <column name="credits" sql-type="integer"/>
+        </property>
+    </class>
+</hibernate-mapping>
