@@ -125,9 +125,9 @@ ALTER TABLE public.teacher
 
 COMMIT;
 
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', 'nhlong', 'sinhvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', 'ldluu', 'sinhvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', 'nkluan', 'sinhvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120449', 'sinhvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120460', 'sinhvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120461', 'sinhvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'vcnam', 'giaovu', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'htthanh', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'pnstung', 'giangvien', default);
