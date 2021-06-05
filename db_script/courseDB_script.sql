@@ -22,7 +22,7 @@ CREATE TABLE public.account (
 );
 
 CREATE TABLE public.moderator (
-                                  moderator_id integer PRIMARY KEY,
+                                  moderator_id varchar(10) PRIMARY KEY,
                                   fullname varchar(50) NOT NULL,
                                   gender varchar(3) NOT NULL CHECK (gender in ('Nam', 'Nữ')),
                                   dob date NOT NULL CHECK (dob > '1900-01-01'),
@@ -128,15 +128,15 @@ COMMIT;
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120449', 'sinhvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120460', 'sinhvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120461', 'sinhvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'vcnam', 'giaovu', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'htthanh', 'giangvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'pnstung', 'giangvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'tlvinh', 'giangvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'nathi', 'giangvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'nthnhung', 'giangvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'MOD001', 'giaovu', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV001', 'giangvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV002', 'giangvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV003', 'giangvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV004', 'giangvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV005', 'giangvien', default);
 
 INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, account_id)
-    VALUES (1, 'Văn Chí Nam', 'Nam', '1984-07-06', 'Hồ Chí Minh', 4);
+    VALUES ('MOD001', 'Văn Chí Nam', 'Nam', '1984-07-06', 'Hồ Chí Minh', 4);
 
 INSERT INTO public.subject VALUES ('OOP', 'Lâp trình hướng đối tượng', 4);
 INSERT INTO public.subject VALUES ('CTDLGT', 'Cấu trúc dữ liệu và giải thuật', 4);

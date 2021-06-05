@@ -24,13 +24,13 @@ public class ModeratorGUI extends JFrame {
     private JButton addCourseTable;
     private JTextField textField9;
     private JTable semesterTable;
-    private JButton tìmKiếmButton;
-    private JButton xoáButton2;
-    private JButton thêmButton2;
+    private JButton searchSemesterBtn;
+    private JButton deleteSemesterBtn;
+    private JButton addSemesterBtn;
     private JButton addClassBtn;
     private JButton deleteClassBtn;
     private JTable classTable;
-    private JComboBox comboBox1;
+    private JComboBox classBomboBox;
     private JTable table4;
     private JTextField textField10;
     private JButton searchBtn;
@@ -47,9 +47,10 @@ public class ModeratorGUI extends JFrame {
     private JTabbedPane tabbedPane1;
     private JButton changePasswordBtn;
     private JComboBox comboBox2;
-    private JButton cậpNhậtThôngTinButton;
-    private JButton đăngXuấtButton;
-    private JButton button2;
+    private JButton updateUserInfoBtn;
+    private JButton logoutBtn;
+    private JButton selectDOBBtn;
+    private JButton searchCourseBtn;
 
     public ModeratorGUI(){
         super("Hệ thống đăng ký khoá học");
