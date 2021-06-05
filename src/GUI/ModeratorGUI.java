@@ -1,6 +1,18 @@
 package GUI;
 
+import GUI.TableManager.ModeratorTableManager;
+import dao.ModeratorDAO;
+import org.dom4j.rule.Mode;
+import pojo.Moderator;
+
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * GUI
@@ -11,7 +23,7 @@ import javax.swing.*;
  */
 public class ModeratorGUI extends JFrame {
     private JPanel mainPanel;
-    private JTabbedPane studentTable;
+    private JTabbedPane mainTab;
     private JTextField textField1;
     private JTable modTable;
     private JButton searchModBtn;
@@ -31,7 +43,7 @@ public class ModeratorGUI extends JFrame {
     private JButton deleteClassBtn;
     private JTable classTable;
     private JComboBox classBomboBox;
-    private JTable table4;
+    private JTable studentTable;
     private JTextField textField10;
     private JButton searchBtn;
     private JButton openSessionBtn;
@@ -44,7 +56,7 @@ public class ModeratorGUI extends JFrame {
     private JButton addCourseBtn;
     private JButton deleteCourseBtn;
     private JButton listRegistrationBtn;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane settingTab;
     private JButton changePasswordBtn;
     private JComboBox comboBox2;
     private JButton updateUserInfoBtn;
@@ -59,5 +71,31 @@ public class ModeratorGUI extends JFrame {
         this.setLocation(1920 / 2 - 200, 1080 / 2 - 200);
         this.pack();
         this.setVisible(true);
+
+        ModeratorTableManager moderatorTableManager = new ModeratorTableManager(modTable);
+        moderatorTableManager.loadTableData();
+
+        addModBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { onAddMod();}
+        });
+
+        searchModBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
+
+
+    private void onAddMod(){
+
+        Moderator moderator = new Moderator();
+        moderator.setModeratorId("MOD002");
+        moderator.setDob(Date.valueOf("2000-04-01"));
+        moderator.setFullname("Nguyễn Hoàng Long");
+        moderator.setModAddress("Hồ Chí Minh");
+        ModeratorDAO.addModerator(moderator);
     }
 }

@@ -6,7 +6,7 @@
 
     <class name="pojo.Moderator" table="moderator" schema="public" catalog="coursesDB">
         <id name="moderatorId">
-            <column name="moderator_id" sql-type="integer"/>
+            <column name="moderator_id" sql-type="varchar(10)"/>
         </id>
         <property name="fullname">
             <column name="fullname" sql-type="varchar(50)" length="50"/>

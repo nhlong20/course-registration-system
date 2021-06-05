@@ -11,17 +11,17 @@ import java.util.Objects;
  * @Description
  */
 public class Moderator {
-    private int moderatorId;
+    private String moderatorId;
     private String fullname;
     private String gender;
     private Date dob;
     private String modAddress;
 
-    public int getModeratorId() {
+    public String getModeratorId() {
         return moderatorId;
     }
 
-    public void setModeratorId(int moderatorId) {
+    public void setModeratorId(String moderatorId) {
         this.moderatorId = moderatorId;
     }
 
