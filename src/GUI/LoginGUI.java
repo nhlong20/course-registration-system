@@ -23,10 +23,11 @@ public class LoginGUI extends JFrame implements ActionListener {
         super("Hệ thống đăng ký khoá học");
         this.setContentPane(loginPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocation(1920 / 2 - 200, 1080 / 2 - 200);
         this.pack();
-        loginSubmitButton.addActionListener(this);
+        // this following method must call after pack() method to set Java App Window to center of your computer screen
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+        loginSubmitButton.addActionListener(this);
     }
 
     private String validateInput(String username, String password){
@@ -43,14 +44,14 @@ public class LoginGUI extends JFrame implements ActionListener {
         // Check invalid input
         String error_check = validateInput(username,password);
         if(error_check != null){
-            errorHandler("Login error", error_check);
+            errorHandler("Lỗi đăng nhập", error_check);
             return;
         }
 
         // Check account is exist or not
         Account account = AccountDAO.getAccount(username, password);
         if (account == null) {
-            errorHandler("Login error", "Tên đăng nhập hoặc mật khẩu không đúng");
+            errorHandler("Lỗi đăng nhập", "Tên đăng nhập hoặc mật khẩu không đúng");
             return;
         }
 
