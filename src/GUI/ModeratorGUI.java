@@ -70,6 +70,8 @@ public class ModeratorGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(1920 / 2 - 200, 1080 / 2 - 200);
         this.pack();
+        // this following method must call after pack() method to set Java App Window to center of your computer screen
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         ModeratorTableManager moderatorTableManager = new ModeratorTableManager(modTable);
@@ -90,12 +92,6 @@ public class ModeratorGUI extends JFrame {
 
 
     private void onAddMod(){
-
-        Moderator moderator = new Moderator();
-        moderator.setModeratorId("MOD002");
-        moderator.setDob(Date.valueOf("2000-04-01"));
-        moderator.setFullname("Nguyễn Hoàng Long");
-        moderator.setModAddress("Hồ Chí Minh");
-        ModeratorDAO.addModerator(moderator);
+        AddModertatorDlg addModertatorDlg = new AddModertatorDlg();
     }
 }

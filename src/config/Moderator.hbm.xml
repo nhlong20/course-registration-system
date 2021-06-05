@@ -6,7 +6,7 @@
 
     <class name="pojo.Moderator" table="moderator" schema="public" catalog="coursesDB">
         <id name="moderatorId">
-            <column name="moderator_id" sql-type="varchar(10)"/>
+            <column name="moderator_id" sql-type="varchar(10)" length="10"/>
         </id>
         <property name="fullname">
             <column name="fullname" sql-type="varchar(50)" length="50"/>
@@ -20,5 +20,10 @@
         <property name="modAddress">
             <column name="mod_address" sql-type="varchar(100)" length="100" not-null="true"/>
         </property>
+        <many-to-one class="pojo.Account"
+                     name="account" fetch="join" lazy="false"
+                     cascade="save-update,delete">
+            <column name="account_id" unique="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

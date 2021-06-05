@@ -16,6 +16,7 @@ public class Moderator {
     private String gender;
     private Date dob;
     private String modAddress;
+    private Account account;
 
     public String getModeratorId() {
         return moderatorId;
@@ -56,6 +57,11 @@ public class Moderator {
     public void setModAddress(String modAddress) {
         this.modAddress = modAddress;
     }
+
+    public Account getAccount(){ return account; }
+
+    public void setAccount(Account account){ this.account = account; }
+
 
     @Override
     public boolean equals(Object o) {

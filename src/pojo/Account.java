@@ -17,6 +17,13 @@ public class Account {
     private String passwd;
     private Timestamp createdAt;
 
+    public Account(){}
+
+    public Account(String _accType, String _username, String _passwd){
+        this.accType = _accType;
+        this.username = _username;
+        this.passwd = _passwd;
+    }
     public int getAccountId() {
         return accountId;
     }

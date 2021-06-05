@@ -16,9 +16,13 @@ public class AddModertatorDlg extends JDialog {
     private JTextField textField5;
 
     public AddModertatorDlg() {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(createModBtn);
+        this.setContentPane(contentPane);
+        this.getRootPane().setDefaultButton(createModBtn);
+        this.setModal(true);
+        this.pack();
+        // this following method must call after pack() method to set Java App Window to center of your computer screen
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
         createModBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -50,12 +54,12 @@ public class AddModertatorDlg extends JDialog {
 
     private void onOK() {
         // add your code here
-        dispose();
+        this.dispose();
     }
 
     private void onCancel() {
         // add your code here if necessary
-        dispose();
+        this.dispose();
     }
 
     public static void main(String[] args) {

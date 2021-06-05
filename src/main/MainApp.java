@@ -1,5 +1,8 @@
-package GUI;
+package main;
 
+import GUI.LoginGUI;
+import GUI.ModeratorGUI;
+import GUI.StudentGUI;
 import pojo.Account;
 
 import javax.swing.*;

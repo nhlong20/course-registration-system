@@ -1,6 +1,7 @@
 package GUI;
 
 import dao.AccountDAO;
+import main.MainApp;
 import pojo.Account;
 
 import javax.swing.*;

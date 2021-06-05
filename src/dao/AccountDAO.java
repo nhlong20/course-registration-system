@@ -35,4 +35,17 @@ public class AccountDAO {
         }
         return account;
     }
+    public static void addAccount(Account account) {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            session.beginTransaction();
+            session.save(account);
+            session.getTransaction().commit();
+
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        }
+    }
+
 }
