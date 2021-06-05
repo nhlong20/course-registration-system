@@ -13,12 +13,6 @@ public class ModeratorGUI extends JFrame {
     private JPanel mainPanel;
     private JTabbedPane studentTable;
     private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
-    private JTextField textField6;
-    private JButton updateInfoBtn;
     private JTable modTable;
     private JButton searchModBtn;
     private JButton deleteModBtn;
@@ -46,15 +40,16 @@ public class ModeratorGUI extends JFrame {
     private JButton deleteStudentBtn;
     private JButton addStudentBtn;
     private JButton updateStudentbtn;
-    private JButton changePasswordBtn;
-    private JButton button1;
-    private JButton logoutBtn;
-    private JRadioButton namRadioButton;
-    private JRadioButton nữRadioButton;
     private JTable courseTable;
     private JButton addCourseBtn;
     private JButton deleteCourseBtn;
     private JButton listRegistrationBtn;
+    private JTabbedPane tabbedPane1;
+    private JButton changePasswordBtn;
+    private JComboBox comboBox2;
+    private JButton cậpNhậtThôngTinButton;
+    private JButton đăngXuấtButton;
+    private JButton button2;
 
     public ModeratorGUI(){
         super("Hệ thống đăng ký khoá học");
