@@ -17,6 +17,7 @@ public class Moderator {
     private Date dob;
     private String modAddress;
     private Account account;
+    private String phone;
 
     public String getModeratorId() {
         return moderatorId;
@@ -50,6 +51,14 @@ public class Moderator {
         this.dob = dob;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getModAddress() {
         return modAddress;
     }
@@ -58,9 +67,13 @@ public class Moderator {
         this.modAddress = modAddress;
     }
 
-    public Account getAccount(){ return account; }
+    public Account getAccount() {
+        return account;
+    }
 
-    public void setAccount(Account account){ this.account = account; }
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
 
     @Override

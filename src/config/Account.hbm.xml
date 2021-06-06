@@ -7,6 +7,7 @@
     <class name="pojo.Account" table="account" schema="public" catalog="coursesDB">
         <id name="accountId">
             <column name="account_id" sql-type="integer"/>
+            <generator class="increment"></generator>
         </id>
         <property name="accType">
             <column name="acc_type" sql-type="varchar(10)" length="10"/>
@@ -17,8 +18,8 @@
         <property name="passwd">
             <column name="passwd" sql-type="varchar(100)" length="100"/>
         </property>
-        <property name="createdAt">
-            <column name="created_at" sql-type="timestamp"/>
+        <property name="createdAt" generated="insert">
+            <column name="created_at" sql-type="timestamp" />
         </property>
     </class>
 </hibernate-mapping>

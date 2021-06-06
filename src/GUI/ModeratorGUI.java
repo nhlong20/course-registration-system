@@ -1,18 +1,15 @@
 package GUI;
 
+import GUI.Diaglog.AddModertatorDlg;
 import GUI.TableManager.ModeratorTableManager;
 import dao.ModeratorDAO;
-import org.dom4j.rule.Mode;
+import main.MainApp;
+import pojo.Account;
 import pojo.Moderator;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
 
 /**
  * GUI
@@ -63,8 +60,10 @@ public class ModeratorGUI extends JFrame {
     private JButton logoutBtn;
     private JButton selectDOBBtn;
     private JButton searchCourseBtn;
+    private JLabel accountName;
+    public static ModeratorTableManager moderatorTableManager;
 
-    public ModeratorGUI(){
+    public ModeratorGUI() {
         super("Hệ thống đăng ký khoá học");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,12 +73,19 @@ public class ModeratorGUI extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        ModeratorTableManager moderatorTableManager = new ModeratorTableManager(modTable);
+//        Account currentAccount = MainApp.getCurrentAccount();
+//        Moderator currentUser = ModeratorDAO.getModerator(currentAccount.getUsername());
+        Moderator currentUser = ModeratorDAO.getModerator("MOD001");
+        accountName.setText(currentUser.getFullname());
+
+        moderatorTableManager = new ModeratorTableManager(modTable);
         moderatorTableManager.loadTableData();
 
         addModBtn.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { onAddMod();}
+            public void actionPerformed(ActionEvent e) {
+                onAddMod();
+            }
         });
 
         searchModBtn.addActionListener(new ActionListener() {
@@ -91,7 +97,7 @@ public class ModeratorGUI extends JFrame {
     }
 
 
-    private void onAddMod(){
+    private void onAddMod() {
         AddModertatorDlg addModertatorDlg = new AddModertatorDlg();
     }
 }

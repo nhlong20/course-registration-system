@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ModeratorTableManager {
     JTable modTable;
-    private static String[] columnModeratorNames = {"STT", "Mã giáo vụ", "Họ và tên", "Giới tính", "Ngày sinh", "Địa chỉ"};
+    private static String[] columnModeratorNames = {"STT", "Mã giáo vụ", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ"};
     DefaultTableModel model;
     public ModeratorTableManager(JTable table){
         modTable = table;
@@ -30,9 +30,20 @@ public class ModeratorTableManager {
             String fullname = moderators.get(i).getFullname();
             String gender = moderators.get(i).getGender();
             String dob = String.valueOf(moderators.get(i).getDob());
+            String phone = moderators.get(i).getPhone();
             String address = moderators.get(i).getModAddress();
-            model.addRow(new Object[]{i+1, modId,fullname,gender,dob,address});
+            model.addRow(new Object[]{i+1, modId,fullname,gender,dob,phone,address});
         }
     }
-
+    public void addRow(Moderator newModerator){
+        Object[] row = new Object[7];
+        row[0] = modTable.getRowCount()+1;
+        row[1] = newModerator.getModeratorId();
+        row[2] = newModerator.getFullname();
+        row[3] = newModerator.getGender();
+        row[4]= String.valueOf(newModerator.getDob());
+        row[5]= newModerator.getPhone();
+        row[6]= newModerator.getModAddress();
+        model.addRow(row);
+    }
 }

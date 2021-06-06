@@ -26,6 +26,7 @@ CREATE TABLE public.moderator (
                                   fullname varchar(50) NOT NULL,
                                   gender varchar(3) NOT NULL CHECK (gender in ('Nam', 'Nữ')),
                                   dob date NOT NULL CHECK (dob > '1900-01-01'),
+                                  phone varchar(20),
                                   mod_address  varchar(100),
                                   account_id integer NOT NULL
 );
@@ -134,9 +135,12 @@ INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES 
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV003', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV004', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV005', 'giangvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'MOD002', 'giaovu', default);
 
-INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, account_id)
-    VALUES ('MOD001', 'Văn Chí Nam', 'Nam', '1984-07-06', 'Hồ Chí Minh', 4);
+INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, phone,  account_id)
+    VALUES ('MOD001', 'Văn Chí Nam', 'Nam', '1984-07-06', '0942020222', 'Hồ Chí Minh', 4);
+INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, phone,  account_id)
+    VALUES ('MOD002', 'Thái Lê Vinh', 'Nam', '1987-07-06', '0564859274', 'Hồ Chí Minh', 10);
 
 INSERT INTO public.subject VALUES ('OOP', 'Lâp trình hướng đối tượng', 4);
 INSERT INTO public.subject VALUES ('CTDLGT', 'Cấu trúc dữ liệu và giải thuật', 4);

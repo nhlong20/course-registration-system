@@ -7,6 +7,7 @@ import pojo.Account;
 import pojo.Moderator;
 import util.HibernateUtil;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ import java.util.List;
 public class ModeratorDAO {
     private static String ACCOUNT_TYPE = "Moderator";
     private static String DEFAULT_PASWORD = "giaovu";
-    public static List<Moderator> getModeratorList(){
+
+    public static List<Moderator> getModeratorList() {
         List<Moderator> moderators = null;
         Session session = HibernateUtil.getSessionFactory()
                 .openSession();
@@ -35,7 +37,8 @@ public class ModeratorDAO {
         }
         return moderators;
     }
-    public static Moderator getModerator(String modId){
+
+    public static Moderator getModerator(String modId) {
         Moderator moderator = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -43,7 +46,9 @@ public class ModeratorDAO {
             Query query = session.createQuery(hql);
             query.setParameter("modId", modId);
             List<Moderator> l = query.list();
-            moderator = l.get(0);
+            if(l.size()>0){
+                moderator = l.get(0);
+            }
             return moderator;
         } catch (HibernateException ex) {
             //Log the exception
@@ -53,20 +58,16 @@ public class ModeratorDAO {
         }
         return moderator;
     }
-    public static void addModerator(Moderator moderator){
+
+    public static Boolean addModerator(Moderator moderator) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-//            if (getModerator(moderator.getModeratorId()) != null) {
-//                JOptionPane.showMessageDialog(new JFrame(),"Số chứng minh thư đã tồn tại",
-//                        "Unexpected error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//
-//            if (layThongTinSinhVienByMSSV(sinhVien.getMaSinhVien()) != null) {
-//                JOptionPane.showMessageDialog(new JFrame(),"Sinh viên đã tồn tại",
-//                        "Duplicate value error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
+
+            if (getModerator(moderator.getModeratorId()) != null) {
+                JOptionPane.showMessageDialog(null, "Giáo vụ đã tồn tại",
+                        "Duplicate value error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
 
             // Add new account corresponding to new student
             Account account = new Account(ACCOUNT_TYPE, moderator.getModeratorId(), DEFAULT_PASWORD);
@@ -76,14 +77,16 @@ public class ModeratorDAO {
 
             session.save(moderator);
             session.getTransaction().commit();
-
+            return true;
         } catch (HibernateException ex) {
-//            JOptionPane.showMessageDialog(new JFrame(),"Có lỗi khi thêm Sinh Viên",
-//                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thêm Thêm giáo vụ",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
             System.err.println(ex);
+            return false;
         }
     }
-    public static void deleteModerator(String modId){
+
+    public static void deleteModerator(String modId) {
 
     }
 }
