@@ -3,8 +3,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import pojo.Semester;
-import pojo.Semester;
+import pojo.Moderator;
 import pojo.Subject;
 import util.HibernateUtil;
 
@@ -15,55 +14,52 @@ import java.util.List;
  * dao
  *
  * @created by ASUS - StudentID : 18120449
- * @Date 5/30/2021 - 3:38 PM
+ * @Date 6/7/2021 - 7:46 PM
  * @Description
  */
-public class SemesterDAO {
-    public static List<Semester> getAll() {
-        List<Semester> semesters = null;
+public class SubjectDAO {
+    public static List<Subject> getSubjectList() {
+        List<Subject> subjects = null;
         try(Session session = HibernateUtil.getSessionFactory()
                 .openSession()) {
-            String hql = "select semester from Semester semester";
+            String hql = "select subject from Subject subject";
             Query query = session.createQuery(hql);
-            semesters = query.list();
+            subjects = query.list();
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);
         }
-        return semesters;
+        return subjects;
     }
-    public static Semester get(int semesterId) {
-        Semester semester = null;
+    public static Subject getSubject(String subjectId) {
+        Subject subject = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "select semester from Semester semester where semester.id = :semesterId";
+            String hql = "select subject from Subject subject where subject.id = :subjectId";
             Query query = session.createQuery(hql);
-            query.setParameter("semesterId", semesterId);
-            List<Semester> l = query.list();
+            query.setParameter("subjectId", subjectId);
+            List<Subject> l = query.list();
             if(l.size()>0){
-                semester = l.get(0);
+                subject = l.get(0);
             }
-            return semester;
+            return subject;
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);
         }
-        return semester;
+        return subject;
     }
-    public static boolean delete(int curId) {
-        Semester semester = null;
+    public static boolean delete(String curId) {
+        Subject subject = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            semester = SemesterDAO.get(curId);
-            if (semester == null) {
+            subject = getSubject(curId);
+            if (subject == null) {
                 JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            // TODO - Remove all course of this semester
-
-            // Remove semester
-            session.remove(semester);
-
+            // Remove moderator from db first
+            session.remove(subject);
             session.getTransaction().commit();
 
             return true;

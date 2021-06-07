@@ -9,7 +9,7 @@
             <column name="semester_id" sql-type="integer"/>
         </id>
         <property name="semName">
-            <column name="sem_name" sql-type="integer"/>
+            <column name="sem_name" sql-type="varchar(3)"/>
         </property>
         <property name="semYear">
             <column name="sem_year" sql-type="integer"/>

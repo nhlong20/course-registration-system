@@ -55,7 +55,6 @@ public class ModeratorTableManager {
         model.removeRow(row);
     }
     public void filterData(String query){
-
         if (query.length() == 0) {
             sorter.setRowFilter(null);
         } else {

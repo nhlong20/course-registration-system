@@ -1,9 +1,8 @@
 package GUI.Tabs;
 
-import GUI.Diaglog.AddModertatorDlg;
-import GUI.TableManager.ModeratorTableManager;
-import dao.ModeratorDAO;
-import pojo.Moderator;
+import GUI.TableManager.SemesterTableManager;
+import dao.SemesterDAO;
+import pojo.Semester;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,44 +12,50 @@ import java.awt.event.*;
  * GUI.Tabs
  *
  * @created by ASUS - StudentID : 18120449
- * @Date 6/7/2021 - 6:38 PM
+ * @Date 6/7/2021 - 9:08 PM
  * @Description
  */
-public class ModeratorTabMod {
-    private static ModeratorTabMod instance;
+public class SemesterTabMod {
+    private static SemesterTabMod instance;
 
-    public static ModeratorTableManager mTableManager;
-    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên";
+    public static SemesterTableManager mTableManager;
+    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc năm học";
     private JTextField mSearchTextField;
     private JTable mTable;
     private JButton mSearchBtn;
     private JButton mDeleteBtn;
     private JButton mAddBtn;
-    private JLabel accountName;
 
-    public ModeratorTabMod(){}
+    public SemesterTabMod() {
+    }
 
-    public ModeratorTabMod(JTextField searchModTextField, JTable modTable, JButton searchModBtn, JButton deleteModBtn, JButton addModBtn, JLabel accountName) {
-        this.mSearchTextField = searchModTextField;
-        this.mTable = modTable;
-        this.mSearchBtn = searchModBtn;
-        this.mDeleteBtn = deleteModBtn;
-        this.mAddBtn = addModBtn;
-        this.accountName = accountName;
+    public SemesterTabMod(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn) {
+        this.mSearchTextField = searchTextField;
+        this.mTable = table;
+        this.mSearchBtn = searchBtn;
+        this.mDeleteBtn = deleteBtn;
+        this.mAddBtn = addBtn;
     }
 
 
-    public static ModeratorTabMod getInstance(JTextField searchModTextField, JTable modTable, JButton searchModBtn, JButton deleteModBtn, JButton addModBtn, JLabel accountName){
-        if(instance == null){
-            synchronized(ModeratorTabMod.class){
-                if(instance == null){
-                    instance = new ModeratorTabMod(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, accountName);
+    public static SemesterTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn) {
+        if (instance == null) {
+            synchronized (SubjectTabMod.class) {
+                if (instance == null) {
+                    instance = new SemesterTabMod(searchTextField, table, searchBtn, deleteBtn, addBtn);
                 }
             }
         }
         return instance;
     }
-    public void addModActionlistener(){
+
+    public void initUIData() {
+        mTableManager = new SemesterTableManager(mTable);
+        mTableManager.loadTableData();
+        mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
+    }
+
+    public void addModActionlistener() {
         mAddBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,6 +69,15 @@ public class ModeratorTabMod {
                 onSearch();
             }
         });
+        mSearchTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    onSearch();
+                }
+            }
+        });
         mDeleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,7 +88,7 @@ public class ModeratorTabMod {
             @Override
             public void focusGained(FocusEvent e) {
                 super.focusGained(e);
-                if(mSearchTextField.getText().equals(SEARCH_PLACEHOLDER_TEXT)){
+                if (mSearchTextField.getText().equals(SEARCH_PLACEHOLDER_TEXT)) {
                     mSearchTextField.setText("");
                     mSearchTextField.setForeground(Color.BLACK);
                 }
@@ -89,43 +103,33 @@ public class ModeratorTabMod {
                 }
             }
         });
-        mSearchTextField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if(e.getKeyCode()==KeyEvent.VK_ENTER){
-                    onSearch();
-                }
-            }
-        });
     }
-    public void initUIModData() {
-        //        Account currentAccount = MainApp.getCurrentAccount();
-//        Moderator currentUser = ModeratorDAO.getModerator(currentAccount.getUsername());
-        Moderator currentUser = ModeratorDAO.getModerator("MOD002"); // temp
 
-        accountName.setText(currentUser.getFullname());
-        mTableManager = new ModeratorTableManager(mTable);
-        mTableManager.loadTableData();
-        mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
-    }
+    //    private void onSearch(){}
+//    private void onAdd(){}
+//    private void onUpdate(){}
+//    private void onDelete(){}
+
     private void onSearch() {
         String userQuery = mSearchTextField.getText();
         if(userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
         mTableManager.filterData(userQuery);
     }
+
     private void onAdd() {
-        AddModertatorDlg addModertatorDlg = new AddModertatorDlg();
     }
 
+    private void onUpdate() {
 
-    private void onDelete(){
+    }
+
+    private void onDelete() {
         if(mTable.getSelectedRowCount() == 1){
             // Remove Row from UI
             Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
             mTableManager.removeRow(mTable.getSelectedRow());
             // Remove Row from DB
-            ModeratorDAO.deleteModerator(String.valueOf(curId));
+            SemesterDAO.delete(Integer.parseInt(curId.toString()));
             return;
         }
         if(mTable.getRowCount() == 0){
@@ -134,5 +138,4 @@ public class ModeratorTabMod {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng để xoá");
         }
     }
-
 }

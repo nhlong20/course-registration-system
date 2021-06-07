@@ -23,25 +23,21 @@ public class ModeratorDAO {
 
     public static List<Moderator> getModeratorList() {
         List<Moderator> moderators = null;
-        Session session = HibernateUtil.getSessionFactory()
-                .openSession();
-        try {
+        try(Session session = HibernateUtil.getSessionFactory()
+                .openSession()) {
             String hql = "select moderator from Moderator moderator";
             Query query = session.createQuery(hql);
             moderators = query.list();
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);
-        } finally {
-            session.close();
         }
         return moderators;
     }
 
     public static Moderator getModerator(String modId) {
         Moderator moderator = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select moderator from Moderator moderator where moderator.id = :modId";
             Query query = session.createQuery(hql);
             query.setParameter("modId", modId);
@@ -53,8 +49,6 @@ public class ModeratorDAO {
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);
-        } finally {
-            session.close();
         }
         return moderator;
     }

@@ -240,7 +240,7 @@
                   <text value="Tìm kiếm"/>
                 </properties>
               </component>
-              <component id="5908" class="javax.swing.JTextField" binding="textField9" default-binding="true">
+              <component id="5908" class="javax.swing.JTextField" binding="searchSemesterTextField">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="-1" height="25"/>
@@ -248,14 +248,6 @@
                   </grid>
                 </constraints>
                 <properties/>
-              </component>
-              <component id="40d98" class="javax.swing.JButton" binding="searchSemesterBtn">
-                <constraints>
-                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Tìm kiếm"/>
-                </properties>
               </component>
               <component id="ed754" class="javax.swing.JLabel">
                 <constraints>
@@ -316,6 +308,14 @@
                   </component>
                 </children>
               </scrollpane>
+              <component id="40d98" class="javax.swing.JButton" binding="searchSemesterBtn">
+                <constraints>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Tìm kiếm"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="464ff" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

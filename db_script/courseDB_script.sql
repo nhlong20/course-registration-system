@@ -40,7 +40,7 @@ CREATE TABLE public.subject (
 
 CREATE TABLE public.semester (
                                  semester_id SERIAL PRIMARY KEY,
-                                 sem_name integer NOT NULL,
+                                 sem_name varchar(3) NOT NULL,
                                  sem_year integer NOT NULL,
                                  startdate date NOT NULL CHECK (startdate > '1900-01-01'),
                                  enddate date NOT NULL CHECK (enddate > startdate)
@@ -142,16 +142,18 @@ INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, phone,  a
 INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, phone,  account_id)
     VALUES ('MOD002', 'Thái Lê Vinh', 'Nam', '1987-07-06', '0564859274', 'Hồ Chí Minh', 10);
 
-INSERT INTO public.subject VALUES ('OOP', 'Lâp trình hướng đối tượng', 4);
+INSERT INTO public.subject VALUES ('OOP', 'Lập trình hướng đối tượng', 4);
 INSERT INTO public.subject VALUES ('CTDLGT', 'Cấu trúc dữ liệu và giải thuật', 4);
 INSERT INTO public.subject VALUES ('CSDL', 'Cơ sở dữ liệu', 4);
+INSERT INTO public.subject VALUES ('HDH', 'Hệ điều hành', 4);
+INSERT INTO public.subject VALUES ('MMT', 'Mạng máy tính', 4);
 
-INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 1, 2017, '2017-08-20', '2018-01-20');
-INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 2, 2017, '2018-02-03', '2018-06-28');
-INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 1, 2018, '2018-08-20', '2019-01-20');
-INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 2, 2018, '2019-02-03', '2019-06-28');
-INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 1, 2019, '2019-08-20', '2020-01-20');
-INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 2, 2019, '2020-02-03', '2020-06-28');
+INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK1', 2017, '2017-08-20', '2018-01-20');
+INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK2', 2017, '2018-02-03', '2018-06-28');
+INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default,'HK1', 2018, '2018-08-20', '2019-01-20');
+INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK2', 2018, '2019-02-03', '2019-06-28');
+INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK1', 2019, '2019-08-20', '2020-01-20');
+INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK2', 2019, '2020-02-03', '2020-06-28');
 
 INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CNTN');
 INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CTT1');

@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public class Semester {
     private int semesterId;
-    private int semName;
+    private String semName;
     private int semYear;
     private Date startdate;
     private Date enddate;
@@ -25,11 +25,11 @@ public class Semester {
         this.semesterId = semesterId;
     }
 
-    public int getSemName() {
+    public String getSemName() {
         return semName;
     }
 
-    public void setSemName(int semName) {
+    public void setSemName(String semName) {
         this.semName = semName;
     }
 

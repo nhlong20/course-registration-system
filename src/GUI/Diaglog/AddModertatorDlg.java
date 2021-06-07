@@ -84,7 +84,7 @@ public class AddModertatorDlg extends JDialog{
         moderator.setDob(Date.valueOf(date));
 
         if(ModeratorDAO.addModerator(moderator)){
-            ModeratorTabMod.moderatorTableManager.addRow(moderator);
+            ModeratorTabMod.mTableManager.addRow(moderator);
             JOptionPane.showMessageDialog(null, "Thêm mới thành công",
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();

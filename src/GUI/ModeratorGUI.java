@@ -5,6 +5,7 @@ package GUI;
 import GUI.Diaglog.AddModertatorDlg;
 import GUI.TableManager.ModeratorTableManager;
 import GUI.Tabs.ModeratorTabMod;
+import GUI.Tabs.SemesterTabMod;
 import GUI.Tabs.SubjectTabMod;
 import dao.ModeratorDAO;
 import pojo.Moderator;
@@ -35,11 +36,13 @@ public class ModeratorGUI extends JFrame {
     private JButton searchSubjectBtn;
     private JButton deleteSubjectBtn;
     private JButton addSubjectBtn;
-    private JTextField textField9;
+
+    private JTextField searchSemesterTextField;
     private JTable semesterTable;
     private JButton searchSemesterBtn;
     private JButton deleteSemesterBtn;
     private JButton addSemesterBtn;
+
     private JButton addClassBtn;
     private JButton deleteClassBtn;
     private JTable classTable;
@@ -70,7 +73,10 @@ public class ModeratorGUI extends JFrame {
 
     public ModeratorGUI() {
         super(MODERATOR_WINDOW_TITLE_TEXT);
-        this.linkModeratorTabAtributes();
+        this.linkModeratorTabHandler();
+        this.linkSubjectTabHandler();
+        this.linkSemesterTabHandler();
+
         this.initUIProperty();
 
     }
@@ -83,10 +89,20 @@ public class ModeratorGUI extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    private void linkModeratorTabAtributes(){
+    private void linkModeratorTabHandler(){
         ModeratorTabMod moderatorTabMod = ModeratorTabMod.getInstance(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, accountName);
         moderatorTabMod.initUIModData();
         moderatorTabMod.addModActionlistener();
+    }
+    private void linkSubjectTabHandler(){
+        SubjectTabMod subjectTabMod = SubjectTabMod.getInstance(searchSubjectTextField, subjectTable, searchSubjectBtn,deleteSubjectBtn, addSubjectBtn);
+        subjectTabMod.initUIData();
+        subjectTabMod.addModActionlistener();
+    }
+    private void linkSemesterTabHandler(){
+        SemesterTabMod semesterTabMod = SemesterTabMod.getInstance(searchSemesterTextField, semesterTable, searchSemesterBtn,deleteSemesterBtn, addSemesterBtn);
+        semesterTabMod.initUIData();
+        semesterTabMod.addModActionlistener();
     }
 
 
