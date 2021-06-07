@@ -66,7 +66,6 @@ public class ClazzDAO {
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(null, "Có lỗi khi thêm bản ghi mới",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
-//            System.err.println(ex);
             return false;
         }
     }

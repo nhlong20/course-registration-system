@@ -14,6 +14,15 @@ public class Subject {
     private String subjectName;
     private int credits;
 
+    public Subject() {
+    }
+
+    public Subject(String subjectId, String subjectName, int credits) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+        this.credits = credits;
+    }
+
     public String getSubjectId() {
         return subjectId;
     }

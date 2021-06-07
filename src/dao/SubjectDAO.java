@@ -3,6 +3,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import pojo.Clazz;
 import pojo.Moderator;
 import pojo.Subject;
 import util.HibernateUtil;
@@ -18,7 +19,7 @@ import java.util.List;
  * @Description
  */
 public class SubjectDAO {
-    public static List<Subject> getSubjectList() {
+    public static List<Subject> getAll() {
         List<Subject> subjects = null;
         try(Session session = HibernateUtil.getSessionFactory()
                 .openSession()) {
@@ -31,7 +32,7 @@ public class SubjectDAO {
         }
         return subjects;
     }
-    public static Subject getSubject(String subjectId) {
+    public static Subject get(String subjectId) {
         Subject subject = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select subject from Subject subject where subject.id = :subjectId";
@@ -48,11 +49,28 @@ public class SubjectDAO {
         }
         return subject;
     }
+    public static Boolean add(Subject subject){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            if (get(subject.getSubjectId()) != null) {
+                JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
+                        "Duplicate value error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            session.save(subject);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(null, "Có lỗi khi thêm bản ghi mới",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
     public static boolean delete(String curId) {
         Subject subject = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            subject = getSubject(curId);
+            subject = get(curId);
             if (subject == null) {
                 JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                         "Error", JOptionPane.ERROR_MESSAGE);

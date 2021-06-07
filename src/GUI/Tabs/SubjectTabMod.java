@@ -1,5 +1,6 @@
 package GUI.Tabs;
 
+import GUI.Diaglog.AddSubjectDlg;
 import GUI.TableManager.ModeratorTableManager;
 import GUI.TableManager.SubjectTableManager;
 import dao.ModeratorDAO;
@@ -108,10 +109,6 @@ public class SubjectTabMod {
         });
     }
 
-    //    private void onSearch(){}
-//    private void onAdd(){}
-//    private void onUpdate(){}
-//    private void onDelete(){}
 
     private void onSearch() {
         String userQuery = mSearchTextField.getText();
@@ -120,10 +117,7 @@ public class SubjectTabMod {
     }
 
     private void onAdd() {
-    }
-
-    private void onUpdate() {
-
+        AddSubjectDlg addSubjectDlg = new AddSubjectDlg();
     }
 
     private void onDelete() {

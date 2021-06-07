@@ -29,7 +29,7 @@ public class SubjectTableManager {
         mTable.setModel(model);
     }
     public void loadTableData(){
-        List<Subject> subjects = SubjectDAO.getSubjectList();
+        List<Subject> subjects = SubjectDAO.getAll();
         for(int i = 0; i < subjects.size(); i++){
             String subjectId = subjects.get(i).getSubjectId();
             String subjectName = subjects.get(i).getSubjectName();
