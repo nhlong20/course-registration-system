@@ -66,6 +66,23 @@ public class SubjectDAO {
             return false;
         }
     }
+    public static Boolean update(Subject subject){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            if (subject == null) {
+                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            session.update(subject);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(null, "Có lỗi khi cập nhật",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
     public static boolean delete(String curId) {
         Subject subject = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

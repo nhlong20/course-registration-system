@@ -29,24 +29,25 @@ public class SubjectTabMod {
     private JButton mSearchBtn;
     private JButton mDeleteBtn;
     private JButton mAddBtn;
-
+    private JButton mUpdateBtn;
     public SubjectTabMod() {
     }
 
-    public SubjectTabMod(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn) {
+    public SubjectTabMod(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn, JButton updateBtn) {
         this.mSearchTextField = searchTextField;
         this.mTable = table;
         this.mSearchBtn = searchBtn;
         this.mDeleteBtn = deleteBtn;
         this.mAddBtn = addBtn;
+        this.mUpdateBtn = updateBtn;
     }
 
 
-    public static SubjectTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn) {
+    public static SubjectTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn, JButton updateBtn) {
         if (instance == null) {
             synchronized (SubjectTabMod.class) {
                 if (instance == null) {
-                    instance = new SubjectTabMod(searchTextField, table, searchBtn, deleteBtn, addBtn);
+                    instance = new SubjectTabMod(searchTextField, table, searchBtn, deleteBtn, addBtn, updateBtn);
                 }
             }
         }
@@ -80,6 +81,12 @@ public class SubjectTabMod {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onSearch();
                 }
+            }
+        });
+        mUpdateBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onUpdate();
             }
         });
         mDeleteBtn.addActionListener(new ActionListener() {
@@ -119,20 +126,35 @@ public class SubjectTabMod {
     private void onAdd() {
         AddSubjectDlg addSubjectDlg = new AddSubjectDlg();
     }
-
-    private void onDelete() {
+    private void onUpdate(){
         if(mTable.getSelectedRowCount() == 1){
-            // Remove Row from UI
-            Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
-            mTableManager.removeRow(mTable.getSelectedRow());
-            // Remove Row from DB
-            SubjectDAO.delete(String.valueOf(curId));
+            String code =  String.valueOf(mTable.getValueAt(mTable.getSelectedRow(),1));
+            String name =  String.valueOf(mTable.getValueAt(mTable.getSelectedRow(),2));
+            String credits =  String.valueOf(mTable.getValueAt(mTable.getSelectedRow(),3));
+            Subject subject = new Subject(code,name, Integer.parseInt(credits));
+            AddSubjectDlg addSubjectDlg = new AddSubjectDlg(mTable.getSelectedRow(), subject);
             return;
         }
         if(mTable.getRowCount() == 0){
             JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
         } else{
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng để xoá");
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
+        }
+    }
+
+    private void onDelete() {
+        if(mTable.getSelectedRowCount() == 1){
+            Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
+            // Remove Row from DB
+            SubjectDAO.delete(String.valueOf(curId));
+            // Remove Row from UI
+            mTableManager.removeRow(mTable.getSelectedRow());
+            return;
+        }
+        if(mTable.getRowCount() == 0){
+            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
+        } else{
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
         }
     }
 }

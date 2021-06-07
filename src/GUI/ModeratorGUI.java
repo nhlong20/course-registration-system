@@ -35,6 +35,7 @@ public class ModeratorGUI extends JFrame {
 
     private JTextField searchSubjectTextField;
     private JTable subjectTable;
+    private JButton updateSubjectBtn;
     private JButton searchSubjectBtn;
     private JButton deleteSubjectBtn;
     private JButton addSubjectBtn;
@@ -72,6 +73,7 @@ public class ModeratorGUI extends JFrame {
     private JButton searchCourseBtn;
 
 
+
     public static String MODERATOR_WINDOW_TITLE_TEXT = "Hệ thống đăng ký khoá học";
 
     public ModeratorGUI() {
@@ -99,7 +101,7 @@ public class ModeratorGUI extends JFrame {
         moderatorTabMod.addModActionlistener();
     }
     private void linkSubjectTabHandler(){
-        SubjectTabMod subjectTabMod = SubjectTabMod.getInstance(searchSubjectTextField, subjectTable, searchSubjectBtn,deleteSubjectBtn, addSubjectBtn);
+        SubjectTabMod subjectTabMod = SubjectTabMod.getInstance(searchSubjectTextField, subjectTable, searchSubjectBtn,deleteSubjectBtn, addSubjectBtn, updateSubjectBtn);
         subjectTabMod.initUIData();
         subjectTabMod.addModActionlistener();
     }

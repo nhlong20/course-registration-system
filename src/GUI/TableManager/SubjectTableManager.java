@@ -55,4 +55,10 @@ public class SubjectTableManager {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,2));
         }
     }
+    public void updateRow(int row, Subject subject){
+        model.setValueAt(subject.getSubjectId(), row, 1);
+        model.setValueAt(subject.getSubjectName(), row, 2);
+        model.setValueAt(subject.getCredits(), row, 3);
+
+    }
 }
