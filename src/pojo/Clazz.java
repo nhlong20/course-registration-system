@@ -10,16 +10,13 @@ import java.util.Objects;
  * @Description
  */
 public class Clazz {
-    private int classId;
+    private String classCode;
     private int classYear;
-    private String className;
 
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
+    public Clazz(){}
+    public Clazz(String classCode, int classYear){
+        this.classYear = classYear;
+        this.classCode = classCode;
     }
 
     public int getClassYear() {
@@ -30,12 +27,12 @@ public class Clazz {
         this.classYear = classYear;
     }
 
-    public String getClassName() {
-        return className;
+    public String getClassCode() {
+        return classCode;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setClassCode(String className) {
+        this.classCode = className;
     }
 
     @Override
@@ -43,13 +40,12 @@ public class Clazz {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Clazz clazz = (Clazz) o;
-        return classId == clazz.classId &&
-                classYear == clazz.classYear &&
-                Objects.equals(className, clazz.className);
+        return  classYear == clazz.classYear &&
+                Objects.equals(classCode, clazz.classCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(classId, classYear, className);
+        return Objects.hash(classYear, classCode);
     }
 }

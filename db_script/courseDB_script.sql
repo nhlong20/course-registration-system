@@ -47,9 +47,8 @@ CREATE TABLE public.semester (
 );
 
 CREATE TABLE public.class (
-                              class_id SERIAL PRIMARY KEY,
-                              class_year integer NOT NULL,
-                              class_name varchar(10) NOT NULL
+                              class_code varchar(10) PRIMARY KEY,
+                              class_year integer NOT NULL
 );
 
 CREATE TABLE public.student (
@@ -59,7 +58,7 @@ CREATE TABLE public.student (
                                 gender varchar(10) NOT NULL CHECK (gender in ('Nam', 'Nữ')),
                                 dob date NOT NULL CHECK (dob > '1900-01-01'),
                                 stu_address varchar(100),
-                                class_id integer,
+                                class_code varchar(10),
                                 account_id integer
 );
 
@@ -102,7 +101,7 @@ CREATE TABLE public.course_student (
 
 
 ALTER TABLE public.student
-    ADD CONSTRAINT FK_student__class_id FOREIGN KEY (class_id) REFERENCES public.class(class_id);
+    ADD CONSTRAINT FK_student__class_code FOREIGN KEY (class_code) REFERENCES public.class(class_code);
 ALTER TABLE public.student
     ADD CONSTRAINT FK_student__account_id FOREIGN KEY (account_id) REFERENCES public.account(account_id);
 ALTER TABLE public.moderator
@@ -155,14 +154,14 @@ INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES
 INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK1', 2019, '2019-08-20', '2020-01-20');
 INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK2', 2019, '2020-02-03', '2020-06-28');
 
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CNTN');
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CTT1');
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CTT2');
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CTT3');
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CTT4');
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2018, '18CTT5');
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2019, '19CNTN');
-INSERT INTO class(class_id, class_year, class_name) VALUES (default, 2019, '19CTT1');
+INSERT INTO class(class_year, class_code) VALUES (2018, '18CNTN');
+INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT1');
+INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT2');
+INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT3');
+INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT4');
+INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT5');
+INSERT INTO class(class_year, class_code) VALUES (2019, '19CNTN');
+INSERT INTO class(class_year, class_code) VALUES (2019, '19CTT1');
 
 INSERT INTO shift(shift_id, start_at, end_at) VALUES (1, '07:30:00', '09:30:00');
 INSERT INTO shift(shift_id, start_at, end_at) VALUES (2, '09:30:00', '11:30:00');
@@ -178,8 +177,8 @@ INSERT INTO teacher(teacher_id, fullname, gender, account_id) VALUES (default, '
 INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, maximum_slots) VALUES (default, 'OOP', 1, 'Thứ 4', 3, 3, 100);
 INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, maximum_slots) VALUES (default, 'CSDL', 3, 'Thứ 5', 3, 2, 100);
 
-INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, account_id) VALUES (default, '18120449', 'Nguyễn Hoàng Long', 'Nam', '2000-04-01', 'Nghệ An', 1);
-INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, account_id) VALUES (default, '18120460', 'Lê Danh Lưu', 'Nam', '2000-09-06', 'Đắk Lắk', 2);
-INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, account_id) VALUES (default, '18120461', 'Nguyễn Khắc Luân', 'Nam', '2000-05-21', 'Bình Thuận', 3);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120449', 'Nguyễn Hoàng Long', 'Nam', '2000-04-01', 'Nghệ An', '18CTT4', 1);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120460', 'Lê Danh Lưu', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 2);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120461', 'Nguyễn Khắc Luân', 'Nam', '2000-05-21', 'Bình Thuận','18CTT4', 3);
 
 END;

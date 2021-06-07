@@ -41,13 +41,13 @@ public class SemesterTableManager {
         }
     }
     public void addRow(Semester newSemester){
-        Object[] row = new Object[4];
+        Object[] row = new Object[6];
         row[0] = mTable.getRowCount()+1;
         row[1] = newSemester.getSemesterId();
         row[2] = newSemester.getSemName();
         row[3] = newSemester.getSemYear();
-        row[3] = String.valueOf(newSemester.getStartdate());
-        row[3] = String.valueOf(newSemester.getEnddate());
+        row[4] = String.valueOf(newSemester.getStartdate());
+        row[5] = String.valueOf(newSemester.getEnddate());
         mModel.addRow(row);
     }
     public void removeRow(int row){

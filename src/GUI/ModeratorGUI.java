@@ -4,9 +4,11 @@ package GUI;
 
 import GUI.Diaglog.AddModertatorDlg;
 import GUI.TableManager.ModeratorTableManager;
+import GUI.Tabs.ClazzTabMod;
 import GUI.Tabs.ModeratorTabMod;
 import GUI.Tabs.SemesterTabMod;
 import GUI.Tabs.SubjectTabMod;
+import dao.ClazzDAO;
 import dao.ModeratorDAO;
 import pojo.Moderator;
 
@@ -46,6 +48,7 @@ public class ModeratorGUI extends JFrame {
     private JButton addClassBtn;
     private JButton deleteClassBtn;
     private JTable classTable;
+
     private JComboBox classBomboBox;
     private JTable studentTable;
     private JTextField textField10;
@@ -76,6 +79,7 @@ public class ModeratorGUI extends JFrame {
         this.linkModeratorTabHandler();
         this.linkSubjectTabHandler();
         this.linkSemesterTabHandler();
+        this.linkClazzTabHandler();
 
         this.initUIProperty();
 
@@ -104,6 +108,10 @@ public class ModeratorGUI extends JFrame {
         semesterTabMod.initUIData();
         semesterTabMod.addModActionlistener();
     }
-
+    private void linkClazzTabHandler(){
+        ClazzTabMod clazzTabMod = ClazzTabMod.getInstance(classTable,deleteClassBtn, addClassBtn);
+        clazzTabMod.initUIData();
+        clazzTabMod.addModActionlistener();
+    }
 
 }

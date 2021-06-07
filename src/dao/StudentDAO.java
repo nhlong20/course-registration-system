@@ -18,17 +18,14 @@ import java.util.List;
 public class StudentDAO {
     public static List<Student> getStudentList(){
         List<Student> students = null;
-        Session session = HibernateUtil.getSessionFactory()
-                .openSession();
-        try {
+
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select sv from Student sv";
             Query query = session.createQuery(hql);
             students = query.list();
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);
-        } finally {
-            session.close();
         }
         return students;
     }

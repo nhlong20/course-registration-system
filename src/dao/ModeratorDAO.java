@@ -45,7 +45,6 @@ public class ModeratorDAO {
             if(l.size()>0){
                 moderator = l.get(0);
             }
-            return moderator;
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);

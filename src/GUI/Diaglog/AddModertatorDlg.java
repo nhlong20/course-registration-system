@@ -35,12 +35,14 @@ public class AddModertatorDlg extends JDialog{
         dateChooser = new JDateChooser(calendar.getTime());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         dobDatePanel.add(dateChooser);
-
+        this.addEventListener();
         this.setModal(true);
         this.pack();
         // this following method must call after pack() method to set Java App Window to center of your computer screen
         this.setLocationRelativeTo(null);
-
+        setVisible(true);
+    }
+    private void addEventListener(){
         createModBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCreateModerator();
@@ -67,7 +69,6 @@ public class AddModertatorDlg extends JDialog{
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        setVisible(true);
     }
 
     private void onCreateModerator() {

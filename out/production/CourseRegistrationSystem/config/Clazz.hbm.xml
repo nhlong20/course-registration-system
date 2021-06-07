@@ -5,14 +5,11 @@
 <hibernate-mapping>
 
     <class name="pojo.Clazz" table="class" schema="public" catalog="coursesDB">
-        <id name="classId">
-            <column name="class_id" sql-type="integer"/>
+        <id name="classCode">
+            <column name="class_code" sql-type="varchar(10)" length="10"/>
         </id>
         <property name="classYear">
             <column name="class_year" sql-type="integer"/>
-        </property>
-        <property name="className">
-            <column name="class_name" sql-type="varchar(10)" length="10"/>
         </property>
     </class>
 </hibernate-mapping>

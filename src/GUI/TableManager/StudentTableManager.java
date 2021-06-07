@@ -8,4 +8,5 @@ package GUI.TableManager;
  * @Description
  */
 public class StudentTableManager {
+
 }
