@@ -54,7 +54,6 @@ public class AccountDAO {
             query.setParameter("username", username);
             int res = query.executeUpdate();
             session.getTransaction().commit();
-            System.out.println("res: " + res);
         } catch (HibernateException ex) {
             System.err.println(ex);
         }

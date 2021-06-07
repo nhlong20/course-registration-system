@@ -8,8 +8,11 @@ import pojo.Account;
 import pojo.Moderator;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 /**
  * GUI
@@ -62,11 +65,13 @@ public class ModeratorGUI extends JFrame {
     private JButton searchCourseBtn;
     private JLabel accountName;
     public static ModeratorTableManager moderatorTableManager;
+    public static String MODERATOR_WINDOW_TITLE_TEXT = "Hệ thống đăng ký khoá học";
+    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên";
 
     public ModeratorGUI() {
-        super("Hệ thống đăng ký khoá học");
-        this.initUIProperty();
+        super(MODERATOR_WINDOW_TITLE_TEXT);
         this.initUIData();
+        this.initUIProperty();
         this.addModActionlistener();
 
     }
@@ -106,15 +111,35 @@ public class ModeratorGUI extends JFrame {
                 onDeleteMod();
             }
         });
+        searchModTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+                if(searchModTextField.getText().equals(SEARCH_PLACEHOLDER_TEXT)){
+                    searchModTextField.setText("");
+                    searchModTextField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (searchModTextField.getText().isEmpty()) {
+                    searchModTextField.setForeground(Color.GRAY);
+                    searchModTextField.setText(SEARCH_PLACEHOLDER_TEXT);
+                }
+            }
+        });
     }
     private void initUIData() {
         //        Account currentAccount = MainApp.getCurrentAccount();
 //        Moderator currentUser = ModeratorDAO.getModerator(currentAccount.getUsername());
-        Moderator currentUser = ModeratorDAO.getModerator("MOD001");
+        Moderator currentUser = ModeratorDAO.getModerator("MOD001"); // temp
+
         accountName.setText(currentUser.getFullname());
         moderatorTableManager = new ModeratorTableManager(modTable);
         moderatorTableManager.loadTableData();
-        searchModTextField = new JTextField("Search");
+        searchModTextField.setText(SEARCH_PLACEHOLDER_TEXT);
     }
 
     private void onAddMod() {
@@ -123,7 +148,8 @@ public class ModeratorGUI extends JFrame {
 
     private void onSearchMod() {
         String userQuery = searchModTextField.getText();
-
+        if(userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
+        moderatorTableManager.filterData(userQuery);
     }
     private void onDeleteMod(){
         if(modTable.getSelectedRowCount() == 1){

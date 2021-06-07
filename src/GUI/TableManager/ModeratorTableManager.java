@@ -5,6 +5,7 @@ import pojo.Moderator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.util.List;
 
 /**
@@ -16,11 +17,15 @@ import java.util.List;
  */
 public class ModeratorTableManager {
     JTable modTable;
-    private static String[] columnModeratorNames = {"STT", "Mã giáo vụ", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ"};
     DefaultTableModel model;
+    TableRowSorter<DefaultTableModel> sorter;
+    private static String[] columnModeratorNames = {"STT", "Mã giáo vụ", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ"};
+
     public ModeratorTableManager(JTable table){
         modTable = table;
         model = new DefaultTableModel(columnModeratorNames, 0);
+        sorter = new TableRowSorter<DefaultTableModel>(model);
+        modTable.setRowSorter(sorter);
         modTable.setModel(model);
     }
     public void loadTableData(){
@@ -48,6 +53,14 @@ public class ModeratorTableManager {
     }
     public void removeRow(int row){
         model.removeRow(row);
+    }
+    public void filterData(String query){
+
+        if (query.length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,2));
+        }
     }
 
 }
