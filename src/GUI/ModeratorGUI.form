@@ -146,7 +146,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="e3ebe" class="javax.swing.JTextField" binding="textField8" default-binding="true">
+              <component id="e3ebe" class="javax.swing.JTextField" binding="searchSubjectTextField">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="-1" height="25"/>
@@ -171,7 +171,7 @@
                   <text value="Xác nhận"/>
                 </properties>
               </component>
-              <component id="2ac8f" class="javax.swing.JButton" binding="deleteCourseTable">
+              <component id="2ac8f" class="javax.swing.JButton" binding="deleteSubjectBtn">
                 <constraints>
                   <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -179,7 +179,7 @@
                   <text value="Xoá"/>
                 </properties>
               </component>
-              <component id="39931" class="javax.swing.JButton" binding="addCourseTable">
+              <component id="39931" class="javax.swing.JButton" binding="addSubjectBtn">
                 <constraints>
                   <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>

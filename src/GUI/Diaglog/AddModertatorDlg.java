@@ -2,6 +2,7 @@ package GUI.Diaglog;
 
 import GUI.ModeratorGUI;
 import GUI.TableManager.ModeratorTableManager;
+import GUI.Tabs.ModeratorTabMod;
 import com.toedter.calendar.JDateChooser;
 import dao.ModeratorDAO;
 import org.dom4j.rule.Mode;
@@ -83,7 +84,7 @@ public class AddModertatorDlg extends JDialog{
         moderator.setDob(Date.valueOf(date));
 
         if(ModeratorDAO.addModerator(moderator)){
-            ModeratorGUI.moderatorTableManager.addRow(moderator);
+            ModeratorTabMod.moderatorTableManager.addRow(moderator);
             JOptionPane.showMessageDialog(null, "Thêm mới thành công",
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
