@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class AddModertatorDlg extends JDialog implements ActionListener{
+public class AddModertatorDlg extends JDialog{
     private JPanel contentPane;
     private JButton createModBtn;
     private JButton buttonCancel;
@@ -94,10 +94,5 @@ public class AddModertatorDlg extends JDialog implements ActionListener{
     private void onCancel() {
         // add your code here if necessary
         this.dispose();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.print("Clicdsdsdsked nè");
     }
 }

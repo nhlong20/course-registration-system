@@ -46,4 +46,8 @@ public class ModeratorTableManager {
         row[6]= newModerator.getModAddress();
         model.addRow(row);
     }
+    public void removeRow(int row){
+        model.removeRow(row);
+    }
+
 }

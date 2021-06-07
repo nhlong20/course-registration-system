@@ -2,6 +2,7 @@ package dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import pojo.Account;
 import util.HibernateUtil;
@@ -18,8 +19,7 @@ import java.util.List;
 public class AccountDAO {
     public static Account getAccount(String username, String password){
         Account account = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select acc from Account acc where acc.username = :username and acc.passwd = :password";
             Query query = session.createQuery(hql);
             query.setParameter("username", username);
@@ -30,8 +30,6 @@ public class AccountDAO {
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);
-        } finally {
-            session.close();
         }
         return account;
     }
@@ -47,5 +45,18 @@ public class AccountDAO {
             System.err.println(ex);
         }
     }
+    public static void removeAccount(String username) {
 
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            String hql = "delete from Account where username= :username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            int res = query.executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("res: " + res);
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        }
+    }
 }

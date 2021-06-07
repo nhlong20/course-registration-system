@@ -86,7 +86,28 @@ public class ModeratorDAO {
         }
     }
 
-    public static void deleteModerator(String modId) {
+    public static boolean deleteModerator(String modId) {
+        Moderator moderator = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            moderator = getModerator(modId);
+            if (moderator == null) {
+                JOptionPane.showMessageDialog(null, "Giáo vụ không tồn tại",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            // Remove moderator from db first
+            session.remove(moderator);
+            session.getTransaction().commit();
 
+            // Then remove account from db
+            AccountDAO.removeAccount(modId);
+            return true;
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi xoá giáo vụ",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            System.err.println(ex);
+            return false;
+        }
     }
 }

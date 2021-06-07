@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 public class ModeratorGUI extends JFrame {
     private JPanel mainPanel;
     private JTabbedPane mainTab;
-    private JTextField textField1;
+    private JTextField searchModTextField;
     private JTable modTable;
     private JButton searchModBtn;
     private JButton deleteModBtn;
@@ -65,6 +65,13 @@ public class ModeratorGUI extends JFrame {
 
     public ModeratorGUI() {
         super("Hệ thống đăng ký khoá học");
+        this.initUIProperty();
+        this.initUIData();
+        this.addModActionlistener();
+
+    }
+
+    private void initUIProperty() {
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(1920 / 2 - 200, 1080 / 2 - 200);
@@ -72,15 +79,8 @@ public class ModeratorGUI extends JFrame {
         // this following method must call after pack() method to set Java App Window to center of your computer screen
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-//        Account currentAccount = MainApp.getCurrentAccount();
-//        Moderator currentUser = ModeratorDAO.getModerator(currentAccount.getUsername());
-        Moderator currentUser = ModeratorDAO.getModerator("MOD001");
-        accountName.setText(currentUser.getFullname());
-
-        moderatorTableManager = new ModeratorTableManager(modTable);
-        moderatorTableManager.loadTableData();
-
+    }
+    private void addModActionlistener(){
         addModBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -94,10 +94,51 @@ public class ModeratorGUI extends JFrame {
 
             }
         });
+        searchModBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSearchMod();
+            }
+        });
+        deleteModBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onDeleteMod();
+            }
+        });
     }
-
+    private void initUIData() {
+        //        Account currentAccount = MainApp.getCurrentAccount();
+//        Moderator currentUser = ModeratorDAO.getModerator(currentAccount.getUsername());
+        Moderator currentUser = ModeratorDAO.getModerator("MOD001");
+        accountName.setText(currentUser.getFullname());
+        moderatorTableManager = new ModeratorTableManager(modTable);
+        moderatorTableManager.loadTableData();
+        searchModTextField = new JTextField("Search");
+    }
 
     private void onAddMod() {
         AddModertatorDlg addModertatorDlg = new AddModertatorDlg();
     }
+
+    private void onSearchMod() {
+        String userQuery = searchModTextField.getText();
+
+    }
+    private void onDeleteMod(){
+        if(modTable.getSelectedRowCount() == 1){
+            // Remove Row from UI
+            Object modID =  modTable.getValueAt(modTable.getSelectedRow(),1);
+            moderatorTableManager.removeRow(modTable.getSelectedRow());
+            // Remove Row from DB
+           ModeratorDAO.deleteModerator(String.valueOf(modID));
+            return;
+        }
+        if(modTable.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Bảng không có dữ liệu để thực hiện thao tác này");
+        } else{
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn chỉ 1 hàng để xoá");
+        }
+    }
+
 }
