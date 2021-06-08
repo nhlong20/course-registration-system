@@ -71,7 +71,11 @@ public class ModeratorGUI extends JFrame {
     private JButton logoutBtn;
     private JButton selectDOBBtn;
     private JButton searchCourseBtn;
-
+    private JButton đặtLàmHọcKỳButton;
+    private JLabel curentSemester;
+    private JTextField oldPasswordTextField;
+    private JTextField newPasswordTextField;
+    private JTextField confirmPasswordTextField;
 
 
     public static String MODERATOR_WINDOW_TITLE_TEXT = "Hệ thống đăng ký khoá học";

@@ -17,6 +17,16 @@ public class Semester {
     private Date startdate;
     private Date enddate;
 
+    public Semester() {
+    }
+
+    public Semester(String semName, int semYear, Date startdate, Date enddate) {
+        this.semName = semName;
+        this.semYear = semYear;
+        this.startdate = startdate;
+        this.enddate = enddate;
+    }
+
     public int getSemesterId() {
         return semesterId;
     }

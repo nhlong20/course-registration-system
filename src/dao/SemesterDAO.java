@@ -3,6 +3,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import pojo.Clazz;
 import pojo.Semester;
 import pojo.Semester;
 import pojo.Subject;
@@ -42,12 +43,28 @@ public class SemesterDAO {
             if(l.size()>0){
                 semester = l.get(0);
             }
-            return semester;
         } catch (HibernateException ex) {
             //Log the exception
             System.err.println(ex);
         }
         return semester;
+    }
+    public static Boolean add(Semester semester){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            if (get(semester.getSemesterId()) != null) {
+                JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
+                        "Duplicate value error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            session.save(semester);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(null, "Có lỗi khi thêm bản ghi mới",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
     public static boolean delete(int curId) {
         Semester semester = null;

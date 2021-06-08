@@ -1,5 +1,6 @@
 package GUI.Tabs;
 
+import GUI.Diaglog.AddSemesterDlg;
 import GUI.TableManager.SemesterTableManager;
 import dao.SemesterDAO;
 import pojo.Semester;
@@ -117,6 +118,7 @@ public class SemesterTabMod {
     }
 
     private void onAdd() {
+        AddSemesterDlg addSemesterDlg = new AddSemesterDlg();
     }
 
     private void onUpdate() {
