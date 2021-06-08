@@ -3,6 +3,8 @@ package GUI.Tabs;
 import GUI.Diaglog.AddSemesterDlg;
 import GUI.TableManager.SemesterTableManager;
 import dao.SemesterDAO;
+import pojo.Semester;
+import pojo.Subject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,24 +27,28 @@ public class SemesterTabMod {
     private JButton mSearchBtn;
     private JButton mDeleteBtn;
     private JButton mAddBtn;
-
+    private JButton mSetAsCurrentSemBtn;
+    private JLabel mCurrentSemesterLabel;
+    private Semester currentSem;
     public SemesterTabMod() {
     }
 
-    public SemesterTabMod(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn) {
+    public SemesterTabMod(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn, JButton updateBtn, JLabel currentSemesterLabel) {
         this.mSearchTextField = searchTextField;
         this.mTable = table;
         this.mSearchBtn = searchBtn;
         this.mDeleteBtn = deleteBtn;
         this.mAddBtn = addBtn;
+        this.mSetAsCurrentSemBtn = updateBtn;
+        this.mCurrentSemesterLabel = currentSemesterLabel;
     }
 
 
-    public static SemesterTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn) {
+    public static SemesterTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn, JButton updateBtn, JLabel currentSemesterLabel) {
         if (instance == null) {
             synchronized (SubjectTabMod.class) {
                 if (instance == null) {
-                    instance = new SemesterTabMod(searchTextField, table, searchBtn, deleteBtn, addBtn);
+                    instance = new SemesterTabMod(searchTextField, table, searchBtn, deleteBtn, addBtn, updateBtn, currentSemesterLabel);
                 }
             }
         }
@@ -53,22 +59,16 @@ public class SemesterTabMod {
         mTableManager = new SemesterTableManager(mTable);
         mTableManager.loadTableData();
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
+        currentSem = SemesterDAO.getCurrent();
+        if(currentSem !=null) mCurrentSemesterLabel.setText(currentSem.getSemName() + " - " + currentSem.getSemYear());
     }
 
     public void addModActionlistener() {
-        mAddBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onAdd();
-            }
-        });
+        mAddBtn.addActionListener(e-> onAdd());
 
-        mSearchBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onSearch();
-            }
-        });
+        mSearchBtn.addActionListener(e->onSearch());
+        mDeleteBtn.addActionListener(e -> onDelete());
+        mSetAsCurrentSemBtn.addActionListener(e -> onUpdate());
         mSearchTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -76,12 +76,6 @@ public class SemesterTabMod {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onSearch();
                 }
-            }
-        });
-        mDeleteBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onDelete();
             }
         });
         mSearchTextField.addFocusListener(new FocusAdapter() {
@@ -105,11 +99,6 @@ public class SemesterTabMod {
         });
     }
 
-    //    private void onSearch(){}
-//    private void onAdd(){}
-//    private void onUpdate(){}
-//    private void onDelete(){}
-
     private void onSearch() {
         String userQuery = mSearchTextField.getText();
         if(userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
@@ -121,7 +110,23 @@ public class SemesterTabMod {
     }
 
     private void onUpdate() {
+        if(mTable.getSelectedRowCount() == 1){
+            Object curId =  mTable.getModel().getValueAt(mTable.getSelectedRow(),1);
+            // Remove Row from DB
+            SemesterDAO.setAsCurrent(Integer.parseInt(curId.toString()));
+            // Remove Row from UI
+            currentSem = SemesterDAO.getCurrent();
+            mCurrentSemesterLabel.setText(currentSem.getSemName() + " - " + currentSem.getSemYear());
+            mTableManager.refresh();
+            JOptionPane.showMessageDialog(null, "Cập nhật dữ liệu thành công");
 
+            return;
+        }
+        if(mTable.getRowCount() == 0){
+            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
+        } else{
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng để xoá");
+        }
     }
 
     private void onDelete() {
@@ -131,6 +136,7 @@ public class SemesterTabMod {
             mTableManager.removeRow(mTable.getSelectedRow());
             // Remove Row from DB
             SemesterDAO.delete(Integer.parseInt(curId.toString()));
+            JOptionPane.showMessageDialog(null, "Xoá dữ liệu thành công");
             return;
         }
         if(mTable.getRowCount() == 0){

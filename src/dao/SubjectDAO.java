@@ -69,7 +69,7 @@ public class SubjectDAO {
     public static Boolean update(Subject subject){
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            if (subject == null) {
+            if (get(subject.getSubjectId()) == null) {
                 JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return false;

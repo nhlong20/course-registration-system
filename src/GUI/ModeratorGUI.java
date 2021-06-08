@@ -8,9 +8,11 @@ import com.toedter.calendar.JDateChooser;
 import dao.AccountDAO;
 import dao.ClazzDAO;
 import dao.ModeratorDAO;
+import dao.SemesterDAO;
 import main.MainApp;
 import pojo.Account;
 import pojo.Moderator;
+import pojo.Semester;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +43,7 @@ public class ModeratorGUI extends JFrame {
     private JButton deleteSubjectBtn;
     private JButton addSubjectBtn;
 
+    private JButton setAsCurrentSemesterBtn;
     private JTextField searchSemesterTextField;
     private JTable semesterTable;
     private JButton searchSemesterBtn;
@@ -73,7 +76,6 @@ public class ModeratorGUI extends JFrame {
     private JComboBox userGenderComboBox;
     private JButton updateUserInfoBtn;
     private JButton searchCourseBtn;
-    private JButton đặtLàmHọcKỳButton;
     private JLabel curentSemester;
 
     Calendar calendar;
@@ -90,6 +92,7 @@ public class ModeratorGUI extends JFrame {
     private JButton changePasswordBtn;
 
     private JButton logoutBtn;
+    private JLabel currentSemesterLabel;
     private Account currentAcc;
 
     public static String MODERATOR_WINDOW_TITLE_TEXT = "Hệ thống đăng ký khoá học";
@@ -112,10 +115,10 @@ public class ModeratorGUI extends JFrame {
         this.initUIProperty();
     }
     private void initData(){
-        currentAcc = MainApp.getCurrentAccount();
+        currentAcc = AccountDAO.getAccount("MOD002", "giaovu");
         Moderator currentUser = ModeratorDAO.getModerator(currentAcc.getUsername());
-//        Moderator currentUser = ModeratorDAO.getModerator("MOD002"); // temp
         accountName.setText(currentUser.getFullname());
+
         userIdTextField.setText(currentUser.getModeratorId());
         userFullnameTextField.setText(currentUser.getFullname());
         userAddressTextField.setText(currentUser.getModAddress());
@@ -152,7 +155,7 @@ public class ModeratorGUI extends JFrame {
     }
 
     private void linkSemesterTabHandler() {
-        SemesterTabMod semesterTabMod = SemesterTabMod.getInstance(searchSemesterTextField, semesterTable, searchSemesterBtn, deleteSemesterBtn, addSemesterBtn);
+        SemesterTabMod semesterTabMod = SemesterTabMod.getInstance(searchSemesterTextField, semesterTable, searchSemesterBtn, deleteSemesterBtn, addSemesterBtn, setAsCurrentSemesterBtn, currentSemesterLabel);
         semesterTabMod.initUIData();
         semesterTabMod.addModActionlistener();
     }

@@ -5,6 +5,7 @@ import pojo.Semester;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.util.List;
 
@@ -23,10 +24,16 @@ public class SemesterTableManager {
 
     public SemesterTableManager(JTable table){
         mTable = table;
-        mModel = new DefaultTableModel(columnSemesterNames, 0);
+        mModel = new DefaultTableModel(columnSemesterNames, 0){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         sorter = new TableRowSorter<DefaultTableModel>(mModel);
         mTable.setRowSorter(sorter);
         mTable.setModel(mModel);
+        TableColumn colToDelete = mTable.getColumnModel().getColumn(1);
+        mTable.removeColumn(colToDelete);
     }
     public void loadTableData(){
         List<Semester> semesters = SemesterDAO.getAll();
@@ -36,9 +43,10 @@ public class SemesterTableManager {
             String semName = semesters.get(i).getSemName();
             int semYear = semesters.get(i).getSemYear();
             String startDate = String.valueOf(semesters.get(i).getStartdate());
-            String enđate = String.valueOf(semesters.get(i).getEnddate());
-            mModel.addRow(new Object[]{semSize - i, semesterId,semName,semYear, startDate, enđate});
+            String endDate = String.valueOf(semesters.get(i).getEnddate());
+            mModel.addRow(new Object[]{semSize - i, semesterId,semName,semYear, startDate, endDate});
         }
+
     }
     public void addRow(Semester newSemester){
         Object[] row = new Object[6];
@@ -59,5 +67,9 @@ public class SemesterTableManager {
         } else {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,3));
         }
+    }
+    public void refresh(){
+        mModel.setRowCount(0);
+        loadTableData();
     }
 }
