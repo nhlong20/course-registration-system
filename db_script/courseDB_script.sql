@@ -64,8 +64,8 @@ CREATE TABLE public.student (
 
 CREATE TABLE public.courseregistrationsession (
                                                   registration_session_id SERIAL PRIMARY KEY,
-                                                  start_at timestamp with time zone NOT NULL,
-                                                  end_at timestamp with time zone NOT NULL,
+                                                  start_at date NOT NULL CHECK (start_at > '1900-01-01'),
+                                                  end_at date NOT NULL CHECK (end_at > start_at),
                                                   semester_id integer NOT NULL
 );
 

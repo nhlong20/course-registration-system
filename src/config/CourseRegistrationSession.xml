@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="pojo.CourseRegistrationSession" table="courseregistrationsession" schema="public" catalog="coursesDB">
+        <id name="registrationSessionId">
+            <column name="registration_session_id" sql-type="integer"/>
+        </id>
+        <property name="startDate">
+            <column name="start_at" sql-type="date"/>
+        </property>
+        <property name="endDate">
+            <column name="end_at" sql-type="date"/>
+        </property>
+        <many-to-one class="pojo.Semester"
+                     name="semesterId" fetch="join" lazy="false"
+                     cascade="save-update,delete">
+            <column name="semester_id" unique="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
