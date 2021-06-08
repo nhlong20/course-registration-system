@@ -1,12 +1,9 @@
 package GUI.Diaglog;
 
-import GUI.Tabs.ClazzTabMod;
-import GUI.Tabs.SemesterTabMod;
+import GUI.Tabs.CourseRegistrationSessionTabMod;
 import com.toedter.calendar.JDateChooser;
-import dao.ClazzDAO;
-import dao.SemesterDAO;
-import pojo.Clazz;
-import pojo.Semester;
+import dao.CourseRegistrationSessionDAO;
+import pojo.CourseRegistrationSession;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -14,23 +11,21 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class AddSemesterDlg extends JDialog {
+public class AddCourseRegistrationSessionDlg extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField yearTextField;
-    private JComboBox nameComboBox;
     private JPanel startDatePanel;
     private JPanel endDatePanel;
     Calendar calendar;
     private JDateChooser startDateChooser;
     private JDateChooser endDateChooser;
-    public AddSemesterDlg() {
-        this.setTitle("Thêm học kỳ mới");
+
+    public AddCourseRegistrationSessionDlg() {
+        this.setTitle("Tạo mới phiên đăng ký học phần");
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        nameComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"HK1", "HK2", "HK3"}));
 
         calendar = Calendar.getInstance();
         startDateChooser = new JDateChooser(calendar.getTime());
@@ -78,9 +73,6 @@ public class AddSemesterDlg extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
     private void onOK() {
-        // add your code here
-        String name = String.valueOf(nameComboBox.getSelectedItem());
-        int year = Integer.parseInt(yearTextField.getText());
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String temp1 = simpleDateFormat.format(startDateChooser.getDate());
@@ -88,9 +80,10 @@ public class AddSemesterDlg extends JDialog {
         Date startDate = Date.valueOf(temp1);
         Date endDate = Date.valueOf(temp2);
 
-        Semester semester = new Semester(name,year,startDate,endDate);
-        if(SemesterDAO.add(semester)){
-            SemesterTabMod.mTableManager.addRow(semester);
+        // TODO - Replace học kì hiện tại
+        CourseRegistrationSession newSesion = new CourseRegistrationSession(startDate,endDate, 3);
+        if(CourseRegistrationSessionDAO.add(newSesion)){
+            CourseRegistrationSessionTabMod.mTableManager.addRow(newSesion);
             dispose();
         }
     }

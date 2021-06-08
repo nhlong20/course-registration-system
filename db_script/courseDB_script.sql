@@ -64,8 +64,8 @@ CREATE TABLE public.student (
 
 CREATE TABLE public.courseregistrationsession (
                                                   registration_session_id SERIAL PRIMARY KEY,
-                                                  start_at date NOT NULL CHECK (start_at > '1900-01-01'),
-                                                  end_at date NOT NULL CHECK (end_at > start_at),
+                                                  start_date date NOT NULL CHECK (start_date > '1900-01-01'),
+                                                  end_date date NOT NULL CHECK (end_date >= start_date),
                                                   semester_id integer NOT NULL
 );
 
@@ -153,6 +153,13 @@ INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES
 INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK2', 2018, '2019-02-03', '2019-06-28');
 INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK1', 2019, '2019-08-20', '2020-01-20');
 INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK2', 2019, '2020-02-03', '2020-06-28');
+
+INSERT INTO courseregistrationsession(registration_session_id,start_date, end_date, semester_id)
+VALUES (default, '2017-08-24', '2017-08-28', 1);
+INSERT INTO courseregistrationsession(registration_session_id,start_date, end_date, semester_id)
+VALUES (default, '2018-08-24', '2018-08-28', 2);
+INSERT INTO courseregistrationsession(registration_session_id,start_date, end_date, semester_id)
+VALUES (default, '2019-08-24', '2019-08-28', 3);
 
 INSERT INTO class(class_year, class_code) VALUES (2018, '18CNTN');
 INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT1');

@@ -4,10 +4,7 @@ package GUI;
 
 import GUI.Diaglog.AddModertatorDlg;
 import GUI.TableManager.ModeratorTableManager;
-import GUI.Tabs.ClazzTabMod;
-import GUI.Tabs.ModeratorTabMod;
-import GUI.Tabs.SemesterTabMod;
-import GUI.Tabs.SubjectTabMod;
+import GUI.Tabs.*;
 import dao.ClazzDAO;
 import dao.ModeratorDAO;
 import pojo.Moderator;
@@ -86,6 +83,7 @@ public class ModeratorGUI extends JFrame {
         this.linkSubjectTabHandler();
         this.linkSemesterTabHandler();
         this.linkClazzTabHandler();
+        this.linkCourseRegistrationSessionHandler();
 
         this.initUIProperty();
 
@@ -119,5 +117,9 @@ public class ModeratorGUI extends JFrame {
         clazzTabMod.initUIData();
         clazzTabMod.addModActionlistener();
     }
-
+    private void linkCourseRegistrationSessionHandler(){
+        CourseRegistrationSessionTabMod courseRegistrationSessionTabMod = CourseRegistrationSessionTabMod.getInstance(sessionTable, openSessionBtn, endSessionBtn);
+        courseRegistrationSessionTabMod.initUIData();
+        courseRegistrationSessionTabMod.addModActionlistener();
+    }
 }

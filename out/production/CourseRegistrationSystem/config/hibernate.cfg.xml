@@ -13,11 +13,13 @@
         <mapping resource="config/Account.hbm.xml"/>
         <mapping resource="config/Clazz.hbm.xml"/>
         <mapping resource="config/Course.hbm.xml"/>
+        <mapping resource="config/CourseRegistrationSession.xml"/>
         <mapping resource="config/Moderator.hbm.xml"/>
         <mapping resource="config/Semester.hbm.xml"/>
         <mapping resource="config/Student.hbm.xml"/>
         <mapping resource="config/Subject.hbm.xml"/>
         <mapping resource="config/Teacher.hbm.xml"/>
+
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>

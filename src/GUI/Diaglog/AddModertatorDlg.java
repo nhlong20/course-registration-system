@@ -80,7 +80,7 @@ public class AddModertatorDlg extends JDialog{
         moderator.setModAddress(addressTextField.getText());
         moderator.setGender(String.valueOf(genderComboBox.getSelectedItem()));
         // Format Date again befor save to DB
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-yy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = simpleDateFormat.format(dateChooser.getDate());
         moderator.setDob(Date.valueOf(date));
 

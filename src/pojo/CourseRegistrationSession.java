@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  * pojo
@@ -11,7 +12,7 @@ import java.sql.Date;
  */
 public class CourseRegistrationSession {
     private int registrationSessionId;
-    private Date  startDate;
+    private Date startDate;
     private Date endDate;
     private int semesterId;
 
@@ -55,7 +56,20 @@ public class CourseRegistrationSession {
     public void setSemesterId(int semesterId) {
         this.semesterId = semesterId;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CourseRegistrationSession that = (CourseRegistrationSession) o;
+        return registrationSessionId == that.registrationSessionId &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(registrationSessionId, startDate, endDate);
+    }
 
 
 }
