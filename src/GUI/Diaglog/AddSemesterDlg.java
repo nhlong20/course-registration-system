@@ -1,11 +1,8 @@
 package GUI.Diaglog;
 
-import GUI.Tabs.ClazzTabMod;
 import GUI.Tabs.SemesterTabMod;
 import com.toedter.calendar.JDateChooser;
-import dao.ClazzDAO;
 import dao.SemesterDAO;
-import pojo.Clazz;
 import pojo.Semester;
 
 import javax.swing.*;

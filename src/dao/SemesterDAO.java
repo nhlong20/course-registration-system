@@ -3,10 +3,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import pojo.Clazz;
 import pojo.Semester;
-import pojo.Semester;
-import pojo.Subject;
 import util.HibernateUtil;
 
 import javax.swing.*;

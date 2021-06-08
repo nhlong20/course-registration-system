@@ -1,17 +1,21 @@
 package GUI;
 
 
-
 import GUI.Diaglog.AddModertatorDlg;
 import GUI.TableManager.ModeratorTableManager;
 import GUI.Tabs.*;
+import com.toedter.calendar.JDateChooser;
+import dao.AccountDAO;
 import dao.ClazzDAO;
 import dao.ModeratorDAO;
+import main.MainApp;
+import pojo.Account;
 import pojo.Moderator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Calendar;
 
 /**
  * GUI
@@ -51,41 +55,78 @@ public class ModeratorGUI extends JFrame {
     private JTable studentTable;
     private JTextField textField10;
     private JButton searchBtn;
+
     private JButton openSessionBtn;
     private JButton endSessionBtn;
     private JTable sessionTable;
+
     private JButton deleteStudentBtn;
     private JButton addStudentBtn;
     private JButton updateStudentbtn;
+
     private JTable courseTable;
     private JButton addCourseBtn;
     private JButton deleteCourseBtn;
     private JButton listRegistrationBtn;
+
     private JTabbedPane settingTab;
-    private JButton changePasswordBtn;
-    private JComboBox comboBox2;
+    private JComboBox userGenderComboBox;
     private JButton updateUserInfoBtn;
-    private JButton logoutBtn;
-    private JButton selectDOBBtn;
     private JButton searchCourseBtn;
     private JButton đặtLàmHọcKỳButton;
     private JLabel curentSemester;
-    private JTextField oldPasswordTextField;
-    private JTextField newPasswordTextField;
-    private JTextField confirmPasswordTextField;
 
+    Calendar calendar;
+    private JDateChooser dateChooser;
+    private JTextField userIdTextField;
+    private JTextField userFullnameTextField;
+    private JPanel userDOBPanel;
+    private JTextField userPhoneTextField;
+    private JTextField userAddressTextField;
+
+    private JPasswordField newPasswordField;
+    private JPasswordField confirmPasswordField;
+    private JPasswordField oldPasswordField;
+    private JButton changePasswordBtn;
+
+    private JButton logoutBtn;
+    private Account currentAcc;
 
     public static String MODERATOR_WINDOW_TITLE_TEXT = "Hệ thống đăng ký khoá học";
 
     public ModeratorGUI() {
         super(MODERATOR_WINDOW_TITLE_TEXT);
+        this.initData();
         this.linkModeratorTabHandler();
         this.linkSubjectTabHandler();
         this.linkSemesterTabHandler();
         this.linkClazzTabHandler();
         this.linkCourseRegistrationSessionHandler();
+        this.linkStudentHandler();
+        this.linkCourseHandler();
+
+        this.editInfoHandler();
+        changePasswordBtn.addActionListener(e -> changePasswordHanlder());
+        logoutBtn.addActionListener(e -> logoutHandler());
 
         this.initUIProperty();
+    }
+    private void initData(){
+        currentAcc = MainApp.getCurrentAccount();
+        Moderator currentUser = ModeratorDAO.getModerator(currentAcc.getUsername());
+//        Moderator currentUser = ModeratorDAO.getModerator("MOD002"); // temp
+        accountName.setText(currentUser.getFullname());
+        userIdTextField.setText(currentUser.getModeratorId());
+        userFullnameTextField.setText(currentUser.getFullname());
+        userAddressTextField.setText(currentUser.getModAddress());
+        userPhoneTextField.setText(currentUser.getPhone());
+
+        // Set DOB
+        calendar = Calendar.getInstance();
+        dateChooser = new JDateChooser(calendar.getTime());
+        dateChooser.setDate(currentUser.getDob());
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+        userDOBPanel.add(dateChooser);
 
     }
     private void initUIProperty() {
@@ -97,29 +138,75 @@ public class ModeratorGUI extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    private void linkModeratorTabHandler(){
-        ModeratorTabMod moderatorTabMod = ModeratorTabMod.getInstance(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, accountName);
+
+    private void linkModeratorTabHandler() {
+        ModeratorTabMod moderatorTabMod = ModeratorTabMod.getInstance(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn);
         moderatorTabMod.initUIModData();
         moderatorTabMod.addModActionlistener();
     }
-    private void linkSubjectTabHandler(){
-        SubjectTabMod subjectTabMod = SubjectTabMod.getInstance(searchSubjectTextField, subjectTable, searchSubjectBtn,deleteSubjectBtn, addSubjectBtn, updateSubjectBtn);
+
+    private void linkSubjectTabHandler() {
+        SubjectTabMod subjectTabMod = SubjectTabMod.getInstance(searchSubjectTextField, subjectTable, searchSubjectBtn, deleteSubjectBtn, addSubjectBtn, updateSubjectBtn);
         subjectTabMod.initUIData();
         subjectTabMod.addModActionlistener();
     }
-    private void linkSemesterTabHandler(){
-        SemesterTabMod semesterTabMod = SemesterTabMod.getInstance(searchSemesterTextField, semesterTable, searchSemesterBtn,deleteSemesterBtn, addSemesterBtn);
+
+    private void linkSemesterTabHandler() {
+        SemesterTabMod semesterTabMod = SemesterTabMod.getInstance(searchSemesterTextField, semesterTable, searchSemesterBtn, deleteSemesterBtn, addSemesterBtn);
         semesterTabMod.initUIData();
         semesterTabMod.addModActionlistener();
     }
-    private void linkClazzTabHandler(){
-        ClazzTabMod clazzTabMod = ClazzTabMod.getInstance(classTable,deleteClassBtn, addClassBtn);
+
+    private void linkClazzTabHandler() {
+        ClazzTabMod clazzTabMod = ClazzTabMod.getInstance(classTable, deleteClassBtn, addClassBtn);
         clazzTabMod.initUIData();
         clazzTabMod.addModActionlistener();
     }
-    private void linkCourseRegistrationSessionHandler(){
+    private void linkStudentHandler() {
+
+    }
+
+    private void linkCourseRegistrationSessionHandler() {
         CourseRegistrationSessionTabMod courseRegistrationSessionTabMod = CourseRegistrationSessionTabMod.getInstance(sessionTable, openSessionBtn, endSessionBtn);
         courseRegistrationSessionTabMod.initUIData();
         courseRegistrationSessionTabMod.addModActionlistener();
+    }
+
+    private void linkCourseHandler() {
+
+    }
+
+    private void editInfoHandler() {
+
+    }
+
+    private void changePasswordHanlder() {
+        String oldPwd = String.valueOf(oldPasswordField.getPassword());
+        String newPwd = String.valueOf(newPasswordField.getPassword());
+        String confirmPwd = String.valueOf(confirmPasswordField.getPassword());
+        if(!newPwd.equals(confirmPwd)){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập nhập mật khẩu mới và xác nhận giống nhau");
+            return;
+        }
+        if(!currentAcc.getPasswd().equals(oldPwd)){
+            JOptionPane.showMessageDialog(this, "Mật khẫu hiện tại không chính xác");
+            return;
+        }
+        // Handle change pasword
+        currentAcc.setPasswd(newPwd);
+        if(!AccountDAO.update(currentAcc)){
+            currentAcc.setPasswd(oldPwd);
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình cập nhật mật khẩu mới");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Cập nhật mật khẩu thành công, vui lòng đăng nhập lại");
+        // TODO - Logout user
+        logoutHandler();
+    }
+
+    private void logoutHandler() {
+        MainApp.setCurrentAccount(null);
+        dispose();
+        MainApp.invokeGUI(MainApp.ViewControl.LOGIN);
     }
 }

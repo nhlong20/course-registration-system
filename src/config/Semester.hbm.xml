@@ -10,10 +10,13 @@
             <generator class="increment"></generator>
         </id>
         <property name="semName">
-            <column name="sem_name" sql-type="varchar(3)"/>
+            <column name="sem_name" sql-type="varchar(3)" length="3"/>
         </property>
         <property name="semYear">
             <column name="sem_year" sql-type="integer"/>
+        </property>
+        <property name="isCurrentSem" generated="insert">
+            <column name="is_current_sem" sql-type="boolean"/>
         </property>
         <property name="startdate">
             <column name="startdate" sql-type="date"/>

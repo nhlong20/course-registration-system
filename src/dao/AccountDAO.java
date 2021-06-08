@@ -58,4 +58,15 @@ public class AccountDAO {
             System.err.println(ex);
         }
     }
+    public static Boolean update(Account acc){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.update(acc);
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+            return false;
+        }
+        return true;
+    }
 }

@@ -90,7 +90,6 @@ public class AddModertatorDlg extends JDialog{
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         }
-
     }
 
     private void onCancel() {

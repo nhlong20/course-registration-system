@@ -3,7 +3,6 @@ package GUI.Tabs;
 import GUI.Diaglog.AddSemesterDlg;
 import GUI.TableManager.SemesterTableManager;
 import dao.SemesterDAO;
-import pojo.Semester;
 
 import javax.swing.*;
 import java.awt.*;

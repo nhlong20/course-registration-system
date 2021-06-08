@@ -1,7 +1,6 @@
 package GUI.TableManager;
 
 import dao.SemesterDAO;
-import pojo.Semester;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,27 +28,27 @@ public class CourseTableManager {
         mTable.setModel(mModel);
     }
     public void loadTableData(){
-        List<Semester> semesters = SemesterDAO.getAll();
-        int semSize = semesters.size();
-        for(int i = semSize - 1; i >=0; i--){
-            int semesterId = semesters.get(i).getSemesterId();
-            String semName = semesters.get(i).getSemName();
-            int semYear = semesters.get(i).getSemYear();
-            String startDate = String.valueOf(semesters.get(i).getStartdate());
-            String enđate = String.valueOf(semesters.get(i).getEnddate());
-            mModel.addRow(new Object[]{semSize - i, semesterId,semName,semYear, startDate, enđate});
-        }
+//        List<Semester> semesters = SemesterDAO.getAll();
+//        int semSize = semesters.size();
+//        for(int i = semSize - 1; i >=0; i--){
+//            int semesterId = semesters.get(i).getSemesterId();
+//            String semName = semesters.get(i).getSemName();
+//            int semYear = semesters.get(i).getSemYear();
+//            String startDate = String.valueOf(semesters.get(i).getStartdate());
+//            String enđate = String.valueOf(semesters.get(i).getEnddate());
+//            mModel.addRow(new Object[]{semSize - i, semesterId,semName,semYear, startDate, enđate});
+//        }
     }
-    public void addRow(Semester newSemester){
-        Object[] row = new Object[6];
-        row[0] = mTable.getRowCount()+1;
-        row[1] = newSemester.getSemesterId();
-        row[2] = newSemester.getSemName();
-        row[3] = newSemester.getSemYear();
-        row[4] = String.valueOf(newSemester.getStartdate());
-        row[5] = String.valueOf(newSemester.getEnddate());
-        mModel.addRow(row);
-    }
+//    public void addRow(Semester newSemester){
+//        Object[] row = new Object[6];
+//        row[0] = mTable.getRowCount()+1;
+//        row[1] = newSemester.getSemesterId();
+//        row[2] = newSemester.getSemName();
+//        row[3] = newSemester.getSemYear();
+//        row[4] = String.valueOf(newSemester.getStartdate());
+//        row[5] = String.valueOf(newSemester.getEnddate());
+//        mModel.addRow(row);
+//    }
     public void removeRow(int row){
         mModel.removeRow(row);
     }

@@ -42,10 +42,11 @@ CREATE TABLE public.semester (
                                  semester_id SERIAL PRIMARY KEY,
                                  sem_name varchar(3) NOT NULL,
                                  sem_year integer NOT NULL,
+                                 is_current_sem boolean NOT NULL default false,
                                  startdate date NOT NULL CHECK (startdate > '1900-01-01'),
                                  enddate date NOT NULL CHECK (enddate > startdate)
-);
 
+);
 CREATE TABLE public.class (
                               class_code varchar(10) PRIMARY KEY,
                               class_year integer NOT NULL

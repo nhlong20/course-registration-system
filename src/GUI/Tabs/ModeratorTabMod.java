@@ -26,25 +26,23 @@ public class ModeratorTabMod {
     private JButton mSearchBtn;
     private JButton mDeleteBtn;
     private JButton mAddBtn;
-    private JLabel accountName;
 
     public ModeratorTabMod(){}
 
-    public ModeratorTabMod(JTextField searchModTextField, JTable modTable, JButton searchModBtn, JButton deleteModBtn, JButton addModBtn, JLabel accountName) {
+    public ModeratorTabMod(JTextField searchModTextField, JTable modTable, JButton searchModBtn, JButton deleteModBtn, JButton addModBtn) {
         this.mSearchTextField = searchModTextField;
         this.mTable = modTable;
         this.mSearchBtn = searchModBtn;
         this.mDeleteBtn = deleteModBtn;
         this.mAddBtn = addModBtn;
-        this.accountName = accountName;
     }
 
 
-    public static ModeratorTabMod getInstance(JTextField searchModTextField, JTable modTable, JButton searchModBtn, JButton deleteModBtn, JButton addModBtn, JLabel accountName){
+    public static ModeratorTabMod getInstance(JTextField searchModTextField, JTable modTable, JButton searchModBtn, JButton deleteModBtn, JButton addModBtn){
         if(instance == null){
             synchronized(ModeratorTabMod.class){
                 if(instance == null){
-                    instance = new ModeratorTabMod(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, accountName);
+                    instance = new ModeratorTabMod(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn);
                 }
             }
         }
@@ -100,12 +98,7 @@ public class ModeratorTabMod {
         });
     }
     public void initUIModData() {
-        //        Account currentAccount = MainApp.getCurrentAccount();
-//        Moderator currentUser = ModeratorDAO.getModerator(currentAccount.getUsername());
-        Moderator currentUser = ModeratorDAO.getModerator("MOD002"); // temp
-
-        accountName.setText(currentUser.getFullname());
-        mTableManager = new ModeratorTableManager(mTable);
+         mTableManager = new ModeratorTableManager(mTable);
         mTableManager.loadTableData();
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
     }

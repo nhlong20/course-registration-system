@@ -7,6 +7,8 @@ import pojo.Account;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * GUI
@@ -15,7 +17,7 @@ import java.awt.event.ActionListener;
  * @Date 6/2/2021 - 2:14 AM
  * @Description
  */
-public class LoginGUI extends JFrame implements ActionListener {
+public class LoginGUI extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginSubmitButton;
@@ -28,7 +30,16 @@ public class LoginGUI extends JFrame implements ActionListener {
         // this following method must call after pack() method to set Java App Window to center of your computer screen
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        loginSubmitButton.addActionListener(this);
+        loginSubmitButton.addActionListener(e -> onSubmit());
+        passwordField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if(e.getKeyCode()==KeyEvent.VK_ENTER){
+                    onSubmit();
+                }
+            }
+        });
     }
 
     private String validateInput(String username, String password){
@@ -37,8 +48,7 @@ public class LoginGUI extends JFrame implements ActionListener {
         }
         return null;
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private void onSubmit(){
         String username = usernameField.getText();
         String password = String.valueOf(passwordField.getPassword());
 
