@@ -17,6 +17,11 @@ public class Student {
     private String gender;
     private Date dob;
     private String stuAddress;
+    private Account account;
+    private Clazz classCode;
+    private Clazz clazz;
+
+
 
     public int getId() {
         return id;
@@ -65,6 +70,22 @@ public class Student {
     public void setStuAddress(String stuAddress) {
         this.stuAddress = stuAddress;
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
+    }
+
 
     @Override
     public boolean equals(Object o) {

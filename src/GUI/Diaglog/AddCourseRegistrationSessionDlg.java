@@ -3,7 +3,9 @@ package GUI.Diaglog;
 import GUI.Tabs.CourseRegistrationSessionTabMod;
 import com.toedter.calendar.JDateChooser;
 import dao.CourseRegistrationSessionDAO;
+import dao.SemesterDAO;
 import pojo.CourseRegistrationSession;
+import pojo.Semester;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -73,15 +75,18 @@ public class AddCourseRegistrationSessionDlg extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
     private void onOK() {
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String temp1 = simpleDateFormat.format(startDateChooser.getDate());
         String temp2 = simpleDateFormat.format(endDateChooser.getDate());
         Date startDate = Date.valueOf(temp1);
         Date endDate = Date.valueOf(temp2);
 
-        // TODO - Replace học kì hiện tại
-        CourseRegistrationSession newSesion = new CourseRegistrationSession(startDate,endDate, 3);
+        Semester currentSem = SemesterDAO.getCurrent();
+        if(currentSem == null){
+            JOptionPane.showMessageDialog(null, "Học kì hiện tại không có, vui lòng kiểm tra lại");
+            return;
+        }
+        CourseRegistrationSession newSesion = new CourseRegistrationSession(startDate,endDate, currentSem.getSemesterId());
         if(CourseRegistrationSessionDAO.add(newSesion)){
             CourseRegistrationSessionTabMod.mTableManager.addRow(newSesion);
             dispose();

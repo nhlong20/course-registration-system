@@ -54,18 +54,18 @@ public class ModeratorGUI extends JFrame {
     private JButton deleteClassBtn;
     private JTable classTable;
 
+    private JTextField searchStudentTextField;
+    private JButton searchStudentBtn;
     private JComboBox classBomboBox;
     private JTable studentTable;
-    private JTextField textField10;
-    private JButton searchBtn;
+    private JButton deleteStudentBtn;
+    private JButton addStudentBtn;
+    private JButton updateStudentbtn;
+    private JButton resetStudentPwdBtn;
 
     private JButton openSessionBtn;
     private JButton endSessionBtn;
     private JTable sessionTable;
-
-    private JButton deleteStudentBtn;
-    private JButton addStudentBtn;
-    private JButton updateStudentbtn;
 
     private JTable courseTable;
     private JButton addCourseBtn;
@@ -166,7 +166,9 @@ public class ModeratorGUI extends JFrame {
         clazzTabMod.addModActionlistener();
     }
     private void linkStudentHandler() {
-
+        StudentTabMod studentTabMod = StudentTabMod.getInstance(searchStudentTextField, studentTable, searchStudentBtn, classBomboBox, addStudentBtn, updateStudentbtn, resetStudentPwdBtn,deleteStudentBtn);
+        studentTabMod.initUIData();
+        studentTabMod.addModActionlistener();
     }
 
     private void linkCourseRegistrationSessionHandler() {
@@ -195,6 +197,7 @@ public class ModeratorGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Mật khẫu hiện tại không chính xác");
             return;
         }
+
         // Handle change pasword
         currentAcc.setPasswd(newPwd);
         if(!AccountDAO.update(currentAcc)){
@@ -203,7 +206,8 @@ public class ModeratorGUI extends JFrame {
             return;
         }
         JOptionPane.showMessageDialog(this, "Cập nhật mật khẩu thành công, vui lòng đăng nhập lại");
-        // TODO - Logout user
+
+        // Logout user after change password
         logoutHandler();
     }
 

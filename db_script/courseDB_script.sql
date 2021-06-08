@@ -187,6 +187,6 @@ INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, sem
 
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120449', 'Nguyễn Hoàng Long', 'Nam', '2000-04-01', 'Nghệ An', '18CTT4', 1);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120460', 'Lê Danh Lưu', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 2);
-INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120461', 'Nguyễn Khắc Luân', 'Nam', '2000-05-21', 'Bình Thuận','18CTT4', 3);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120461', 'Nguyễn Khắc Luân', 'Nam', '2000-05-21', 'Bình Thuận','18CTT5', 3);
 
 END;
