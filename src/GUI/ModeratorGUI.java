@@ -1,22 +1,18 @@
 package GUI;
 
 
-import GUI.Diaglog.AddModertatorDlg;
 import GUI.TableManager.ModeratorTableManager;
 import GUI.Tabs.*;
 import com.toedter.calendar.JDateChooser;
 import dao.AccountDAO;
-import dao.ClazzDAO;
 import dao.ModeratorDAO;
-import dao.SemesterDAO;
 import main.MainApp;
 import pojo.Account;
 import pojo.Moderator;
-import pojo.Semester;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -94,6 +90,7 @@ public class ModeratorGUI extends JFrame {
     private JButton logoutBtn;
     private JLabel currentSemesterLabel;
     private Account currentAcc;
+    Moderator currentUser;
 
     public static String MODERATOR_WINDOW_TITLE_TEXT = "Hệ thống đăng ký khoá học";
 
@@ -108,7 +105,7 @@ public class ModeratorGUI extends JFrame {
         this.linkStudentHandler();
         this.linkCourseHandler();
 
-        this.editInfoHandler();
+        updateUserInfoBtn.addActionListener(e -> editInfoHandler());
         changePasswordBtn.addActionListener(e -> changePasswordHanlder());
         logoutBtn.addActionListener(e -> logoutHandler());
 
@@ -116,20 +113,22 @@ public class ModeratorGUI extends JFrame {
     }
     private void initData(){
         currentAcc = AccountDAO.getAccount("MOD002", "giaovu");
-        Moderator currentUser = ModeratorDAO.getModerator(currentAcc.getUsername());
+        currentUser = ModeratorDAO.getModerator(currentAcc.getUsername());
         accountName.setText(currentUser.getFullname());
 
         userIdTextField.setText(currentUser.getModeratorId());
         userFullnameTextField.setText(currentUser.getFullname());
-        userAddressTextField.setText(currentUser.getModAddress());
         userPhoneTextField.setText(currentUser.getPhone());
-
+        userAddressTextField.setText(currentUser.getModAddress());
+        userGenderComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Nam", "Nữ"}));
+        userGenderComboBox.setSelectedItem(currentUser.getGender());
         // Set DOB
         calendar = Calendar.getInstance();
         dateChooser = new JDateChooser(calendar.getTime());
         dateChooser.setDate(currentUser.getDob());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         userDOBPanel.add(dateChooser);
+
 
     }
     private void initUIProperty() {
@@ -185,7 +184,20 @@ public class ModeratorGUI extends JFrame {
     }
 
     private void editInfoHandler() {
+        // Get DOB
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dob = Date.valueOf(simpleDateFormat.format(dateChooser.getDate()));
 
+        currentUser.setFullname(userFullnameTextField.getText());
+        currentUser.setModAddress(userAddressTextField.getText());
+        currentUser.setPhone(userPhoneTextField.getText());
+        currentUser.setGender(String.valueOf(userGenderComboBox.getSelectedItem()));
+        currentUser.setDob(dob);
+        if(ModeratorDAO.update(currentUser)){
+            JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công");
+            ModeratorTableManager.refresh();
+            return;
+        }
     }
 
     private void changePasswordHanlder() {

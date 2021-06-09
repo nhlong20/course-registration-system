@@ -16,19 +16,19 @@ import java.util.List;
  * @Description
  */
 public class ModeratorTableManager {
-    JTable modTable;
-    DefaultTableModel model;
-    TableRowSorter<DefaultTableModel> sorter;
+    private static JTable modTable;
+    private static DefaultTableModel mModel;
+    private static TableRowSorter<DefaultTableModel> sorter;
     private static String[] columnModeratorNames = {"STT", "Mã giáo vụ", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ"};
 
     public ModeratorTableManager(JTable table){
         modTable = table;
-        model = new DefaultTableModel(columnModeratorNames, 0);
-        sorter = new TableRowSorter<DefaultTableModel>(model);
+        mModel = new DefaultTableModel(columnModeratorNames, 0);
+        sorter = new TableRowSorter<DefaultTableModel>(mModel);
         modTable.setRowSorter(sorter);
-        modTable.setModel(model);
+        modTable.setModel(mModel);
     }
-    public void loadTableData(){
+    public static void loadTableData(){
         List<Moderator> moderators = ModeratorDAO.getModeratorList();
         for(int i = 0; i < moderators.size(); i++){
             String modId = moderators.get(i).getModeratorId();
@@ -37,10 +37,10 @@ public class ModeratorTableManager {
             String dob = String.valueOf(moderators.get(i).getDob());
             String phone = moderators.get(i).getPhone();
             String address = moderators.get(i).getModAddress();
-            model.addRow(new Object[]{i+1, modId,fullname,gender,dob,phone,address});
+            mModel.addRow(new Object[]{i+1, modId,fullname,gender,dob,phone,address});
         }
     }
-    public void addRow(Moderator newModerator){
+    public static void addRow(Moderator newModerator){
         Object[] row = new Object[7];
         row[0] = modTable.getRowCount()+1;
         row[1] = newModerator.getModeratorId();
@@ -49,17 +49,20 @@ public class ModeratorTableManager {
         row[4]= String.valueOf(newModerator.getDob());
         row[5]= newModerator.getPhone();
         row[6]= newModerator.getModAddress();
-        model.addRow(row);
+        mModel.addRow(row);
     }
-    public void removeRow(int row){
-        model.removeRow(row);
+    public static void removeRow(int row){
+        mModel.removeRow(row);
     }
-    public void filterData(String query){
+    public static void filterData(String query){
         if (query.length() == 0) {
             sorter.setRowFilter(null);
         } else {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,2));
         }
     }
-
+    public static void refresh(){
+        mModel.setRowCount(0);
+        loadTableData();
+    }
 }

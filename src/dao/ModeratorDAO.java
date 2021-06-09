@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pojo.Account;
 import pojo.Moderator;
+import pojo.Student;
 import util.HibernateUtil;
 
 import javax.swing.*;
@@ -78,7 +79,23 @@ public class ModeratorDAO {
             return false;
         }
     }
-
+    public static boolean update(Moderator moderator){
+        if (getModerator(moderator.getModeratorId()) == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.update(moderator);
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(null, "Có lỗi khi cập nhật",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
     public static boolean deleteModerator(String modId) {
         Moderator moderator = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

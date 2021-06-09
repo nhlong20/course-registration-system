@@ -143,9 +143,9 @@ INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES 
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120463', '18120463', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120464', '18120464', default);
 
-INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, phone,  account_id)
+INSERT INTO moderator(moderator_id, fullname, gender,dob, phone, mod_address,  account_id)
     VALUES ('MOD001', 'Văn Chí Nam', 'Nam', '1984-07-06', '0942020222', 'Hồ Chí Minh', 4);
-INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, phone,  account_id)
+INSERT INTO moderator(moderator_id, fullname, gender,dob, phone, mod_address,  account_id)
     VALUES ('MOD002', 'Thái Lê Vinh', 'Nam', '1987-07-06', '0564859274', 'Hồ Chí Minh', 10);
 
 INSERT INTO public.subject VALUES ('OOP', 'Lập trình hướng đối tượng', 4);
