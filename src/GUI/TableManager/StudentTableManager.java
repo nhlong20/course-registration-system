@@ -35,6 +35,7 @@ public class StudentTableManager {
         TableColumn colToDelete = mTable.getColumnModel().getColumn(1);
         mTable.removeColumn(colToDelete);
     }
+
     public void loadTableData(String classCode){
         mModel.setRowCount(0);
         List<Student> students = StudentDAO.getAll(classCode);
@@ -48,8 +49,8 @@ public class StudentTableManager {
             String studentClass = students.get(i).getClazz().getClassCode();
             mModel.addRow(new Object[]{i+1, id,studentId,studentName,studentGender, studentDOB, studentAddress, studentClass});
         }
-
     }
+
     public void addRow(Student newStudent){
         Object[] row = new Object[8];
         row[0] = mTable.getRowCount()+1;
@@ -62,9 +63,11 @@ public class StudentTableManager {
         row[7] = newStudent.getClazz().getClassCode();
         mModel.addRow(row);
     }
+
     public void removeRow(int row){
         mModel.removeRow(row);
     }
+
     public void filterData(String query){
         if (query.length() == 0) {
             sorter.setRowFilter(null);
@@ -72,7 +75,9 @@ public class StudentTableManager {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,2,3));
         }
     }
-    public void refresh(){
+
+    public void refresh(String classCode){
         mModel.setRowCount(0);
+        loadTableData(classCode);
     }
 }

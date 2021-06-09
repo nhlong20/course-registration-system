@@ -5,6 +5,7 @@ import GUI.TableManager.StudentTableManager;
 import dao.ClazzDAO;
 import dao.StudentDAO;
 import pojo.Clazz;
+import pojo.Student;
 
 import javax.swing.*;
 import java.awt.*;
@@ -112,7 +113,8 @@ public class StudentTabMod {
         });
     }
     private void onChange(){
-        mTableManager.loadTableData(String.valueOf(mComboBox.getSelectedItem()));
+        currentShownClass = String.valueOf(mComboBox.getSelectedItem());
+        mTableManager.loadTableData(currentShownClass);
     }
 
     private void onSearch() {
@@ -128,7 +130,18 @@ public class StudentTabMod {
         // TODO - Reset student password to default
     }
     private void onUpdate() {
-        AddStudentDlg addStudentDlg = new AddStudentDlg();
+        if(mTable.getSelectedRowCount() == 1){
+            String studentId =  String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
+            Student student = StudentDAO.getByStudentId(studentId);
+            AddStudentDlg addStudentDlg = new AddStudentDlg(student);
+            return;
+        }
+        if(mTable.getRowCount() == 0){
+            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
+        } else{
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
+        }
+
     }
 
     private void onDelete() {

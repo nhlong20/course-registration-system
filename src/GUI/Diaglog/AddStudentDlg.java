@@ -1,13 +1,10 @@
 package GUI.Diaglog;
 
-import GUI.Tabs.SemesterTabMod;
 import GUI.Tabs.StudentTabMod;
 import com.toedter.calendar.JDateChooser;
 import dao.ClazzDAO;
-import dao.SemesterDAO;
 import dao.StudentDAO;
 import pojo.Clazz;
-import pojo.Semester;
 import pojo.Student;
 
 import javax.swing.*;
@@ -28,11 +25,14 @@ public class AddStudentDlg extends JDialog {
     private JPanel dobPanel;
     private JComboBox genderComboBox;
     private JComboBox clazzComboBox;
-
+    private boolean updateCommand;
+    private Student student;
     Calendar calendar;
     private JDateChooser dateChooser;
 
     public AddStudentDlg() {
+        this.setTitle("Thêm sinh viên mới");
+        this.updateCommand = false;
         this.initComponents();
         this.addEventListener();
         this.setModal(true);
@@ -41,8 +41,20 @@ public class AddStudentDlg extends JDialog {
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
+    public AddStudentDlg(Student student) {
+        this.setTitle("Cập nhật thông tin sinh viên");
+        this.updateCommand = true;
+        this.student = student;
+        this.initComponents();
+        this.initStudentData(student);
+        this.addEventListener();
+        this.setModal(true);
+        this.pack();
+        // this following method must call after pack() method to set Java App Window to center of your computer screen
+        this.setLocationRelativeTo(null);
+        setVisible(true);
+    }
     private void initComponents(){
-        this.setTitle("Thêm sinh viên mới");
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -59,6 +71,15 @@ public class AddStudentDlg extends JDialog {
         dateChooser = new JDateChooser(calendar.getTime());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         dobPanel.add(dateChooser);
+    }
+    private void initStudentData(Student student){
+        studentIdTextField.setEnabled(false);
+        studentIdTextField.setText(student.getStudentId());
+        nameTextField.setText(student.getFullname());
+        addressTextField.setText(student.getStuAddress());
+        dateChooser.setDate(student.getDob());
+        genderComboBox.setSelectedItem(student.getGender());
+        clazzComboBox.setSelectedItem(student.getClazz().getClassCode());
     }
     private void addEventListener(){
         buttonOK.addActionListener(e-> onOK());
@@ -95,17 +116,36 @@ public class AddStudentDlg extends JDialog {
             JOptionPane.showMessageDialog(this, "Lớp học không tồn tại, vui lòng thử lại");
             return;
         }
-        Student student = new Student(studentId,name,gender,dob,address,clazz);
-        if(StudentDAO.add(student)){
-            // Update UI if current shown Class is the same
-            if(StudentTabMod.currentShownClass.equals(classCode)){
-                StudentTabMod.mTableManager.addRow(student);
+        if(!updateCommand){
+            Student newStudent = new Student(studentId,name,gender,dob,address,clazz);
+            onAdd(newStudent);
+        } else {
+            student.setFullname(name);
+            student.setDob(dob);
+            student.setGender(gender);
+            student.setStuAddress(address);
+            student.setClazz(clazz);
+            onUpdate(student);
+        }
+    }
+    private void onUpdate(Student student){
+        if(StudentDAO.update(student)){
+            // Update curentTable
+            StudentTabMod.mTableManager.refresh(StudentTabMod.currentShownClass);
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+            dispose();
+        }
+    }
+    private void onAdd(Student newStudent){
+        if(StudentDAO.add(newStudent)){
+            // Update current table
+            if(StudentTabMod.currentShownClass.equals(newStudent.getClazz().getClassCode())){
+                StudentTabMod.mTableManager.addRow(newStudent);
             }
             JOptionPane.showMessageDialog(this, "Thêm mới thành công");
             dispose();
         }
     }
-
     private void onCancel() {
         dispose();
     }

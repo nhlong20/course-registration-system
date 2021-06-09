@@ -4,7 +4,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pojo.Account;
-import pojo.Clazz;
 import pojo.Student;
 import util.HibernateUtil;
 
@@ -86,11 +85,11 @@ public class StudentDAO {
         return true;
     }
 
-    public static void update(Student student){
+    public static boolean update(Student student){
         if (getByStudentId(student.getStudentId()) == null) {
             JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                     "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
@@ -99,7 +98,9 @@ public class StudentDAO {
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(null, "Có lỗi khi cập nhật",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+        return true;
     }
 
     public static boolean delete(String curId) {
