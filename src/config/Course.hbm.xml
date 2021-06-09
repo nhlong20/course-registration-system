@@ -6,13 +6,36 @@
 
     <class name="pojo.Course" table="course" schema="public" catalog="coursesDB">
         <id name="courseId">
-            <column name="course_id" sql-type="integer"/>
+            <column name="course_id" sql-type="varchar(20)"/>
         </id>
         <property name="dayOfWeek">
             <column name="day_of_week" sql-type="varchar(10)" length="10"/>
         </property>
+        <property name="room">
+            <column name="room" sql-type="varchar(10)"/>
+        </property>
         <property name="maximumSlots">
             <column name="maximum_slots" sql-type="integer"/>
         </property>
+        <many-to-one class="pojo.Subject"
+                     name="subject" fetch="join" lazy="false"
+                     cascade="save-update,delete">
+            <column name="subject_id"/>
+        </many-to-one>
+        <many-to-one class="pojo.Teacher"
+                     name="teacher" fetch="join" lazy="false"
+                     cascade="save-update,delete">
+            <column name="teacher_id"/>
+        </many-to-one>
+        <many-to-one class="pojo.Shift"
+                     name="shift" fetch="join" lazy="false"
+                     cascade="save-update,delete">
+            <column name="shift_id"/>
+        </many-to-one>
+        <many-to-one class="pojo.Semester"
+                     name="semester" fetch="join" lazy="false"
+                     cascade="save-update,delete">
+            <column name="semester_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

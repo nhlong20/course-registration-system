@@ -1,6 +1,8 @@
 package GUI.TableManager;
 
+import dao.CourseDAO;
 import dao.SemesterDAO;
+import pojo.Course;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +20,7 @@ public class CourseTableManager {
     JTable mTable;
     DefaultTableModel mModel;
     TableRowSorter<DefaultTableModel> sorter;
-    private static String[] columnSemesterNames = {"STT", "Mã học kì", "Tên học kỳ", "Năm học", "Ngày bắt đầu", "Ngày kết thúc"};
+    private static String[] columnSemesterNames = {"STT", "Mã môn", "Tên môn", "Số tín chỉ", "GV lý thuyết", "Phòng học", "Ngày học", "Ca học", "Số slot tối đa"};
 
     public CourseTableManager(JTable table){
         mTable = table;
@@ -28,27 +30,24 @@ public class CourseTableManager {
         mTable.setModel(mModel);
     }
     public void loadTableData(){
-//        List<Semester> semesters = SemesterDAO.getAll();
-//        int semSize = semesters.size();
-//        for(int i = semSize - 1; i >=0; i--){
-//            int semesterId = semesters.get(i).getSemesterId();
-//            String semName = semesters.get(i).getSemName();
-//            int semYear = semesters.get(i).getSemYear();
-//            String startDate = String.valueOf(semesters.get(i).getStartdate());
-//            String enđate = String.valueOf(semesters.get(i).getEnddate());
-//            mModel.addRow(new Object[]{semSize - i, semesterId,semName,semYear, startDate, enđate});
-//        }
+        List<Course> courses = CourseDAO.getAll();
+        for(int i = 0; i < courses.size(); i++){
+            String courseId = courses.get(i).getCourseId();
+            String name = courses.get(i).getSubject().getSubjectName();
+            int credits = courses.get(i).getSubject().getCredits();
+            String teacherName = courses.get(i).getTeacher().getFullname();
+            String room = courses.get(i).getRoom();
+            String dayOfWeek = courses.get(i).getDayOfWeek();
+            int shift = courses.get(i).getShift().getShiftId();
+            int maxSlots = courses.get(i).getMaximumSlots();
+            mModel.addRow(new Object[]{i + 1, courseId,name,credits,teacherName,room,dayOfWeek,shift,maxSlots});
+        }
     }
-//    public void addRow(Semester newSemester){
-//        Object[] row = new Object[6];
-//        row[0] = mTable.getRowCount()+1;
-//        row[1] = newSemester.getSemesterId();
-//        row[2] = newSemester.getSemName();
-//        row[3] = newSemester.getSemYear();
-//        row[4] = String.valueOf(newSemester.getStartdate());
-//        row[5] = String.valueOf(newSemester.getEnddate());
-//        mModel.addRow(row);
-//    }
+    public void addRow(Course course){
+        Object[] row = new Object[6];
+        row[0] = mTable.getRowCount()+1;
+        mModel.addRow(row);
+    }
     public void removeRow(int row){
         mModel.removeRow(row);
     }
@@ -58,5 +57,9 @@ public class CourseTableManager {
         } else {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,3));
         }
+    }
+    public void refresh(){
+        mModel.setRowCount(0);
+        loadTableData();
     }
 }

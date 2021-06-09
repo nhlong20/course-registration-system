@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Shift" table="shift" schema="public" catalog="coursesDB">
+        <id name="shiftId">
+            <column name="shift_id" sql-type="integer"/>
+        </id>
+        <property name="startAt">
+            <column name="start_at" sql-type="time"/>
+        </property>
+        <property name="endAt">
+            <column name="end_at" sql-type="time"/>
+        </property>
+    </class>
+</hibernate-mapping>

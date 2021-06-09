@@ -19,6 +19,7 @@
         <mapping resource="config/Student.hbm.xml"/>
         <mapping resource="config/Subject.hbm.xml"/>
         <mapping resource="config/Teacher.hbm.xml"/>
+        <mapping resource="config/Shift.hbm.xml"/>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->

@@ -71,12 +71,13 @@ public class ModeratorGUI extends JFrame {
     private JButton addCourseBtn;
     private JButton deleteCourseBtn;
     private JButton listRegistrationBtn;
+    private JLabel currentSemLabel;
+    private JTextField searchCourseTextField;
+    private JButton searchCourseBtn;
 
     private JTabbedPane settingTab;
     private JComboBox userGenderComboBox;
     private JButton updateUserInfoBtn;
-    private JButton searchCourseBtn;
-    private JLabel curentSemester;
 
     Calendar calendar;
     private JDateChooser dateChooser;
@@ -178,6 +179,9 @@ public class ModeratorGUI extends JFrame {
     }
 
     private void linkCourseHandler() {
+        CourseTabMod courseTabMod = CourseTabMod.getInstance(searchCourseTextField, courseTable, searchCourseBtn, currentSemLabel, listRegistrationBtn, addCourseBtn, deleteCourseBtn);
+        courseTabMod.initUIData();
+        courseTabMod.addModActionlistener();
 
     }
 
