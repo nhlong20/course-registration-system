@@ -33,6 +33,21 @@ public class AccountDAO {
         }
         return account;
     }
+    public static Account getAccount(String username) {
+        Account account = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            String hql = "select acc from Account acc where acc.username = :username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            List<Account> list = query.list();
+            if (list.size() == 0) return null;
+            account = list.get(0);
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        }
+        return account;
+    }
     public static void addAccount(Account account) {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

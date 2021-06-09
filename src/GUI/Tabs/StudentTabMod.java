@@ -2,8 +2,10 @@ package GUI.Tabs;
 
 import GUI.Diaglog.AddStudentDlg;
 import GUI.TableManager.StudentTableManager;
+import dao.AccountDAO;
 import dao.ClazzDAO;
 import dao.StudentDAO;
+import pojo.Account;
 import pojo.Clazz;
 import pojo.Student;
 
@@ -127,7 +129,25 @@ public class StudentTabMod {
         AddStudentDlg addStudentDlg = new AddStudentDlg();
     }
     private void onReset(){
-        // TODO - Reset student password to default
+        if(mTable.getSelectedRowCount() == 1){
+            String studentId =  String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
+            Student student = StudentDAO.getByStudentId(studentId);
+            Account account = AccountDAO.getAccount(student.getStudentId());
+            if(account == null){
+                JOptionPane.showMessageDialog(null, "Tài khoản ứng với MSSV này không tồn tại");
+                return;
+            }
+            account.setPasswd(student.getStudentId());
+            if(AccountDAO.update(account)){
+                JOptionPane.showMessageDialog(null, "Reset mật khẩu thành công");
+            }
+            return;
+        }
+        if(mTable.getRowCount() == 0){
+            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
+        } else{
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
+        }
     }
     private void onUpdate() {
         if(mTable.getSelectedRowCount() == 1){
@@ -141,7 +161,6 @@ public class StudentTabMod {
         } else{
             JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
         }
-
     }
 
     private void onDelete() {
