@@ -110,6 +110,7 @@ ALTER TABLE public.moderator
     ADD CONSTRAINT FK_moderator__account_id FOREIGN KEY (account_id) REFERENCES public.account(account_id);
 ALTER TABLE public.courseregistrationsession
     ADD CONSTRAINT FK_courseregistrationsession__semester_id FOREIGN KEY (semester_id) REFERENCES public.semester(semester_id);
+
 ALTER TABLE public.course
     ADD CONSTRAINT FK_course__subject_id FOREIGN KEY (subject_id) REFERENCES public.subject(subject_id);
 ALTER TABLE public.course
@@ -118,6 +119,7 @@ ALTER TABLE public.course
     ADD CONSTRAINT FK_course__shift_id FOREIGN KEY (shift_id) REFERENCES public.shift(shift_id);
 ALTER TABLE public.course
     ADD CONSTRAINT FK_course__semester_id FOREIGN KEY (semester_id) REFERENCES public.semester(semester_id);
+
 ALTER TABLE public.course_student
     ADD CONSTRAINT FK_course_student__student_id FOREIGN KEY (student_id) REFERENCES public.subject(subject_id);
 ALTER TABLE public.course_student

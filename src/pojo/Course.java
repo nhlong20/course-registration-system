@@ -19,6 +19,20 @@ public class Course {
     private Semester semester;
     private String room;
 
+    public Course() {
+    }
+
+    public Course(String courseId, String dayOfWeek, int maximumSlots, Subject subject, Teacher teacher, Shift shift, Semester semester, String room) {
+        this.courseId = courseId;
+        this.dayOfWeek = dayOfWeek;
+        this.maximumSlots = maximumSlots;
+        this.subject = subject;
+        this.teacher = teacher;
+        this.shift = shift;
+        this.semester = semester;
+        this.room = room;
+    }
+
     public String getRoom() {
         return room;
     }

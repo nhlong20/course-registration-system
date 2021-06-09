@@ -112,7 +112,6 @@ public class StudentDAO {
         }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            // Remove moderator from db first
             session.remove(student);
             session.getTransaction().commit();
         } catch (HibernateException ex) {

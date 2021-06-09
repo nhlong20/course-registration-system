@@ -60,7 +60,8 @@ public class SemesterTabMod {
         mTableManager.loadTableData();
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         currentSem = SemesterDAO.getCurrent();
-        if(currentSem !=null) mCurrentSemesterLabel.setText(currentSem.getSemName() + " - " + currentSem.getSemYear());
+        if(currentSem ==null) return;
+        mCurrentSemesterLabel.setText(currentSem.getSemName() + " - " + currentSem.getSemYear());
     }
 
     public void addModActionlistener() {

@@ -26,12 +26,11 @@
         </property>
         <many-to-one class="pojo.Account"
                      name="account" fetch="join" lazy="false"
-                     cascade="save-update,delete">
+                     cascade="delete">
             <column name="account_id" unique="true"/>
         </many-to-one>
         <many-to-one class="pojo.Clazz"
-                     name="clazz" fetch="join" lazy="false"
-                     cascade="save-update,delete">
+                     name="clazz" fetch="join" lazy="false" >
             <column name="class_code"/>
         </many-to-one>
 

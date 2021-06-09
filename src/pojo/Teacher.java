@@ -1,6 +1,7 @@
 package pojo;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * images
@@ -13,6 +14,15 @@ public class Teacher {
     private int teacherId;
     private String fullname;
     private String gender;
+    private Set<Course> courses;
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 
     public int getTeacherId() {
         return teacherId;

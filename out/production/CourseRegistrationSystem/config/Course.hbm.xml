@@ -18,23 +18,19 @@
             <column name="maximum_slots" sql-type="integer"/>
         </property>
         <many-to-one class="pojo.Subject"
-                     name="subject" fetch="join" lazy="false"
-                     cascade="save-update,delete">
+                     name="subject" fetch="join" lazy="false">
             <column name="subject_id"/>
         </many-to-one>
         <many-to-one class="pojo.Teacher"
-                     name="teacher" fetch="join" lazy="false"
-                     cascade="save-update,delete">
+                     name="teacher" fetch="join" lazy="false">
             <column name="teacher_id"/>
         </many-to-one>
         <many-to-one class="pojo.Shift"
-                     name="shift" fetch="join" lazy="false"
-                     cascade="save-update,delete">
+                     name="shift" fetch="join" lazy="false">
             <column name="shift_id"/>
         </many-to-one>
         <many-to-one class="pojo.Semester"
-                     name="semester" fetch="join" lazy="false"
-                     cascade="save-update,delete">
+                     name="semester" fetch="join" lazy="false">
             <column name="semester_id"/>
         </many-to-one>
     </class>

@@ -34,7 +34,6 @@ public class StudentTabMod {
     private JButton mAddBtn;
     private JButton mUpdateBtn;
     private JButton mResetBtn;
-    private JButton mDeleteBtn;
     public static StudentTableManager mTableManager;
     public static String currentShownClass;
     public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên sinh viên";
@@ -42,7 +41,7 @@ public class StudentTabMod {
     public StudentTabMod() {
     }
 
-    public StudentTabMod(JTextField searchTextField, JTable table, JButton searchBtn, JComboBox comboBox, JButton addBtn, JButton updateBtn, JButton resetBtn, JButton deleteBtn) {
+    public StudentTabMod(JTextField searchTextField, JTable table, JButton searchBtn, JComboBox comboBox, JButton addBtn, JButton updateBtn, JButton resetBtn) {
         this.mSearchTextField = searchTextField;
         this.mTable = table;
         this.mSearchBtn = searchBtn;
@@ -50,15 +49,14 @@ public class StudentTabMod {
         this.mAddBtn = addBtn;
         this.mUpdateBtn = updateBtn;
         this.mResetBtn = resetBtn;
-        this.mDeleteBtn = deleteBtn;
     }
 
 
-    public static StudentTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JComboBox comboBox, JButton addBtn, JButton updateBtn, JButton resetBtn, JButton deleteBtn) {
+    public static StudentTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JComboBox comboBox, JButton addBtn, JButton updateBtn, JButton resetBtn) {
         if (instance == null) {
             synchronized (SubjectTabMod.class) {
                 if (instance == null) {
-                    instance = new StudentTabMod(searchTextField, table, searchBtn, comboBox, addBtn, updateBtn, resetBtn, deleteBtn);
+                    instance = new StudentTabMod(searchTextField, table, searchBtn, comboBox, addBtn, updateBtn, resetBtn);
                 }
             }
         }
@@ -84,7 +82,6 @@ public class StudentTabMod {
         mAddBtn.addActionListener(e-> onAdd());
         mUpdateBtn.addActionListener(e -> onUpdate());
         mResetBtn.addActionListener(e -> onReset());
-        mDeleteBtn.addActionListener(e -> onDelete());
         mSearchTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -160,24 +157,6 @@ public class StudentTabMod {
             JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
         } else{
             JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
-        }
-    }
-
-    private void onDelete() {
-        if(mTable.getSelectedRowCount() == 1){
-            Object studentId =  mTable.getValueAt(mTable.getSelectedRow(),2);
-            // Remove Row from DB
-            StudentDAO.delete(String.valueOf(studentId));
-            // Remove Row from UI
-            mTableManager.removeRow(mTable.getSelectedRow());
-            // Pop up successful message
-            JOptionPane.showMessageDialog(null, "Xoá dữ liệu thành công");
-            return;
-        }
-        if(mTable.getRowCount() == 0){
-            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
-        } else{
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng để xoá");
         }
     }
 }

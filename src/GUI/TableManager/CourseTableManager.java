@@ -3,6 +3,9 @@ package GUI.TableManager;
 import dao.CourseDAO;
 import dao.SemesterDAO;
 import pojo.Course;
+import pojo.Shift;
+import pojo.Subject;
+import pojo.Teacher;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -38,14 +41,24 @@ public class CourseTableManager {
             String teacherName = courses.get(i).getTeacher().getFullname();
             String room = courses.get(i).getRoom();
             String dayOfWeek = courses.get(i).getDayOfWeek();
-            int shift = courses.get(i).getShift().getShiftId();
+            Shift shift = courses.get(i).getShift();
+            int shiftTime = shift.getShiftId() ;
             int maxSlots = courses.get(i).getMaximumSlots();
-            mModel.addRow(new Object[]{i + 1, courseId,name,credits,teacherName,room,dayOfWeek,shift,maxSlots});
+            mModel.addRow(new Object[]{i + 1, courseId,name,credits,teacherName,room,dayOfWeek,shiftTime,maxSlots});
         }
     }
     public void addRow(Course course){
-        Object[] row = new Object[6];
+
+        Object[] row = new Object[9];
         row[0] = mTable.getRowCount()+1;
+        row[1] = course.getCourseId();
+        row[2] = course.getSubject().getSubjectName();
+        row[3] = course.getSubject().getCredits();
+        row[4] = course.getTeacher().getFullname();
+        row[5] = course.getRoom();
+        row[6] = course.getDayOfWeek();
+        row[7] = course.getShift().getShiftId();
+        row[8] = course.getMaximumSlots();
         mModel.addRow(row);
     }
     public void removeRow(int row){
@@ -55,7 +68,7 @@ public class CourseTableManager {
         if (query.length() == 0) {
             sorter.setRowFilter(null);
         } else {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,3));
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,2,4));
         }
     }
     public void refresh(){

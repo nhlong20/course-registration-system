@@ -7,5 +7,15 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/coursesDB</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="config:hibernate.cfg.xml/Hibernate" uuid="408ea5dc-7dd2-41c8-99e4-ea3039300b12">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+C:/Users/ASUS/IdeaProjects/CourseRegistrationSystem/src/config/hibernate.cfg.xml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/coursesDB</jdbc-url>
+    </data-source>
   </component>
 </project>

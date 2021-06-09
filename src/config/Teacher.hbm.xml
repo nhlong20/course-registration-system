@@ -14,5 +14,10 @@
         <property name="gender">
             <column name="gender" sql-type="varchar(10)" length="10"/>
         </property>
+        <set name="courses"
+             inverse="true">
+            <key column="course_id"/>
+            <one-to-many class="pojo.Course"/>
+        </set>
     </class>
 </hibernate-mapping>

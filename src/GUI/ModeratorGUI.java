@@ -58,7 +58,6 @@ public class ModeratorGUI extends JFrame {
     private JButton searchStudentBtn;
     private JComboBox classBomboBox;
     private JTable studentTable;
-    private JButton deleteStudentBtn;
     private JButton addStudentBtn;
     private JButton updateStudentbtn;
     private JButton resetStudentPwdBtn;
@@ -167,7 +166,7 @@ public class ModeratorGUI extends JFrame {
         clazzTabMod.addModActionlistener();
     }
     private void linkStudentHandler() {
-        StudentTabMod studentTabMod = StudentTabMod.getInstance(searchStudentTextField, studentTable, searchStudentBtn, classBomboBox, addStudentBtn, updateStudentbtn, resetStudentPwdBtn,deleteStudentBtn);
+        StudentTabMod studentTabMod = StudentTabMod.getInstance(searchStudentTextField, studentTable, searchStudentBtn, classBomboBox, addStudentBtn, updateStudentbtn, resetStudentPwdBtn);
         studentTabMod.initUIData();
         studentTabMod.addModActionlistener();
     }
