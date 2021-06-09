@@ -33,6 +33,7 @@ public class StudentTabMod {
     private JButton mResetBtn;
     private JButton mDeleteBtn;
     public static StudentTableManager mTableManager;
+    public static String currentShownClass;
     public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên sinh viên";
 
     public StudentTabMod() {
@@ -64,6 +65,7 @@ public class StudentTabMod {
     public void initUIData() {
         mTableManager = new StudentTableManager(mTable);
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
+        currentShownClass = String.valueOf(mComboBox.getSelectedItem());
         List<Clazz> clazzes = ClazzDAO.getAll();
         List<String> clazzNames = new ArrayList<>();
         for(Clazz clazz : clazzes){

@@ -51,14 +51,15 @@ public class StudentTableManager {
 
     }
     public void addRow(Student newStudent){
-        Object[] row = new Object[7];
+        Object[] row = new Object[8];
         row[0] = mTable.getRowCount()+1;
-        row[1] = newStudent.getStudentId();
-        row[2] = newStudent.getFullname();
-        row[3] = newStudent.getGender();
-        row[4] = String.valueOf(newStudent.getDob());
-        row[5] = newStudent.getStuAddress();
-        row[6] = newStudent.getClazz().getClassCode();
+        row[1] = newStudent.getId();
+        row[2] = newStudent.getStudentId();
+        row[3] = newStudent.getFullname();
+        row[4] = newStudent.getGender();
+        row[5] = String.valueOf(newStudent.getDob());
+        row[6] = newStudent.getStuAddress();
+        row[7] = newStudent.getClazz().getClassCode();
         mModel.addRow(row);
     }
     public void removeRow(int row){

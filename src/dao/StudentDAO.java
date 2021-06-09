@@ -3,6 +3,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import pojo.Account;
 import pojo.Student;
 import util.HibernateUtil;
 
@@ -17,6 +18,8 @@ import java.util.List;
  * @Description
  */
 public class StudentDAO {
+    private static String ACCOUNT_TYPE = "Student";
+
     public static List<Student> getAll(){
         List<Student> students = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -28,6 +31,7 @@ public class StudentDAO {
         }
         return students;
     }
+
     public static List<Student> getAll(String classCode){
         List<Student> students = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -40,6 +44,7 @@ public class StudentDAO {
         }
         return students;
     }
+
     public static Student getByStudentId(String studentID){
         Student student = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -54,14 +59,40 @@ public class StudentDAO {
         }
         return student;
     }
-    public static void update(Student student){
+
+    public static boolean add(Student student){
+        if (getByStudentId(student.getStudentId()) != null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu đã tồn tại",
+                    "Trùng dữ liệu", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            if (getByStudentId(student.getStudentId()) == null) {
-                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+
+            // Add new account corresponding to new student
+            Account account = new Account(ACCOUNT_TYPE, student.getStudentId(), student.getStudentId());
+            AccountDAO.addAccount(account);
+            student.setAccount(account);
+
+            session.save(student);
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thêm Thêm giáo vụ",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            System.err.println(ex);
+            return false;
+        }
+        return true;
+    }
+
+    public static void update(Student student){
+        if (getByStudentId(student.getStudentId()) == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
             session.update(student);
             session.getTransaction().commit();
         } catch (HibernateException ex) {
@@ -69,26 +100,25 @@ public class StudentDAO {
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     public static boolean delete(String curId) {
-        Student student = null;
+        Student student = getByStudentId(curId);
+        if (student == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            student = getByStudentId(curId);
-            if (student == null) {
-                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
             // Remove moderator from db first
             session.remove(student);
             session.getTransaction().commit();
-
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thực hiện xoá",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             System.err.println(ex);
             return false;
         }
+        return true;
     }
 }

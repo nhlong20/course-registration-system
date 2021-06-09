@@ -126,9 +126,9 @@ ALTER TABLE public.teacher
 
 COMMIT;
 
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120449', 'sinhvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120460', 'sinhvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120461', 'sinhvien', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120449', '18120449', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120460', '18120460', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120461', '18120461', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'MOD001', 'giaovu', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV001', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV002', 'giangvien', default);
@@ -136,6 +136,9 @@ INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES 
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV004', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV005', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'MOD002', 'giaovu', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120462', '18120462', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120463', '18120463', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120464', '18120464', default);
 
 INSERT INTO moderator(moderator_id, fullname, gender,dob, mod_address, phone,  account_id)
     VALUES ('MOD001', 'Văn Chí Nam', 'Nam', '1984-07-06', '0942020222', 'Hồ Chí Minh', 4);
@@ -162,12 +165,9 @@ VALUES (default, '2018-08-24', '2018-08-28', 2);
 INSERT INTO courseregistrationsession(registration_session_id,start_date, end_date, semester_id)
 VALUES (default, '2019-08-24', '2019-08-28', 3);
 
-INSERT INTO class(class_year, class_code) VALUES (2018, '18CNTN');
-INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT1');
-INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT2');
-INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT3');
 INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT4');
 INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT5');
+INSERT INTO class(class_year, class_code) VALUES (2018, '18CNTN');
 INSERT INTO class(class_year, class_code) VALUES (2019, '19CNTN');
 INSERT INTO class(class_year, class_code) VALUES (2019, '19CTT1');
 
@@ -188,5 +188,7 @@ INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, sem
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120449', 'Nguyễn Hoàng Long', 'Nam', '2000-04-01', 'Nghệ An', '18CTT4', 1);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120460', 'Lê Danh Lưu', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 2);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120461', 'Nguyễn Khắc Luân', 'Nam', '2000-05-21', 'Bình Thuận','18CTT5', 3);
-
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120462', 'Trần Hoàng Minh', 'Nam', '2000-04-01', 'Nghệ An', '18CTT5', 11);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120463', 'Lê Phan Công Minh', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 12);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120464', 'Nguyễn Hữu Trí', 'Nam', '2000-05-21', 'Bình Thuận','18CTT4', 13);
 END;

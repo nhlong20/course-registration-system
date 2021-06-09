@@ -7,6 +7,7 @@
     <class name="pojo.Student" table="student" schema="public" catalog="coursesDB">
         <id name="id">
             <column name="id" sql-type="integer"/>
+            <generator class="increment"></generator>
         </id>
         <property name="studentId">
             <column name="student_id" sql-type="varchar(20)" length="20"/>

@@ -18,8 +18,19 @@ public class Student {
     private Date dob;
     private String stuAddress;
     private Account account;
-    private Clazz classCode;
     private Clazz clazz;
+
+    public Student() {
+    }
+
+    public Student(String studentId, String fullname, String gender, Date dob, String stuAddress, Clazz clazz) {
+        this.studentId = studentId;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.dob = dob;
+        this.stuAddress = stuAddress;
+        this.clazz = clazz;
+    }
 
 
 
