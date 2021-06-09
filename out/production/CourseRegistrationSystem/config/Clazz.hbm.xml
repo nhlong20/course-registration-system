@@ -11,5 +11,12 @@
         <property name="classYear">
             <column name="class_year" sql-type="integer"/>
         </property>
+        <set name="students"
+             inverse="true"
+             fetch="join"
+             lazy="false">
+            <key column="class_code"/>
+            <one-to-many class="pojo.Student"/>
+        </set>
     </class>
 </hibernate-mapping>

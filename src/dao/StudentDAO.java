@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pojo.Account;
+import pojo.Clazz;
 import pojo.Student;
 import util.HibernateUtil;
 
@@ -120,5 +121,26 @@ public class StudentDAO {
             return false;
         }
         return true;
+    }
+    public static int countStudentWithGender(String classCode, int gender){
+        int count = 0;
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "select count(id)" +
+                    "from Student s " +
+                    "where s.clazz.classCode = :classCode and s.gender = :gender";
+            Query query = session.createQuery(hql);
+            query.setParameter("classCode", classCode);
+            if(gender == 0) query.setParameter("gender", "Nữ");
+            if(gender == 1) query.setParameter("gender", "Nam");
+            List l = query.list();
+            if(l.size() >0){
+                Number res = (Number) l.get(0);
+                count = res.intValue();
+            }
+        } catch (HibernateException ex) {
+            //Log the exception
+            System.err.println(ex);
+        }
+        return count;
     }
 }

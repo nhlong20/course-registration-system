@@ -1,6 +1,7 @@
 package pojo;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * images
@@ -12,8 +13,10 @@ import java.util.Objects;
 public class Clazz {
     private String classCode;
     private int classYear;
+    private Set<Student> students;
 
     public Clazz(){}
+
     public Clazz(String classCode, int classYear){
         this.classYear = classYear;
         this.classCode = classCode;
@@ -33,6 +36,14 @@ public class Clazz {
 
     public void setClassCode(String className) {
         this.classCode = className;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
     @Override

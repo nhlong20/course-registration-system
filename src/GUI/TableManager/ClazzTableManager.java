@@ -1,6 +1,7 @@
 package GUI.TableManager;
 
 import dao.ClazzDAO;
+import dao.StudentDAO;
 import pojo.Clazz;
 
 import javax.swing.*;
@@ -30,21 +31,23 @@ public class ClazzTableManager {
     }
     public void loadTableData(){
         List<Clazz> clazzes = ClazzDAO.getAll();
-        int semSize = clazzes.size();
-        for(int i = semSize - 1; i >=0; i--){
+        for(int i = 0; i < clazzes.size(); i++){
             String classCode = clazzes.get(i).getClassCode();
             int clazzYear = clazzes.get(i).getClassYear();
-            int totalStudent = 0;
-            int totalMale = 0;
-            int totalFemale = 0;
-            mModel.addRow(new Object[]{semSize - i,classCode,clazzYear, totalStudent, totalMale, totalFemale});
+            int totalStudent = clazzes.get(i).getStudents().size();
+            int totalMale = StudentDAO.countStudentWithGender(classCode, 1); // 1 is Male
+            int totalFemale = StudentDAO.countStudentWithGender(classCode, 0);
+            mModel.addRow(new Object[]{i + 1,classCode,clazzYear, totalStudent, totalMale, totalFemale});
         }
     }
     public void addRow(Clazz newClazz){
-        Object[] row = new Object[3];
+        Object[] row = new Object[6];
         row[0] = mTable.getRowCount()+1;
         row[1] = newClazz.getClassCode();
         row[2] = newClazz.getClassYear();
+        row[3] = 0;
+        row[4] = 0;
+        row[5] = 0;
         mModel.addRow(row);
     }
     public void removeRow(int row){

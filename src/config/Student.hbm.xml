@@ -32,7 +32,7 @@
         <many-to-one class="pojo.Clazz"
                      name="clazz" fetch="join" lazy="false"
                      cascade="save-update,delete">
-            <column name="class_code" unique="true"/>
+            <column name="class_code"/>
         </many-to-one>
 
     </class>
