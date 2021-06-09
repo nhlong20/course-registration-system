@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.Diaglog.RegistrationStudentListDlg">
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="48" y="54" width="800" height="446"/>
+    </constraints>
+    <properties>
+      <minimumSize width="800" height="343"/>
+      <preferredSize width="800" height="518"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="e8a34" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Tìm kiếm"/>
+        </properties>
+      </component>
+      <component id="897ff" class="javax.swing.JTextField" binding="searchCourseRegTextField">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="62e3c" class="javax.swing.JButton" binding="searchCourseRegBtn">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Tìm kiếm"/>
+        </properties>
+      </component>
+      <scrollpane id="ca353">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="3103c" class="javax.swing.JTable" binding="courseRegTable">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="3b9c4" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="a81a9" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Danh sách sinh viên đăng ký học phần"/>
+            </properties>
+          </component>
+          <component id="2e2a9" class="javax.swing.JLabel" binding="courseRegLabel">
+            <constraints/>
+            <properties>
+              <text value="&lt;Mã HP&gt; - &lt;Tên HP&gt;"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

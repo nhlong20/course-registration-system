@@ -2,6 +2,7 @@ package GUI.Tabs;
 
 import GUI.Diaglog.AddCourseDlg;
 import GUI.Diaglog.AddStudentDlg;
+import GUI.Diaglog.RegistrationStudentListDlg;
 import GUI.TableManager.CourseTableManager;
 import GUI.TableManager.StudentTableManager;
 import dao.*;
@@ -66,14 +67,15 @@ public class CourseTabMod {
         mTableManager.loadTableData();
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         Semester semester = SemesterDAO.getCurrent();
-        if(semester == null) return;
-        mSemLabel.setText(semester.getSemName() + " - " +semester.getSemYear());
+        if (semester == null) return;
+        mSemLabel.setText(semester.getSemName() + " - " + semester.getSemYear());
     }
 
     public void addModActionlistener() {
         mSearchBtn.addActionListener(e -> onSearch());
         mAddBtn.addActionListener(e -> onAdd());
         mDeleteBtn.addActionListener(e -> onDelete());
+        mListBtn.addActionListener(e -> onList());
         mSearchTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -110,6 +112,21 @@ public class CourseTabMod {
         mTableManager.filterData(userQuery);
     }
 
+    private void onList(){
+        if (mTable.getSelectedRowCount() == 1) {
+            Object courseId = mTable.getValueAt(mTable.getSelectedRow(), 1);
+            Course course = CourseDAO.get(String.valueOf(courseId));
+            RegistrationStudentListDlg registrationStudentListDlg = new RegistrationStudentListDlg(course);
+            return;
+        }
+        if (mTable.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn tối đa 1 hàng");
+        }
+
+    }
+
     private void onAdd() {
         AddCourseDlg addCourseDlg = new AddCourseDlg();
     }
@@ -122,10 +139,9 @@ public class CourseTabMod {
                 JOptionPane.showMessageDialog(null, "Xoá dữ liệu thất bại");
                 return;
             }
-            ;
             // Remove Row from UI
             mTableManager.removeRow(mTable.getSelectedRow());
-//             Pop up successful message
+            //Pop up successful message
             JOptionPane.showMessageDialog(null, "Xoá dữ liệu thành công");
             return;
         }
