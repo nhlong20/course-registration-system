@@ -22,7 +22,7 @@ public class MainApp {
         LOGIN
     }
     public static void main(String[] args) {
-        invokeGUI(ViewControl.MODERATOR);
+        invokeGUI(ViewControl.STUDENT);
     }
     public static void invokeGUI(ViewControl view) {
         switch (view) {

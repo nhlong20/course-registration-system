@@ -32,12 +32,15 @@ public class RegistrationStudentListDlg extends JDialog {
         this.pack();
         // this following method must call after pack() method to set Java App Window to center of your computer screen
         this.setLocationRelativeTo(null);
+        getContentPane().requestFocusInWindow();
         setVisible(true);
     }
     public void initComponents() {
         mTableManager = new RegStudentListTableManager(courseRegTable);
         mTableManager.loadTableData();
         searchCourseRegTextField.setText(SEARCH_PLACEHOLDER_TEXT);
+        courseRegLabel.setText(course.getCourseId() +" - "+ course.getSubject().getSubjectName());
+        courseRegLabel.setForeground(Color.red);
     }
     private  void addEventListener(){
         searchCourseRegBtn.addActionListener(e -> onSearch());
@@ -88,7 +91,9 @@ public class RegistrationStudentListDlg extends JDialog {
     }
 
     private void onSearch(){
+
         String userQuery = searchCourseRegTextField.getText();
+        System.out.println(userQuery);
         if (userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
         mTableManager.filterData(userQuery);
     }

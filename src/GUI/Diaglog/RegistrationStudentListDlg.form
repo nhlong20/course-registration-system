@@ -25,7 +25,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <requestFocusEnabled value="true"/>
+        </properties>
       </component>
       <component id="62e3c" class="javax.swing.JButton" binding="searchCourseRegBtn">
         <constraints>

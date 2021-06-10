@@ -134,7 +134,6 @@ public class ModeratorGUI extends JFrame {
     private void initUIProperty() {
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocation(1920 / 2 - 200, 1080 / 2 - 200);
         this.pack();
         // this following method must call after pack() method to set Java App Window to center of your computer screen
         this.setLocationRelativeTo(null);
