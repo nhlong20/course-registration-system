@@ -1,6 +1,7 @@
 package GUI;
 
 import GUI.Diaglog.ChangPasswordDlg;
+import GUI.Tabs.CourseRegResultTabStu;
 import GUI.Tabs.RegCourseTabStu;
 import com.toedter.calendar.JDateChooser;
 import dao.*;
@@ -56,10 +57,16 @@ public class StudentGUI extends JFrame{
         super("Hệ thống đăng ký khoá học");
         this.initComponentData();
         this.linkRegCourseHandler();
-
+        this.linkCourseRegResultHandler();
         this.addEventListener();
 
         this.initComponents();
+    }
+
+    private void linkCourseRegResultHandler() {
+        CourseRegResultTabStu courseRegResultTabStu = new CourseRegResultTabStu(resRegTable, cancelCourseBtn, currentUser);
+        courseRegResultTabStu.initUIData();
+        courseRegResultTabStu.addModActionlistener();
     }
 
     private void linkRegCourseHandler() {
@@ -84,6 +91,7 @@ public class StudentGUI extends JFrame{
         this.setVisible(true);
     }
     private void initComponentData(){
+        // TODO - remove comment of the following line
         currentAccount = AccountDAO.getAccount("18120449", "18120449");
 //        currentAccount = MainApp.getCurrentAccount();
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());

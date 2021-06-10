@@ -78,7 +78,6 @@ public class CourseDAO {
     }
     public static boolean delete(String curId) {
         Course course = get(curId);
-        System.out.println(course.getCourseId());
         if (course == null) {
             JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                     "Error", JOptionPane.ERROR_MESSAGE);

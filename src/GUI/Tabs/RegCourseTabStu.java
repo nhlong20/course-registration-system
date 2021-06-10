@@ -115,6 +115,7 @@ public class RegCourseTabStu {
 
             if(CourseStudentDAO.add(courseStudent)){
                 JOptionPane.showMessageDialog(null, "Dăng ký khoá học " + course.getSubject().getSubjectName() +" thành công" );
+                CourseRegResultTabStu.refreshUIData();
             }
             return;
         }

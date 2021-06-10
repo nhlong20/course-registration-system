@@ -14,6 +14,14 @@ public class CourseStudent {
     private Course course;
     private Student student;
 
+    public CourseStudent(Course course, Student student) {
+        this.course = course;
+        this.student = student;
+    }
+
+    public CourseStudent() {
+    }
+
     public Student getStudent() {
         return student;
     }
