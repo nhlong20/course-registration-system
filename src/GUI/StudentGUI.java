@@ -1,21 +1,18 @@
 package GUI;
 
 import GUI.Diaglog.ChangPasswordDlg;
+import GUI.Tabs.RegCourseTabStu;
 import com.toedter.calendar.JDateChooser;
 import dao.*;
 import main.MainApp;
 import pojo.Account;
-import pojo.Clazz;
 import pojo.Student;
-import pojo.Subject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * GUI
@@ -36,15 +33,18 @@ public class StudentGUI extends JFrame{
     private JComboBox genderComboBox;
     private JTextField addressTextField;
 
-    private JLabel regTimeTextField;
+    private JLabel regTimeLabel;
     private JTextField searchCourseTextField;
     private JButton searchCourseBtn;
     private JButton regCourseBtn;
     private JTable courseTable;
+
     private JTable resRegTable;
     private JButton cancelCourseBtn;
+
     private JPanel studentDobPanel;
     private JTextField clazzTextField;
+    private JTextField currentSe;
 
     Calendar calendar;
     private JDateChooser dateChooser;
@@ -55,8 +55,17 @@ public class StudentGUI extends JFrame{
     public StudentGUI() {
         super("Hệ thống đăng ký khoá học");
         this.initComponentData();
+        this.linkRegCourseHandler();
+
         this.addEventListener();
+
         this.initComponents();
+    }
+
+    private void linkRegCourseHandler() {
+        RegCourseTabStu regCourseTabStu = new RegCourseTabStu(regTimeLabel, searchCourseTextField, searchCourseBtn, regCourseBtn, courseTable);
+        regCourseTabStu.initUIData();
+        regCourseTabStu.addModActionlistener();
     }
 
     private void addEventListener() {
@@ -75,8 +84,8 @@ public class StudentGUI extends JFrame{
         this.setVisible(true);
     }
     private void initComponentData(){
-//        currentAccount = AccountDAO.getAccount("18120449", "18120449");
-        currentAccount = MainApp.getCurrentAccount();
+        currentAccount = AccountDAO.getAccount("18120449", "long");
+//        currentAccount = MainApp.getCurrentAccount();
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());
 
         userFullnameLabel.setText(currentUser.getFullname());
