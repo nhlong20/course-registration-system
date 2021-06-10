@@ -1,7 +1,9 @@
 package GUI;
 
+import GUI.Diaglog.ChangPasswordDlg;
 import com.toedter.calendar.JDateChooser;
 import dao.*;
+import main.MainApp;
 import pojo.Account;
 import pojo.Clazz;
 import pojo.Student;
@@ -59,8 +61,9 @@ public class StudentGUI extends JFrame{
 
     private void addEventListener() {
         updateInfoBtn.addActionListener(e-> onUpdateInfo());
+        changePassBtn.addActionListener(e->onChangePassword());
+        logoutBtn.addActionListener(e ->onLogout());
     }
-
 
 
     private void initComponents(){
@@ -72,7 +75,8 @@ public class StudentGUI extends JFrame{
         this.setVisible(true);
     }
     private void initComponentData(){
-        currentAccount = AccountDAO.getAccount("18120449", "18120449");
+//        currentAccount = AccountDAO.getAccount("18120449", "18120449");
+        currentAccount = MainApp.getCurrentAccount();
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());
 
         userFullnameLabel.setText(currentUser.getFullname());
@@ -90,6 +94,20 @@ public class StudentGUI extends JFrame{
         dateChooser.setDate(currentUser.getDob());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         studentDobPanel.add(dateChooser);
+    }
+
+    private void onChangePassword() {
+        ChangPasswordDlg changPasswordDlg = new ChangPasswordDlg(currentAccount);
+        if(changPasswordDlg.isSucess()){
+            JOptionPane.showMessageDialog(this, "Cập nhật mật khẩu thành công, vui lòng đăng nhập để tiếp tục");
+            onLogout();
+        }
+    }
+
+    private void onLogout() {
+        MainApp.setCurrentAccount(null);
+        dispose();
+        MainApp.invokeGUI(MainApp.ViewControl.LOGIN);
     }
     private void onUpdateInfo() {
         // Get DOB
