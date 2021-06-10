@@ -3,6 +3,7 @@ package GUI.Tabs;
 import GUI.Diaglog.AddSemesterDlg;
 import GUI.TableManager.SemesterTableManager;
 import dao.SemesterDAO;
+import pojo.CourseRegistrationSession;
 import pojo.Semester;
 import pojo.Subject;
 
@@ -119,8 +120,9 @@ public class SemesterTabMod {
             currentSem = SemesterDAO.getCurrent();
             mCurrentSemesterLabel.setText(currentSem.getSemName() + " - " + currentSem.getSemYear());
             mTableManager.refresh();
+            // Refresh course registration tab
+            CourseRegistrationSessionTabMod.refreshUIData();
             JOptionPane.showMessageDialog(null, "Cập nhật dữ liệu thành công");
-
             return;
         }
         if(mTable.getRowCount() == 0){

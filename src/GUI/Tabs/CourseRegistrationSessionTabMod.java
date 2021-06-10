@@ -3,6 +3,8 @@ package GUI.Tabs;
 import GUI.Diaglog.AddCourseRegistrationSessionDlg;
 import GUI.TableManager.CourseRegistrationSessionTableManager;
 import dao.ClazzDAO;
+import dao.SemesterDAO;
+import pojo.Semester;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,24 +21,24 @@ public class CourseRegistrationSessionTabMod {
     private static CourseRegistrationSessionTabMod instance;
 
     public static CourseRegistrationSessionTableManager mTableManager;
+    private static Semester curSem;
     private JTable mTable;
     private JButton mOpenBtn;
-    private JButton mCloseBtn;
-
+    private static JLabel mCurSemLabel;
     public CourseRegistrationSessionTabMod() {
     }
 
-    public CourseRegistrationSessionTabMod(JTable table, JButton openBtn, JButton closeBtn) {
+    public CourseRegistrationSessionTabMod(JTable table, JButton openBtn, JLabel currentSemLabel) {
         this.mTable = table;
         this.mOpenBtn = openBtn;
-        this.mCloseBtn = closeBtn;
+        this.mCurSemLabel = currentSemLabel;
     }
 
-    public static CourseRegistrationSessionTabMod getInstance(JTable table, JButton openBtn, JButton closeBtn) {
+    public static CourseRegistrationSessionTabMod getInstance(JTable table, JButton openBtn, JLabel currentSemLabel) {
         if (instance == null) {
             synchronized (SubjectTabMod.class) {
                 if (instance == null) {
-                    instance = new CourseRegistrationSessionTabMod(table, openBtn, closeBtn);
+                    instance = new CourseRegistrationSessionTabMod(table, openBtn, currentSemLabel);
                 }
             }
         }
@@ -44,42 +46,22 @@ public class CourseRegistrationSessionTabMod {
     }
 
     public void initUIData() {
+        curSem = SemesterDAO.getCurrent();
         mTableManager = new CourseRegistrationSessionTableManager(mTable);
-        mTableManager.loadTableData();
+        mTableManager.loadTableData(curSem);
+        mCurSemLabel.setText(curSem.getSemName() + " - " + curSem.getSemYear());
     }
 
     public void addModActionlistener() {
-        mOpenBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onOpen();
-            }
-        });
-
-        mCloseBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onClose();
-            }
-        });
+        mOpenBtn.addActionListener(e->onOpen());
     }
 
     private void onOpen() {
         AddCourseRegistrationSessionDlg addCourseRegistrationSessionDlg = new AddCourseRegistrationSessionDlg();
     }
-
-    private void onClose() {
-//        if(mTable.getSelectedRowCount() == 1){
-//            Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
-//
-//            // Remove Row from DB
-//            ClazzDAO.delete(String.valueOf(curId.toString()));
-//            return;
-//        }
-//        if(mTable.getRowCount() == 0){
-//            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
-//        } else{
-//            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng để xoá");
-//        }
+    public static void refreshUIData(){
+        curSem = SemesterDAO.getCurrent();
+        mTableManager.refresh(curSem);
+        mCurSemLabel.setText(curSem.getSemName() + " - " + curSem.getSemYear());
     }
 }

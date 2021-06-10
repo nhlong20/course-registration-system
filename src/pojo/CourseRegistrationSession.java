@@ -14,15 +14,23 @@ public class CourseRegistrationSession {
     private int registrationSessionId;
     private Date startDate;
     private Date endDate;
-    private int semesterId;
+    private Semester semester;
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
 
     public CourseRegistrationSession() {
     }
 
-    public CourseRegistrationSession(Date startDate, Date endDate, int semesterId) {
+    public CourseRegistrationSession(Date startDate, Date endDate, Semester semester) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.semesterId = semesterId;
+        this.semester = semester;
     }
 
     public int getRegistrationSessionId() {
@@ -49,13 +57,7 @@ public class CourseRegistrationSession {
         this.endDate = endDate;
     }
 
-    public int getSemesterId() {
-        return semesterId;
-    }
 
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

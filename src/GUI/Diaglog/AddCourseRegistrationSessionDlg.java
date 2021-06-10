@@ -86,7 +86,7 @@ public class AddCourseRegistrationSessionDlg extends JDialog {
             JOptionPane.showMessageDialog(null, "Học kì hiện tại không có, vui lòng kiểm tra lại");
             return;
         }
-        CourseRegistrationSession newSesion = new CourseRegistrationSession(startDate,endDate, currentSem.getSemesterId());
+        CourseRegistrationSession newSesion = new CourseRegistrationSession(startDate,endDate, currentSem);
         if(CourseRegistrationSessionDAO.add(newSesion)){
             CourseRegistrationSessionTabMod.mTableManager.addRow(newSesion);
             dispose();

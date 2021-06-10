@@ -14,13 +14,9 @@
         <property name="endDate">
             <column name="end_date" sql-type="date"/>
         </property>
-        <property name="semesterId">
-            <column name="semester_id" sql-type="integer"/>
-        </property>
-<!--        <many-to-one class="pojo.Semester"-->
-<!--                     name="semesterId" fetch="join" lazy="false"-->
-<!--                     cascade="save-update,delete">-->
-<!--            <column name="semester_id"/>-->
-<!--        </many-to-one>-->
+        <many-to-one class="pojo.Semester"
+                     name="semester" fetch="join" lazy="false">
+            <column name="semester_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

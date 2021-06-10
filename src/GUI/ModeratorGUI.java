@@ -59,7 +59,6 @@ public class ModeratorGUI extends JFrame {
     private JButton resetStudentPwdBtn;
 
     private JButton openSessionBtn;
-    private JButton endSessionBtn;
     private JTable sessionTable;
 
     private JTable courseTable;
@@ -89,6 +88,7 @@ public class ModeratorGUI extends JFrame {
 
     private JButton logoutBtn;
     private JLabel currentSemesterLabel;
+    private JLabel currentSemLabel2;
     private Account currentAcc;
     Moderator currentUser;
 
@@ -170,7 +170,7 @@ public class ModeratorGUI extends JFrame {
     }
 
     private void linkCourseRegistrationSessionHandler() {
-        CourseRegistrationSessionTabMod courseRegistrationSessionTabMod = CourseRegistrationSessionTabMod.getInstance(sessionTable, openSessionBtn, endSessionBtn);
+        CourseRegistrationSessionTabMod courseRegistrationSessionTabMod = CourseRegistrationSessionTabMod.getInstance(sessionTable, openSessionBtn, currentSemLabel2);
         courseRegistrationSessionTabMod.initUIData();
         courseRegistrationSessionTabMod.addModActionlistener();
     }

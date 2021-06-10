@@ -510,7 +510,7 @@
               </component>
             </children>
           </grid>
-          <grid id="2d980" layout-manager="GridLayoutManager" row-count="3" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="2d980" layout-manager="GridLayoutManager" row-count="4" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="10" left="20" bottom="20" right="20"/>
             <constraints>
               <tabbedpane title="Lịch mở học phần"/>
@@ -527,17 +527,9 @@
                   <text value="Quản lý lịch đăng ký học phần"/>
                 </properties>
               </component>
-              <component id="77cc9" class="javax.swing.JButton" binding="endSessionBtn">
-                <constraints>
-                  <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Kết thúc đăng ký học phần"/>
-                </properties>
-              </component>
               <component id="d940" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Danh sách phiên đăng ký"/>
@@ -545,7 +537,7 @@
               </component>
               <component id="6f614" class="javax.swing.JButton" binding="openSessionBtn">
                 <constraints>
-                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Mở đăng ký học phần"/>
@@ -553,12 +545,12 @@
               </component>
               <hspacer id="4516b">
                 <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
               <scrollpane id="b8ace">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -569,6 +561,27 @@
                   </component>
                 </children>
               </scrollpane>
+              <grid id="ba860" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="70360" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="Học kỳ hiện tại"/>
+                    </properties>
+                  </component>
+                  <component id="2af9c" class="javax.swing.JLabel" binding="currentSemLabel2">
+                    <constraints/>
+                    <properties>
+                      <text value="Không có"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
           <grid id="c8692" layout-manager="GridLayoutManager" row-count="5" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
