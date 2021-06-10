@@ -2,13 +2,10 @@ package GUI.Tabs;
 
 import GUI.Diaglog.AddCourseRegistrationSessionDlg;
 import GUI.TableManager.CourseRegistrationSessionTableManager;
-import dao.ClazzDAO;
 import dao.SemesterDAO;
 import pojo.Semester;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * GUI.Tabs

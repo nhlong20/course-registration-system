@@ -1,11 +1,8 @@
 package GUI.Diaglog;
 
-import GUI.ModeratorGUI;
-import GUI.TableManager.ModeratorTableManager;
 import GUI.Tabs.ModeratorTabMod;
 import com.toedter.calendar.JDateChooser;
 import dao.ModeratorDAO;
-import org.dom4j.rule.Mode;
 import pojo.Moderator;
 
 import javax.swing.*;

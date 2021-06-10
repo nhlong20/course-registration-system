@@ -1,10 +1,7 @@
 package GUI.Diaglog;
 
-import GUI.Tabs.ClazzTabMod;
 import GUI.Tabs.SubjectTabMod;
-import dao.ClazzDAO;
 import dao.SubjectDAO;
-import pojo.Clazz;
 import pojo.Subject;
 
 import javax.swing.*;

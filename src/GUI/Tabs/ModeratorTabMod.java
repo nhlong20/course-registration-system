@@ -3,7 +3,6 @@ package GUI.Tabs;
 import GUI.Diaglog.AddModertatorDlg;
 import GUI.TableManager.ModeratorTableManager;
 import dao.ModeratorDAO;
-import pojo.Moderator;
 
 import javax.swing.*;
 import java.awt.*;

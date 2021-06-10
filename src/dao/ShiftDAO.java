@@ -4,7 +4,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pojo.Shift;
-import pojo.Teacher;
 import util.HibernateUtil;
 
 import java.util.List;

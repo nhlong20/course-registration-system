@@ -1,16 +1,12 @@
 package GUI.TableManager;
 
-import dao.ClazzDAO;
 import dao.CourseRegistrationSessionDAO;
-import dao.SemesterDAO;
-import pojo.Clazz;
 import pojo.CourseRegistrationSession;
 import pojo.Semester;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

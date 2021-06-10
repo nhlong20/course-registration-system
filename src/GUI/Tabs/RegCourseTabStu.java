@@ -1,13 +1,10 @@
 package GUI.Tabs;
 
-import GUI.Diaglog.AddCourseDlg;
-import GUI.Diaglog.RegistrationStudentListDlg;
 import GUI.TableManager.CourseTableManager;
 import dao.CourseDAO;
 import dao.CourseStudentDAO;
 import dao.SemesterDAO;
 import dao.StudentDAO;
-import main.MainApp;
 import pojo.Course;
 import pojo.CourseStudent;
 import pojo.Semester;

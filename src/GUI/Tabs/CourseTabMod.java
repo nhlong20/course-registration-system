@@ -1,12 +1,12 @@
 package GUI.Tabs;
 
 import GUI.Diaglog.AddCourseDlg;
-import GUI.Diaglog.AddStudentDlg;
 import GUI.Diaglog.RegistrationStudentListDlg;
 import GUI.TableManager.CourseTableManager;
-import GUI.TableManager.StudentTableManager;
-import dao.*;
-import pojo.*;
+import dao.CourseDAO;
+import dao.SemesterDAO;
+import pojo.Course;
+import pojo.Semester;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +14,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * GUI.Tabs

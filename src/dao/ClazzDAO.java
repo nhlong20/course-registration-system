@@ -2,13 +2,8 @@ package dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
-import org.postgresql.util.PSQLException;
-import pojo.Account;
 import pojo.Clazz;
-import pojo.Moderator;
-import pojo.Student;
 import util.HibernateUtil;
 
 import javax.swing.*;
@@ -30,7 +25,6 @@ public class ClazzDAO {
             Query query = session.createQuery(hql);
             clazzes = query.list();
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return clazzes;
@@ -46,7 +40,6 @@ public class ClazzDAO {
                 clazz = l.get(0);
             }
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return clazz;
@@ -84,7 +77,6 @@ public class ClazzDAO {
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi xoá bản ghi",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
-            System.err.println(ex);
             return false;
         }
         return true;

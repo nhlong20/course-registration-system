@@ -1,14 +1,11 @@
 package GUI.Diaglog;
 
-import GUI.TableManager.ModeratorTableManager;
 import GUI.TableManager.RegStudentListTableManager;
-import com.toedter.calendar.JDateChooser;
 import pojo.Course;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Calendar;
 
 public class RegistrationStudentListDlg extends JDialog {
     public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng MSSV hoặc tên sinh viên ";

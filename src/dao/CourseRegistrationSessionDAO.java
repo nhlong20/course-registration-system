@@ -25,7 +25,6 @@ public class CourseRegistrationSessionDAO {
             Query query = session.createQuery(hql);
             courseRegistrationSessions = query.list();
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return courseRegistrationSessions;
@@ -51,11 +50,9 @@ public class CourseRegistrationSessionDAO {
             Query query = session.createQuery(hql);
             query.setParameter("regressionId", regsessionId);
             List<CourseRegistrationSession> l = query.list();
-            if(l.size()>0){
-                courseRegistrationSession = l.get(0);
-            }
+            if(l.size() == 0) return null;
+            courseRegistrationSession = l.get(0);
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return courseRegistrationSession;
@@ -70,11 +67,11 @@ public class CourseRegistrationSessionDAO {
             session.beginTransaction();
             session.save(regsession);
             session.getTransaction().commit();
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(null, "Có lỗi khi thêm bản ghi mới",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
     }
 }

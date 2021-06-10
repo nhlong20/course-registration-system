@@ -1,19 +1,13 @@
 package GUI.Diaglog;
 
 import GUI.Tabs.CourseTabMod;
-import GUI.Tabs.SemesterTabMod;
-import GUI.Tabs.StudentTabMod;
-import com.toedter.calendar.JDateChooser;
 import dao.*;
 import pojo.*;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddCourseDlg extends JDialog {
     private JPanel contentPane;
@@ -46,26 +40,17 @@ public class AddCourseDlg extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         subjects = SubjectDAO.getAll();
-        List<String> subjectNames = new ArrayList<>();
-        for(Subject subject : subjects){
-            subjectNames.add(subject.getSubjectName());
-        }
+        List<String> subjectNames = subjects.stream().map(p -> p.getSubjectName()).collect(Collectors.toList());
         subjectComboBox.setModel(new DefaultComboBoxModel<>(subjectNames.toArray()));
 
         teachers = TeacherDAO.getAll();
-        List<String> teacherNames = new ArrayList<>();
-        for(Teacher teacher : teachers){
-            teacherNames.add(teacher.getFullname());
-        }
+        List<String> teacherNames = teachers.stream().map(p -> p.getFullname()).collect(Collectors.toList());
         teacherComboBox.setModel(new DefaultComboBoxModel<>(teacherNames.toArray()));
         dayOfWeekComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ Nhật"}));
 
         shifts = ShiftDAO.getAll();
-        List<String> shiftPeriods = new ArrayList<>();
-        for(Shift shift : shifts){
-            String shiftTime = shift.getStartAt() +" - "+ shift.getEndAt() ;
-            shiftPeriods.add(shiftTime);
-        }
+        List<String> shiftPeriods = shifts.stream().map(p -> p.getStartAt() +" - "+ p.getEndAt()).collect(Collectors.toList());
+
         shiftComboBox.setModel(new DefaultComboBoxModel<>(shiftPeriods.toArray()));
     }
 

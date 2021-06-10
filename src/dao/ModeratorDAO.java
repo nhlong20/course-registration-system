@@ -30,7 +30,6 @@ public class ModeratorDAO {
             Query query = session.createQuery(hql);
             moderators = query.list();
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return moderators;
@@ -47,21 +46,19 @@ public class ModeratorDAO {
                 moderator = l.get(0);
             }
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return moderator;
     }
 
     public static Boolean addModerator(Moderator moderator) {
+        if (getModerator(moderator.getModeratorId()) != null) {
+            JOptionPane.showMessageDialog(null, "Giáo vụ đã tồn tại",
+                    "Duplicate value error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-
-            if (getModerator(moderator.getModeratorId()) != null) {
-                JOptionPane.showMessageDialog(null, "Giáo vụ đã tồn tại",
-                        "Duplicate value error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
 
             // Add new account corresponding to new student
             Account account = new Account(ACCOUNT_TYPE, moderator.getModeratorId(), DEFAULT_PASWORD);
@@ -97,27 +94,26 @@ public class ModeratorDAO {
         return true;
     }
     public static boolean deleteModerator(String modId) {
-        Moderator moderator = null;
+        Moderator moderator = getModerator(modId);
+        if (moderator == null) {
+            JOptionPane.showMessageDialog(null, "Giáo vụ không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            moderator = getModerator(modId);
-            if (moderator == null) {
-                JOptionPane.showMessageDialog(null, "Giáo vụ không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
+
             // Remove moderator from db first
             session.remove(moderator);
             session.getTransaction().commit();
 
             // Then remove account from db
             AccountDAO.removeAccount(modId);
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi xoá giáo vụ",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
-            System.err.println(ex);
             return false;
         }
+        return true;
     }
 }

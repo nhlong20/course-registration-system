@@ -3,13 +3,14 @@ package GUI.Tabs;
 import GUI.Diaglog.AddSemesterDlg;
 import GUI.TableManager.SemesterTableManager;
 import dao.SemesterDAO;
-import pojo.CourseRegistrationSession;
 import pojo.Semester;
-import pojo.Subject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * GUI.Tabs

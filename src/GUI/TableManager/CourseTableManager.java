@@ -1,7 +1,6 @@
 package GUI.TableManager;
 
 import dao.CourseDAO;
-import dao.SemesterDAO;
 import pojo.*;
 
 import javax.swing.*;

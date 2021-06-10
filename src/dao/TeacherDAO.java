@@ -3,7 +3,6 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import pojo.Student;
 import pojo.Teacher;
 import util.HibernateUtil;
 

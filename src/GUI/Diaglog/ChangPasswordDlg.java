@@ -69,7 +69,7 @@ public class ChangPasswordDlg extends JDialog {
             return;
         }
 
-        // Handle change pasword
+        // Handle change password
         currentAcc.setPasswd(newPwd);
         if(!AccountDAO.update(currentAcc)){
             currentAcc.setPasswd(oldPwd);
@@ -82,7 +82,6 @@ public class ChangPasswordDlg extends JDialog {
 
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 }

@@ -1,9 +1,7 @@
 package GUI.TableManager;
 
-import dao.CourseDAO;
 import dao.CourseStudentDAO;
 import pojo.Course;
-import pojo.CourseStudent;
 import pojo.Shift;
 
 import javax.swing.*;

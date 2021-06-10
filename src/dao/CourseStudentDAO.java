@@ -27,7 +27,6 @@ public class CourseStudentDAO {
             query.setParameter("courseId", courseId);
             students = query.list();
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return students;
@@ -41,7 +40,6 @@ public class CourseStudentDAO {
             query.setParameter("studentId", studentId);
             courses = query.list();
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return courses;

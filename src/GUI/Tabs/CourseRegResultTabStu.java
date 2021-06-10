@@ -1,22 +1,15 @@
 package GUI.Tabs;
 
 import GUI.TableManager.CourseRegResultTableManager;
-import GUI.TableManager.CourseTableManager;
 import dao.CourseDAO;
 import dao.CourseStudentDAO;
 import dao.SemesterDAO;
-import dao.StudentDAO;
 import pojo.Course;
 import pojo.CourseStudent;
 import pojo.Semester;
 import pojo.Student;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 /**
  * GUI.Tabs

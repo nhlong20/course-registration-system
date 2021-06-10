@@ -34,8 +34,7 @@ public class RegStudentListTableManager {
         for(int i = semSize - 1; i >=0; i--){
             String startDate = String.valueOf(redSessions.get(i).getStartDate());
             String endDate = String.valueOf(redSessions.get(i).getEndDate());
-            // TODO - Repplace Placeholder code
-            mModel.addRow(new Object[]{semSize - i,startDate, endDate, 0, "Đã kết thúc"});
+             mModel.addRow(new Object[]{semSize - i,startDate, endDate, 0, "Đã kết thúc"});
         }
     }
     public void addRow(CourseRegistrationSession newSession){

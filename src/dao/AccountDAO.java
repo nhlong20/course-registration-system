@@ -2,7 +2,6 @@ package dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import pojo.Account;
 import util.HibernateUtil;
@@ -28,7 +27,6 @@ public class AccountDAO {
             if (list.size() == 0) return null;
             account = list.get(0);
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return account;
@@ -51,11 +49,9 @@ public class AccountDAO {
     public static void addAccount(Account account) {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
             session.beginTransaction();
             session.save(account);
             session.getTransaction().commit();
-
         } catch (HibernateException ex) {
             System.err.println(ex);
         }

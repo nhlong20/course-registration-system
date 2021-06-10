@@ -1,11 +1,8 @@
 package GUI.Tabs;
 
 import GUI.Diaglog.AddSubjectDlg;
-import GUI.TableManager.ModeratorTableManager;
 import GUI.TableManager.SubjectTableManager;
-import dao.ModeratorDAO;
 import dao.SubjectDAO;
-import pojo.Moderator;
 import pojo.Subject;
 
 import javax.swing.*;

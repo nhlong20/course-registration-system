@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddStudentDlg extends JDialog {
     private JPanel contentPane;
@@ -60,10 +61,7 @@ public class AddStudentDlg extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         List<Clazz> clazzes = ClazzDAO.getAll();
-        List<String> clazzNames = new ArrayList<>();
-        for(Clazz clazz : clazzes){
-            clazzNames.add(clazz.getClassCode());
-        }
+        List<String> clazzNames = clazzes.stream().map(p -> p.getClassCode()).collect(Collectors.toList());
         clazzComboBox.setModel(new DefaultComboBoxModel<>(clazzNames.toArray()));
 
         genderComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Nam", "Nữ"}));
@@ -130,7 +128,7 @@ public class AddStudentDlg extends JDialog {
     }
     private void onUpdate(Student student){
         if(StudentDAO.update(student)){
-            // Update curentTable
+            // Refresh table
             StudentTabMod.mTableManager.refresh(StudentTabMod.currentShownClass);
             JOptionPane.showMessageDialog(this, "Cập nhật thành công");
             dispose();
@@ -138,7 +136,7 @@ public class AddStudentDlg extends JDialog {
     }
     private void onAdd(Student newStudent){
         if(StudentDAO.add(newStudent)){
-            // Update current table
+            // Refresh current table
             if(StudentTabMod.currentShownClass.equals(newStudent.getClazz().getClassCode())){
                 StudentTabMod.mTableManager.addRow(newStudent);
             }

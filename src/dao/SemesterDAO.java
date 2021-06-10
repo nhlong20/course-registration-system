@@ -47,21 +47,21 @@ public class SemesterDAO {
         return semester;
     }
     public static Boolean add(Semester semester){
+        if (get(semester.getSemesterId()) != null) {
+            JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
+                    "Duplicate value error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            if (get(semester.getSemesterId()) != null) {
-                JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
-                        "Duplicate value error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
             session.save(semester);
             session.getTransaction().commit();
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(null, "Có lỗi khi thêm bản ghi mới",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
     }
     public static Semester getCurrent(){
         Semester semester = null;
@@ -85,15 +85,15 @@ public class SemesterDAO {
             semester.setIsCurrentSem(false);
             update(semester);
         }
+        Semester sem = get(curId);
+        if (sem == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        sem.setIsCurrentSem(true);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Semester sem = get(curId);
-            if (sem == null) {
-                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            sem.setIsCurrentSem(true);
             session.update(sem);
             session.getTransaction().commit();
         } catch (HibernateException ex) {
@@ -103,13 +103,13 @@ public class SemesterDAO {
 
     }
     public static void update(Semester semester){
+        if (get(semester.getSemesterId()) == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            if (get(semester.getSemesterId()) == null) {
-                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
             session.update(semester);
             session.getTransaction().commit();
         } catch (HibernateException ex) {
@@ -118,27 +118,21 @@ public class SemesterDAO {
         }
     }
     public static boolean delete(int curId) {
-        Semester semester = null;
+        Semester semester = SemesterDAO.get(curId);
+        if (semester == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            semester = SemesterDAO.get(curId);
-            if (semester == null) {
-                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
             // TODO - Remove all course of this semester
-
-            // Remove semester
             session.remove(semester);
-
             session.getTransaction().commit();
-
             return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thực hiện xoá",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
-            System.err.println(ex);
             return false;
         }
     }

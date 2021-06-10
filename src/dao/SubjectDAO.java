@@ -3,8 +3,6 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import pojo.Clazz;
-import pojo.Moderator;
 import pojo.Subject;
 import util.HibernateUtil;
 
@@ -50,59 +48,55 @@ public class SubjectDAO {
         return subject;
     }
     public static Boolean add(Subject subject){
+        if (get(subject.getSubjectId()) != null) {
+            JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
+                    "Duplicate value error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            if (get(subject.getSubjectId()) != null) {
-                JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
-                        "Duplicate value error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
             session.save(subject);
             session.getTransaction().commit();
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(null, "Có lỗi khi thêm bản ghi mới",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
     }
     public static Boolean update(Subject subject){
+        if (get(subject.getSubjectId()) == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            if (get(subject.getSubjectId()) == null) {
-                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
             session.update(subject);
             session.getTransaction().commit();
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(null, "Có lỗi khi cập nhật",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
     }
     public static boolean delete(String curId) {
-        Subject subject = null;
+        Subject subject = get(curId);
+        if (get(curId) == null) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            subject = get(curId);
-            if (subject == null) {
-                JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-            // Remove moderator from db first
             session.remove(subject);
             session.getTransaction().commit();
-
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thực hiện xoá",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
-            System.err.println(ex);
             return false;
         }
+        return true;
     }
 }
