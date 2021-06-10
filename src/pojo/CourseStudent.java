@@ -1,5 +1,6 @@
 package pojo;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -13,6 +14,15 @@ public class CourseStudent {
     private int id;
     private Course course;
     private Student student;
+    private Timestamp createdAt;
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public CourseStudent(Course course, Student student) {
         this.course = course;

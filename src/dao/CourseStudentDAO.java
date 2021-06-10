@@ -31,6 +31,19 @@ public class CourseStudentDAO {
         }
         return students;
     }
+    public static List<CourseStudent> get(String courseId) {
+        List<CourseStudent> courseStudents = null;
+        try(Session session = HibernateUtil.getSessionFactory()
+                .openSession()) {
+            String hql = "select cs from CourseStudent cs where cs.course.id = :courseId";
+            Query query = session.createQuery(hql);
+            query.setParameter("courseId", courseId);
+            courseStudents = query.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        }
+        return courseStudents;
+    }
     public static List<Course> getAllCourses(String studentId) {
         List<Course> courses = null;
         try(Session session = HibernateUtil.getSessionFactory()

@@ -34,7 +34,7 @@ public class RegistrationStudentListDlg extends JDialog {
     }
     public void initComponents() {
         mTableManager = new RegStudentListTableManager(courseRegTable);
-        mTableManager.loadTableData();
+        mTableManager.loadTableData(course);
         searchCourseRegTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         courseRegLabel.setText(course.getCourseId() +" - "+ course.getSubject().getSubjectName());
         courseRegLabel.setForeground(Color.red);
@@ -88,9 +88,7 @@ public class RegistrationStudentListDlg extends JDialog {
     }
 
     private void onSearch(){
-
         String userQuery = searchCourseRegTextField.getText();
-        System.out.println(userQuery);
         if (userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
         mTableManager.filterData(userQuery);
     }

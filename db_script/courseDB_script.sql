@@ -98,7 +98,8 @@ CREATE TABLE public.course (
 CREATE TABLE public.course_student (
                                        id SERIAL PRIMARY KEY,
                                        student_id integer NOT NULL,
-                                       course_id varchar(20) NOT NULL
+                                       course_id varchar(20) NOT NULL,
+                                        created_at timestamp without time zone default CURRENT_TIMESTAMP NOT NULL
 );
 
 

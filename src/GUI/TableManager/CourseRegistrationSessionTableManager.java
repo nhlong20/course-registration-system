@@ -7,6 +7,7 @@ import pojo.Semester;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class CourseRegistrationSessionTableManager {
     TableRowSorter<DefaultTableModel> sorter;
     private static String[] columnRegSessionNames = {"STT", "Ngày bắt đầu", "Ngày kết thúc", "Trạng thái"};
     private static String[] sessionStatus = {"Đã kết thúc", "Đang mở", "Chưa bắt đầu"};
-
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     public CourseRegistrationSessionTableManager(JTable table){
         mTable = table;
         mModel = new DefaultTableModel(columnRegSessionNames, 0);
@@ -36,6 +37,7 @@ public class CourseRegistrationSessionTableManager {
         List<CourseRegistrationSession> regSessions = CourseRegistrationSessionDAO.getAll(curSem.getSemesterId());
         String curSessionStatus = "";
         Date curD = new Date();
+
         for(int i = 0; i <regSessions.size() ; i++){
 
             Date startD = regSessions.get(i).getStartDate();
@@ -45,8 +47,8 @@ public class CourseRegistrationSessionTableManager {
             else if(curD.after(endD)) curSessionStatus = sessionStatus[0];
             else curSessionStatus = sessionStatus[1];
 
-            String startDate = String.valueOf(startD);
-            String endDate = String.valueOf(endD);
+            String startDate = simpleDateFormat.format(startD);
+            String endDate = simpleDateFormat.format(endD);
 
             mModel.addRow(new Object[]{i,startDate, endDate, curSessionStatus});
         }
@@ -55,8 +57,8 @@ public class CourseRegistrationSessionTableManager {
         Date curD = new Date();
         Object[] row = new Object[4];
         row[0] = mTable.getRowCount()+1;
-        row[1] = newSession.getStartDate();
-        row[2] = newSession.getEndDate();
+        row[1] = simpleDateFormat.format(newSession.getStartDate());
+        row[2] = simpleDateFormat.format(newSession.getEndDate());
         String curSessionStatus = "";
         if(curD.before(newSession.getStartDate())) curSessionStatus = sessionStatus[2];
         else if(curD.after(newSession.getEndDate())) curSessionStatus = sessionStatus[0];

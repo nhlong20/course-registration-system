@@ -9,6 +9,9 @@
             <column name="id" sql-type="integer"/>
             <generator class="increment"></generator>
         </id>
+        <property name="createdAt" generated="insert">
+            <column name="created_at" sql-type="timestamp" />
+        </property>
         <many-to-one class="pojo.Course"
                      name="course" fetch="join" lazy="false">
             <column name="course_id"/>

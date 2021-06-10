@@ -1,11 +1,16 @@
 package GUI.TableManager;
 
 import dao.CourseRegistrationSessionDAO;
+import dao.CourseStudentDAO;
+import pojo.Course;
 import pojo.CourseRegistrationSession;
+import pojo.CourseStudent;
+import pojo.Student;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -19,7 +24,7 @@ public class RegStudentListTableManager {
     JTable mTable;
     DefaultTableModel mModel;
     TableRowSorter<DefaultTableModel> sorter;
-    private static String[] columnRegStudentNames = {"STT", "MSSV", "Họ tên", "Mã môn học", "Tên môn học", "GV lý thuyết", "Ngày học", "Ngày đăng ký"};
+    private static String[] columnRegStudentNames = {"STT", "MSSV", "Họ tên", "Mã học phần", "Tên môn học", "GV lý thuyết", "Ngày học","Ca học", "Ngày đăng ký"};
 
     public RegStudentListTableManager(JTable table){
         mTable = table;
@@ -28,28 +33,27 @@ public class RegStudentListTableManager {
         mTable.setRowSorter(sorter);
         mTable.setModel(mModel);
     }
-    public void loadTableData(){
-        List<CourseRegistrationSession> redSessions = CourseRegistrationSessionDAO.getAll();
-        int semSize = redSessions.size();
-        for(int i = semSize - 1; i >=0; i--){
-            String startDate = String.valueOf(redSessions.get(i).getStartDate());
-            String endDate = String.valueOf(redSessions.get(i).getEndDate());
-             mModel.addRow(new Object[]{semSize - i,startDate, endDate, 0, "Đã kết thúc"});
+    public void loadTableData(Course course){
+        List<CourseStudent> courseStudents = CourseStudentDAO.get(course.getCourseId());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        for(int i = 0; i <courseStudents.size() ; i++){
+            String studentId = courseStudents.get(i).getStudent().getStudentId();
+            String studentName = courseStudents.get(i).getStudent().getFullname();
+            String courseId = course.getCourseId();
+            String subjectName = course.getSubject().getSubjectName();
+            String teacherName = course.getTeacher().getFullname();
+            String dayOfWeek = course.getDayOfWeek();
+            int shift = course.getShift().getShiftId();
+
+            String registerDate = simpleDateFormat.format(courseStudents.get(i).getCreatedAt());
+             mModel.addRow(new Object[]{i+1,studentId,studentName,courseId,subjectName,teacherName,dayOfWeek,shift,registerDate});
         }
-    }
-    public void addRow(CourseRegistrationSession newSession){
-        Object[] row = new Object[5];
-        row[0] = mTable.getRowCount()+1;
-        mModel.addRow(row);
     }
     public void filterData(String query){
         if (query.length() == 0) {
             sorter.setRowFilter(null);
         } else {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,2,4));
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,2));
         }
-    }
-    public void removeRow(int row){
-        mModel.removeRow(row);
     }
 }
