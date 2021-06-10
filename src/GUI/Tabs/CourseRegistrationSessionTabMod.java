@@ -46,8 +46,9 @@ public class CourseRegistrationSessionTabMod {
     }
 
     public void initUIData() {
-        curSem = SemesterDAO.getCurrent();
         mTableManager = new CourseRegistrationSessionTableManager(mTable);
+        curSem = SemesterDAO.getCurrent();
+        if(curSem == null) return;
         mTableManager.loadTableData(curSem);
         mCurSemLabel.setText(curSem.getSemName() + " - " + curSem.getSemYear());
     }

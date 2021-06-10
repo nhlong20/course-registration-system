@@ -4,9 +4,14 @@ import GUI.Diaglog.AddCourseDlg;
 import GUI.Diaglog.RegistrationStudentListDlg;
 import GUI.TableManager.CourseTableManager;
 import dao.CourseDAO;
+import dao.CourseStudentDAO;
 import dao.SemesterDAO;
+import dao.StudentDAO;
+import main.MainApp;
 import pojo.Course;
+import pojo.CourseStudent;
 import pojo.Semester;
+import pojo.Student;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,7 +106,16 @@ public class RegCourseTabStu {
     private void onRegist() {
         if (courseTable.getSelectedRowCount() == 1) {
             Object courseId = courseTable.getValueAt(courseTable.getSelectedRow(), 1);
-            System.out.println(courseId);
+            Course course = CourseDAO.get(String.valueOf(courseId));
+            Student student = StudentDAO.getByStudentId("18120449");
+
+            CourseStudent courseStudent = new CourseStudent();
+            courseStudent.setStudent(student);
+            courseStudent.setCourse(course);
+
+            if(CourseStudentDAO.add(courseStudent)){
+                JOptionPane.showMessageDialog(null, "Dăng ký khoá học " + course.getSubject().getSubjectName() +" thành công" );
+            }
             return;
         }
         if (courseTable.getRowCount() == 0) {

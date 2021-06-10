@@ -96,8 +96,8 @@ CREATE TABLE public.course (
 
 
 CREATE TABLE public.course_student (
-                                       id integer PRIMARY KEY,
-                                       student_id VARCHAR(20) NOT NULL,
+                                       id SERIAL PRIMARY KEY,
+                                       student_id integer NOT NULL,
                                        course_id varchar(20) NOT NULL
 );
 
@@ -121,9 +121,10 @@ ALTER TABLE public.course
     ADD CONSTRAINT FK_course__semester_id FOREIGN KEY (semester_id) REFERENCES public.semester(semester_id);
 
 ALTER TABLE public.course_student
-    ADD CONSTRAINT FK_course_student__student_id FOREIGN KEY (student_id) REFERENCES public.subject(subject_id);
+    ADD CONSTRAINT FK_course_student__student_id FOREIGN KEY (student_id) REFERENCES public.student(id);
 ALTER TABLE public.course_student
     ADD CONSTRAINT FK_course_student__course_id FOREIGN KEY (course_id) REFERENCES public.course(course_id);
+
 ALTER TABLE public.teacher
     ADD CONSTRAINT FK_teacher__account_id FOREIGN KEY (account_id) REFERENCES public.account(account_id);
 
@@ -202,4 +203,9 @@ INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_co
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120462', 'Trần Hoàng Minh', 'Nam', '2000-04-01', 'Nghệ An', '18CTT5', 11);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120463', 'Lê Phan Công Minh', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 12);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120464', 'Nguyễn Hữu Trí', 'Nam', '2000-05-21', 'Bình Thuận','18CTT4', 13);
+
+INSERT INTO course_student(id, student_id, course_id) VALUES (default, 1, 'CS2031');
+
+
+
 END;

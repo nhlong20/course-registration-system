@@ -7,6 +7,15 @@
     <class name="pojo.CourseStudent" table="course_student" schema="public" catalog="coursesDB">
         <id name="id">
             <column name="id" sql-type="integer"/>
+            <generator class="increment"></generator>
         </id>
+        <many-to-one class="pojo.Course"
+                     name="course" fetch="join" lazy="false">
+            <column name="course_id"/>
+        </many-to-one>
+        <many-to-one class="pojo.Student"
+                     name="student" fetch="join" lazy="false">
+            <column name="student_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

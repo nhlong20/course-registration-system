@@ -84,7 +84,7 @@ public class StudentGUI extends JFrame{
         this.setVisible(true);
     }
     private void initComponentData(){
-        currentAccount = AccountDAO.getAccount("18120449", "long");
+        currentAccount = AccountDAO.getAccount("18120449", "18120449");
 //        currentAccount = MainApp.getCurrentAccount();
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());
 
