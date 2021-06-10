@@ -53,8 +53,16 @@ public class StudentGUI extends JFrame{
     public StudentGUI() {
         super("Hệ thống đăng ký khoá học");
         this.initComponentData();
+        this.addEventListener();
         this.initComponents();
     }
+
+    private void addEventListener() {
+        updateInfoBtn.addActionListener(e-> onUpdateInfo());
+    }
+
+
+
     private void initComponents(){
         this.setContentPane(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,22 +74,35 @@ public class StudentGUI extends JFrame{
     private void initComponentData(){
         currentAccount = AccountDAO.getAccount("18120449", "18120449");
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());
+
         userFullnameLabel.setText(currentUser.getFullname());
         userFullnameLabel.setForeground(Color.red);
         studentIdTextField.setText(currentUser.getStudentId());
         nameTextField.setText(currentUser.getFullname());
         genderComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Nam", "Nữ"}));
         genderComboBox.setSelectedItem(currentUser.getGender());
+
         addressTextField.setText(currentUser.getStuAddress());
         clazzTextField.setText(currentUser.getClazz().getClassCode());
-
         // Set DOB
         calendar = Calendar.getInstance();
         dateChooser = new JDateChooser(calendar.getTime());
         dateChooser.setDate(currentUser.getDob());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         studentDobPanel.add(dateChooser);
-
     }
+    private void onUpdateInfo() {
+        // Get DOB
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dob = Date.valueOf(simpleDateFormat.format(dateChooser.getDate()));
 
+        currentUser.setFullname(nameTextField.getText());
+        currentUser.setStuAddress(addressTextField.getText());
+        currentUser.setDob(dob);
+        currentUser.setGender(String.valueOf(genderComboBox.getSelectedItem()));
+
+        if(StudentDAO.update(currentUser)){
+            JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công");
+        }
+    }
 }
