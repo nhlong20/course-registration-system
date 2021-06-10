@@ -30,13 +30,12 @@ public class CourseTabMod {
     private JTextField mSearchTextField;
     private JTable mTable;
     private JButton mSearchBtn;
-    private JLabel mSemLabel;
+    private static JLabel mSemLabel;
     private JButton mAddBtn;
     private JButton mListBtn;
     private JButton mDeleteBtn;
     public static CourseTableManager mTableManager;
     public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID, tên học phần hoặc tên giáo viên";
-
     public CourseTabMod() {
     }
 
@@ -64,10 +63,10 @@ public class CourseTabMod {
 
     public void initUIData() {
         mTableManager = new CourseTableManager(mTable);
-        mTableManager.loadTableData();
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         Semester semester = SemesterDAO.getCurrent();
         if (semester == null) return;
+        mTableManager.loadTableData(semester.getSemesterId());
         mSemLabel.setText(semester.getSemName() + " - " + semester.getSemYear());
     }
 
@@ -105,7 +104,11 @@ public class CourseTabMod {
             }
         });
     }
-
+    public static void refreshUIData(){
+        Semester curSem = SemesterDAO.getCurrent();
+        mTableManager.refresh(curSem.getSemesterId());
+        mSemLabel.setText(curSem.getSemName() + " - " + curSem.getSemYear());
+    }
     private void onSearch() {
         String userQuery = mSearchTextField.getText();
         if (userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";

@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pojo.Account;
 import pojo.Course;
+import pojo.Semester;
 import pojo.Student;
 import util.HibernateUtil;
 
@@ -24,6 +25,18 @@ public class CourseDAO {
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select cs from Course cs";
             Query query = session.createQuery(hql);
+            courses = query.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        }
+        return courses;
+    }
+    public static List<Course> getAll(int semesterId){
+        List<Course> courses = null;
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "select cs from Course cs where cs.semester.id = :semesterId";
+            Query query = session.createQuery(hql);
+            query.setParameter("semesterId", semesterId);
             courses = query.list();
         } catch (HibernateException ex) {
             System.err.println(ex);

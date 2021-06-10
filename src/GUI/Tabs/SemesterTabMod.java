@@ -30,7 +30,8 @@ public class SemesterTabMod {
     private JButton mAddBtn;
     private JButton mSetAsCurrentSemBtn;
     private JLabel mCurrentSemesterLabel;
-    private Semester currentSem;
+    public static Semester currentSem;
+
     public SemesterTabMod() {
     }
 
@@ -122,6 +123,7 @@ public class SemesterTabMod {
             mTableManager.refresh();
             // Refresh course registration tab
             CourseRegistrationSessionTabMod.refreshUIData();
+            CourseTabMod.refreshUIData();
             JOptionPane.showMessageDialog(null, "Cập nhật dữ liệu thành công");
             return;
         }

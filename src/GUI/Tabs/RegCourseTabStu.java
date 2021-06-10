@@ -58,10 +58,10 @@ public class RegCourseTabStu {
 
     public void initUIData() {
         mTableManager = new CourseTableManager(courseTable);
-        mTableManager.loadTableData();
         searchCourseTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         Semester semester = SemesterDAO.getCurrent();
         if (semester == null) return;
+        mTableManager.loadTableData(semester.getSemesterId());
         regTimeLabel.setText(semester.getSemName() + " - " + semester.getSemYear());
     }
 

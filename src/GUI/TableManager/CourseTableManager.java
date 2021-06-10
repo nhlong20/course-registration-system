@@ -2,10 +2,7 @@ package GUI.TableManager;
 
 import dao.CourseDAO;
 import dao.SemesterDAO;
-import pojo.Course;
-import pojo.Shift;
-import pojo.Subject;
-import pojo.Teacher;
+import pojo.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -32,8 +29,8 @@ public class CourseTableManager {
         mTable.setRowSorter(sorter);
         mTable.setModel(mModel);
     }
-    public void loadTableData(){
-        List<Course> courses = CourseDAO.getAll();
+    public void loadTableData(int curSemId){
+        List<Course> courses = CourseDAO.getAll(curSemId);
         for(int i = 0; i < courses.size(); i++){
             String courseId = courses.get(i).getCourseId();
             String name = courses.get(i).getSubject().getSubjectName();
@@ -71,8 +68,8 @@ public class CourseTableManager {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,1,2,4));
         }
     }
-    public void refresh(){
+    public void refresh(int curSemId){
         mModel.setRowCount(0);
-        loadTableData();
+        loadTableData(curSemId);
     }
 }
