@@ -7,6 +7,7 @@ import com.toedter.calendar.JDateChooser;
 import dao.AccountDAO;
 import dao.ModeratorDAO;
 import main.MainApp;
+import org.jboss.jandex.Main;
 import pojo.Account;
 import pojo.Moderator;
 
@@ -24,13 +25,14 @@ import java.util.Calendar;
  */
 public class ModeratorGUI extends JFrame {
     private JPanel mainPanel;
-    private JTabbedPane mainTab;
     private JTextField searchModTextField;
     private JTable modTable;
     private JButton searchModBtn;
     private JButton deleteModBtn;
     private JButton addModBtn;
     private JLabel accountName;
+    private JButton updateModBtn;
+    private JButton resetModPassBtn;
 
     private JTextField searchSubjectTextField;
     private JTable subjectTable;
@@ -69,7 +71,6 @@ public class ModeratorGUI extends JFrame {
     private JTextField searchCourseTextField;
     private JButton searchCourseBtn;
 
-    private JTabbedPane settingTab;
     private JComboBox userGenderComboBox;
     private JButton updateUserInfoBtn;
 
@@ -111,16 +112,18 @@ public class ModeratorGUI extends JFrame {
 
         this.initUIProperty();
     }
-    private void initData(){
-        currentAcc = AccountDAO.getAccount("MOD002", "giaovu");
-        currentUser = ModeratorDAO.getModerator(currentAcc.getUsername());
+
+    private void initData() {
+//        currentAcc = AccountDAO.getAccount("MOD002", "MOD002");
+        currentAcc = MainApp.getCurrentAccount();
+        currentUser = ModeratorDAO.get(currentAcc.getUsername());
         accountName.setText(currentUser.getFullname());
 
         userIdTextField.setText(currentUser.getModeratorId());
         userFullnameTextField.setText(currentUser.getFullname());
         userPhoneTextField.setText(currentUser.getPhone());
         userAddressTextField.setText(currentUser.getModAddress());
-        userGenderComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Nam", "Nữ"}));
+        userGenderComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Nam", "Nữ"}));
         userGenderComboBox.setSelectedItem(currentUser.getGender());
         // Set DOB
         calendar = Calendar.getInstance();
@@ -128,9 +131,8 @@ public class ModeratorGUI extends JFrame {
         dateChooser.setDate(currentUser.getDob());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         userDOBPanel.add(dateChooser);
-
-
     }
+
     private void initUIProperty() {
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,7 +143,7 @@ public class ModeratorGUI extends JFrame {
     }
 
     private void linkModeratorTabHandler() {
-        ModeratorTabMod moderatorTabMod = ModeratorTabMod.getInstance(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn);
+        ModeratorTabMod moderatorTabMod = ModeratorTabMod.getInstance(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, updateModBtn, resetModPassBtn);
         moderatorTabMod.initUIModData();
         moderatorTabMod.addModActionlistener();
     }
@@ -163,6 +165,7 @@ public class ModeratorGUI extends JFrame {
         clazzTabMod.initUIData();
         clazzTabMod.addModActionlistener();
     }
+
     private void linkStudentHandler() {
         StudentTabMod studentTabMod = StudentTabMod.getInstance(searchStudentTextField, studentTable, searchStudentBtn, classBomboBox, addStudentBtn, updateStudentbtn, resetStudentPwdBtn);
         studentTabMod.initUIData();
@@ -192,7 +195,7 @@ public class ModeratorGUI extends JFrame {
         currentUser.setPhone(userPhoneTextField.getText());
         currentUser.setGender(String.valueOf(userGenderComboBox.getSelectedItem()));
         currentUser.setDob(dob);
-        if(ModeratorDAO.update(currentUser)){
+        if (ModeratorDAO.update(currentUser)) {
             JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công");
             ModeratorTableManager.refresh();
             return;
@@ -203,18 +206,18 @@ public class ModeratorGUI extends JFrame {
         String oldPwd = String.valueOf(oldPasswordField.getPassword());
         String newPwd = String.valueOf(newPasswordField.getPassword());
         String confirmPwd = String.valueOf(confirmPasswordField.getPassword());
-        if(!newPwd.equals(confirmPwd)){
+        if (!newPwd.equals(confirmPwd)) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập nhập mật khẩu mới và xác nhận giống nhau");
             return;
         }
-        if(!currentAcc.getPasswd().equals(oldPwd)){
+        if (!currentAcc.getPasswd().equals(oldPwd)) {
             JOptionPane.showMessageDialog(this, "Mật khẫu hiện tại không chính xác");
             return;
         }
 
         // Handle change pasword
         currentAcc.setPasswd(newPwd);
-        if(!AccountDAO.update(currentAcc)){
+        if (!AccountDAO.update(currentAcc)) {
             currentAcc.setPasswd(oldPwd);
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình cập nhật mật khẩu mới");
             return;

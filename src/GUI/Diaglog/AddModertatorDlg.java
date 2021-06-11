@@ -11,9 +11,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class AddModertatorDlg extends JDialog{
+public class AddModertatorDlg extends JDialog {
     private JPanel contentPane;
-    private JButton createModBtn;
+    private JButton OkBtn;
     private JButton buttonCancel;
     private JTextField nameTextField;
     private JTextField idTextField;
@@ -23,14 +23,12 @@ public class AddModertatorDlg extends JDialog{
     private JPanel dobDatePanel;
     Calendar calendar;
     private JDateChooser dateChooser;
-    public AddModertatorDlg() {
-        this.setContentPane(contentPane);
-        this.getRootPane().setDefaultButton(createModBtn);
+    private Moderator moderator;
 
-        genderComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Nam", "Nữ"}));
-        calendar = Calendar.getInstance();
-        dateChooser = new JDateChooser(calendar.getTime());
-        dateChooser.setDateFormatString("dd/MM/yyyy");
+    public AddModertatorDlg() {
+        this.setTitle("Thêm giáo vụ mới");
+        this.initComponents();
+        this.moderator = null;
         dobDatePanel.add(dateChooser);
         this.addEventListener();
         this.setModal(true);
@@ -39,18 +37,47 @@ public class AddModertatorDlg extends JDialog{
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
-    private void addEventListener(){
-        createModBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCreateModerator();
-            }
+
+    public AddModertatorDlg(Moderator moderator) {
+        this.moderator = moderator;
+        idTextField.setEditable(false);
+        this.setTitle("Cập nhật thông tin giáo vụ");
+        this.initComponents();
+        this.initModData();
+        this.addEventListener();
+        this.setModal(true);
+        this.pack();
+        // this following method must call after pack() method to set Java App Window to center of your computer screen
+        this.setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void initModData() {
+        idTextField.setText(moderator.getModeratorId());
+        nameTextField.setText(moderator.getFullname());
+        dateChooser.setDate(moderator.getDob());
+        dobDatePanel.add(dateChooser);
+        phoneTextField.setText(moderator.getPhone());
+        addressTextField.setText(moderator.getModAddress());
+        genderComboBox.setSelectedItem(moderator.getGender());
+    }
+
+    private void initComponents() {
+        this.setContentPane(contentPane);
+        this.getRootPane().setDefaultButton(OkBtn);
+        genderComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Nam", "Nữ"}));
+        calendar = Calendar.getInstance();
+        dateChooser = new JDateChooser(calendar.getTime());
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+    }
+
+    private void addEventListener() {
+        OkBtn.addActionListener(e -> {
+            if (moderator == null) onAdd();
+            else onUpdate();
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -61,15 +88,10 @@ public class AddModertatorDlg extends JDialog{
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onCreateModerator() {
-        // add your code here
+    private void onAdd() {
         Moderator moderator = new Moderator();
         moderator.setFullname(nameTextField.getText());
         moderator.setModeratorId(idTextField.getText());
@@ -81,7 +103,7 @@ public class AddModertatorDlg extends JDialog{
         String date = simpleDateFormat.format(dateChooser.getDate());
         moderator.setDob(Date.valueOf(date));
 
-        if(ModeratorDAO.addModerator(moderator)){
+        if (ModeratorDAO.addModerator(moderator)) {
             ModeratorTabMod.mTableManager.addRow(moderator);
             JOptionPane.showMessageDialog(null, "Thêm mới thành công",
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);
@@ -89,8 +111,24 @@ public class AddModertatorDlg extends JDialog{
         }
     }
 
+    private void onUpdate() {
+        moderator.setFullname(nameTextField.getText());
+        moderator.setPhone(phoneTextField.getText());
+        moderator.setModAddress(addressTextField.getText());
+        moderator.setGender(String.valueOf(genderComboBox.getSelectedItem()));
+        // Format Date again befor save to DB
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = simpleDateFormat.format(dateChooser.getDate());
+        moderator.setDob(Date.valueOf(date));
+
+        if (ModeratorDAO.update(moderator)) {
+            JOptionPane.showMessageDialog(null, "Cập nhật thành công",
+                    "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
+    }
+
     private void onCancel() {
-        // add your code here if necessary
         this.dispose();
     }
 }

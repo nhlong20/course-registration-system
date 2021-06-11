@@ -20,13 +20,12 @@ import java.util.List;
  */
 public class ModeratorDAO {
     private static String ACCOUNT_TYPE = "Moderator";
-    private static String DEFAULT_PASWORD = "giaovu";
 
-    public static List<Moderator> getModeratorList() {
+    public static List<Moderator> getAll() {
         List<Moderator> moderators = null;
-        try(Session session = HibernateUtil.getSessionFactory()
+        try (Session session = HibernateUtil.getSessionFactory()
                 .openSession()) {
-            String hql = "select moderator from Moderator moderator";
+            String hql = "select moderator from Moderator moderator order by moderator.id asc ";
             Query query = session.createQuery(hql);
             moderators = query.list();
         } catch (HibernateException ex) {
@@ -35,14 +34,14 @@ public class ModeratorDAO {
         return moderators;
     }
 
-    public static Moderator getModerator(String modId) {
+    public static Moderator get(String modId) {
         Moderator moderator = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select moderator from Moderator moderator where moderator.id = :modId";
             Query query = session.createQuery(hql);
             query.setParameter("modId", modId);
             List<Moderator> l = query.list();
-            if(l.size()>0){
+            if (l.size() > 0) {
                 moderator = l.get(0);
             }
         } catch (HibernateException ex) {
@@ -52,7 +51,7 @@ public class ModeratorDAO {
     }
 
     public static Boolean addModerator(Moderator moderator) {
-        if (getModerator(moderator.getModeratorId()) != null) {
+        if (get(moderator.getModeratorId()) != null) {
             JOptionPane.showMessageDialog(null, "Giáo vụ đã tồn tại",
                     "Duplicate value error", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -61,9 +60,8 @@ public class ModeratorDAO {
             session.beginTransaction();
 
             // Add new account corresponding to new student
-            Account account = new Account(ACCOUNT_TYPE, moderator.getModeratorId(), DEFAULT_PASWORD);
+            Account account = new Account(ACCOUNT_TYPE, moderator.getModeratorId(), moderator.getModeratorId());
             AccountDAO.addAccount(account);
-
             moderator.setAccount(account);
 
             session.save(moderator);
@@ -72,14 +70,14 @@ public class ModeratorDAO {
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thêm Thêm giáo vụ",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
-            System.err.println(ex);
             return false;
         }
     }
-    public static boolean update(Moderator moderator){
-        if (getModerator(moderator.getModeratorId()) == null) {
+
+    public static boolean update(Moderator moderator) {
+        if (get(moderator.getModeratorId()) == null) {
             JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    "Unexpected Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -93,11 +91,12 @@ public class ModeratorDAO {
         }
         return true;
     }
-    public static boolean deleteModerator(String modId) {
-        Moderator moderator = getModerator(modId);
+
+    public static boolean delete(String modId) {
+        Moderator moderator = get(modId);
         if (moderator == null) {
             JOptionPane.showMessageDialog(null, "Giáo vụ không tồn tại",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    "Unexpected Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

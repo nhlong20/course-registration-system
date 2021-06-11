@@ -141,9 +141,9 @@ public class StudentTabMod {
             return;
         }
         if(mTable.getRowCount() == 0){
-            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
+            JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
         } else{
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
         }
     }
     private void onUpdate() {
