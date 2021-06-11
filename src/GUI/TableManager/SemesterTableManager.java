@@ -4,6 +4,7 @@ import dao.SemesterDAO;
 import pojo.Semester;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
@@ -34,6 +35,8 @@ public class SemesterTableManager {
         mTable.setModel(mModel);
         TableColumn colToDelete = mTable.getColumnModel().getColumn(1);
         mTable.removeColumn(colToDelete);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( SwingConstants.CENTER );
     }
     public void loadTableData(){
         List<Semester> semesters = SemesterDAO.getAll();

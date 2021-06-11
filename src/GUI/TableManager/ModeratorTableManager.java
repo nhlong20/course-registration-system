@@ -4,6 +4,7 @@ import dao.ModeratorDAO;
 import pojo.Moderator;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.util.List;
@@ -27,6 +28,10 @@ public class ModeratorTableManager {
         sorter = new TableRowSorter<DefaultTableModel>(mModel);
         modTable.setRowSorter(sorter);
         modTable.setModel(mModel);
+
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)modTable.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( SwingConstants.CENTER );
+        modTable.getColumnModel().getColumn(0).setMaxWidth(100);
     }
 
     public static void loadTableData() {

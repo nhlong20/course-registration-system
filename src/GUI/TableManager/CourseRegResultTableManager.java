@@ -5,6 +5,7 @@ import pojo.Course;
 import pojo.Shift;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.util.List;
@@ -28,6 +29,8 @@ public class CourseRegResultTableManager {
         sorter = new TableRowSorter<DefaultTableModel>(mModel);
         mTable.setRowSorter(sorter);
         mTable.setModel(mModel);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( SwingConstants.CENTER );
     }
     public void loadTableData(String studentId, int curSemId){
         List<Course> courses = CourseStudentDAO.getAllCourses(studentId, curSemId);

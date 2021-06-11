@@ -4,6 +4,7 @@ import dao.StudentDAO;
 import pojo.Student;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
@@ -34,6 +35,9 @@ public class StudentTableManager {
         mTable.setModel(mModel);
         TableColumn colToDelete = mTable.getColumnModel().getColumn(1);
         mTable.removeColumn(colToDelete);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( SwingConstants.CENTER );
+        mTable.getColumnModel().getColumn(0).setMaxWidth(100);
     }
 
     public void loadTableData(String classCode) {

@@ -8,6 +8,7 @@ import pojo.CourseStudent;
 import pojo.Student;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,8 @@ public class RegStudentListTableManager {
         sorter = new TableRowSorter<DefaultTableModel>(mModel);
         mTable.setRowSorter(sorter);
         mTable.setModel(mModel);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( SwingConstants.CENTER );
     }
     public void loadTableData(Course course){
         List<CourseStudent> courseStudents = CourseStudentDAO.get(course.getCourseId());

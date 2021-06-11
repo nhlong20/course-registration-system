@@ -5,6 +5,7 @@ import dao.StudentDAO;
 import pojo.Clazz;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.util.List;
@@ -28,6 +29,9 @@ public class ClazzTableManager {
         sorter = new TableRowSorter<DefaultTableModel>(mModel);
         mTable.setRowSorter(sorter);
         mTable.setModel(mModel);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( SwingConstants.CENTER );
+        mTable.getColumnModel().getColumn(0).setMaxWidth(100);
     }
     public void loadTableData(){
         List<Clazz> clazzes = ClazzDAO.getAll();
