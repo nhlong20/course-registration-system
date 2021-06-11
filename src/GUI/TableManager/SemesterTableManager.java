@@ -4,10 +4,8 @@ import dao.SemesterDAO;
 import pojo.Semester;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -36,6 +34,8 @@ public class SemesterTableManager {
         TableColumn colToDelete = mTable.getColumnModel().getColumn(1);
         mTable.removeColumn(colToDelete);
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
+        JTableHeader header = mTable.getTableHeader();
+        header.setFont(header.getFont().deriveFont(Font.BOLD));
         renderer.setHorizontalAlignment( SwingConstants.CENTER );
     }
     public void loadTableData(){

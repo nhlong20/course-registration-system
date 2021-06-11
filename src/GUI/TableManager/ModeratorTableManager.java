@@ -6,7 +6,9 @@ import pojo.Moderator;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -31,6 +33,8 @@ public class ModeratorTableManager {
 
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)modTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment( SwingConstants.CENTER );
+        JTableHeader header = modTable.getTableHeader();
+        header.setFont(header.getFont().deriveFont(Font.BOLD));
         modTable.getColumnModel().getColumn(0).setMaxWidth(100);
     }
 

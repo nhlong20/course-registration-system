@@ -7,7 +7,9 @@ import pojo.Clazz;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -31,6 +33,8 @@ public class ClazzTableManager {
         mTable.setModel(mModel);
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment( SwingConstants.CENTER );
+        JTableHeader header = mTable.getTableHeader();
+        header.setFont(header.getFont().deriveFont(Font.BOLD));
         mTable.getColumnModel().getColumn(0).setMaxWidth(100);
     }
     public void loadTableData(){

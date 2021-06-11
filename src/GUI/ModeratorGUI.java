@@ -202,6 +202,7 @@ public class ModeratorGUI extends JFrame {
         if (ModeratorDAO.update(currentUser)) {
             JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công");
             ModeratorTableManager.refresh();
+            accountName.setText(currentUser.getFullname());
             return;
         }
     }
