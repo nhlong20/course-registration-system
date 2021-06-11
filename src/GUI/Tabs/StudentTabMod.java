@@ -33,7 +33,7 @@ public class StudentTabMod {
     private JTextField mSearchTextField;
     private JTable mTable;
     private JButton mSearchBtn;
-    private JComboBox mComboBox;
+    private static JComboBox mComboBox;
     private JButton mAddBtn;
     private JButton mUpdateBtn;
     private JButton mResetBtn;
@@ -55,10 +55,14 @@ public class StudentTabMod {
         mTableManager = new StudentTableManager(mTable);
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         currentShownClass = String.valueOf(mComboBox.getSelectedItem());
+        initClassData();
+        mTableManager.loadTableData(String.valueOf(mComboBox.getSelectedItem()));
+    }
+
+    public static void initClassData() {
         List<Clazz> clazzes = ClazzDAO.getAll();
         List<String> clazzCode = clazzes.stream().map(p -> p.getClassCode()).collect(Collectors.toList());
         mComboBox.setModel(new DefaultComboBoxModel<>(clazzCode.toArray()));
-        mTableManager.loadTableData(String.valueOf(mComboBox.getSelectedItem()));
     }
 
     public void addModActionlistener() {

@@ -2,10 +2,7 @@ package GUI.TableManager;
 
 import dao.CourseRegistrationSessionDAO;
 import dao.CourseStudentDAO;
-import pojo.Course;
-import pojo.CourseRegistrationSession;
-import pojo.CourseStudent;
-import pojo.Student;
+import pojo.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -40,7 +37,8 @@ public class RegStudentListTableManager {
     }
     public void loadTableData(Course course){
         List<CourseStudent> courseStudents = CourseStudentDAO.get(course.getCourseId());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sDF1 = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sDF2 = new SimpleDateFormat("HH:mm");
         for(int i = 0; i <courseStudents.size() ; i++){
             String studentId = courseStudents.get(i).getStudent().getStudentId();
             String studentName = courseStudents.get(i).getStudent().getFullname();
@@ -48,10 +46,11 @@ public class RegStudentListTableManager {
             String subjectName = course.getSubject().getSubjectName();
             String teacherName = course.getTeacher().getFullname();
             String dayOfWeek = course.getDayOfWeek();
-            int shift = course.getShift().getShiftId();
+            Shift shift = course.getShift();
+            String shiftTime = sDF2.format(shift.getStartAt()) + " - " + sDF2.format(shift.getEndAt());
+            String registerDate = sDF1.format(courseStudents.get(i).getCreatedAt());
 
-            String registerDate = simpleDateFormat.format(courseStudents.get(i).getCreatedAt());
-             mModel.addRow(new Object[]{i+1,studentId,studentName,courseId,subjectName,teacherName,dayOfWeek,shift,registerDate});
+             mModel.addRow(new Object[]{i+1,studentId,studentName,courseId,subjectName,teacherName,dayOfWeek,shiftTime,registerDate});
         }
     }
     public void filterData(String query){

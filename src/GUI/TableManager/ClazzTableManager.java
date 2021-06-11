@@ -57,4 +57,8 @@ public class ClazzTableManager {
     public void removeRow(int row){
         mModel.removeRow(row);
     }
+    public void refresh(){
+        mModel.setRowCount(0);
+        loadTableData();
+    }
 }

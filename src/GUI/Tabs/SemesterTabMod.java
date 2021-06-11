@@ -124,7 +124,7 @@ public class SemesterTabMod {
 
     private void onDelete() {
         if(mTable.getSelectedRowCount() == 1){
-            Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
+            Object curId =  mTable.getModel().getValueAt(mTable.getSelectedRow(), 1);
             // Remove Row from DB
             if(!SemesterDAO.delete(Integer.parseInt(curId.toString()))){
                 JOptionPane.showMessageDialog(null, "Xoá dữ liệu thành công", "Thất bại khi xoá học kì", JOptionPane.ERROR_MESSAGE);

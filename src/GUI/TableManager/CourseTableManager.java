@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -30,7 +31,9 @@ public class CourseTableManager {
         mTable.setModel(mModel);
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment( SwingConstants.CENTER );
-        mTable.getColumnModel().getColumn(2).setMinWidth(180);
+        mTable.getColumnModel().getColumn(2).setMinWidth(200);
+        mTable.getColumnModel().getColumn(4).setMinWidth(180);
+        mTable.getColumnModel().getColumn(7).setMinWidth(100);
     }
     public void loadTableData(int curSemId){
         List<Course> courses = CourseDAO.getAll(curSemId);
@@ -38,6 +41,7 @@ public class CourseTableManager {
     }
 
     static void loadCourseToTable(List<Course> courses, DefaultTableModel mModel) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         for(int i = 0; i < courses.size(); i++){
             String courseId = courses.get(i).getCourseId();
             String name = courses.get(i).getSubject().getSubjectName();
@@ -46,14 +50,13 @@ public class CourseTableManager {
             String room = courses.get(i).getRoom();
             String dayOfWeek = courses.get(i).getDayOfWeek();
             Shift shift = courses.get(i).getShift();
-            int shiftTime = shift.getShiftId() ;
+            String shiftTime = simpleDateFormat.format(shift.getStartAt()) + " - " + simpleDateFormat.format(shift.getEndAt());
             int maxSlots = courses.get(i).getMaximumSlots();
             mModel.addRow(new Object[]{i + 1, courseId,name,credits,teacherName,room,dayOfWeek,shiftTime,maxSlots});
         }
     }
 
     public void addRow(Course course){
-
         Object[] row = new Object[9];
         row[0] = mTable.getRowCount()+1;
         row[1] = course.getCourseId();
@@ -62,7 +65,9 @@ public class CourseTableManager {
         row[4] = course.getTeacher().getFullname();
         row[5] = course.getRoom();
         row[6] = course.getDayOfWeek();
-        row[7] = course.getShift().getShiftId();
+        Shift shift = course.getShift();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        row[7] = simpleDateFormat.format(shift.getStartAt()) + " - " + simpleDateFormat.format(shift.getEndAt());
         row[8] = course.getMaximumSlots();
         mModel.addRow(row);
     }

@@ -6,6 +6,7 @@ import pojo.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,8 @@ public class AddCourseDlg extends JDialog {
         dayOfWeekComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ Nhật"}));
 
         shifts = ShiftDAO.getAll();
-        List<String> shiftPeriods = shifts.stream().map(p -> p.getStartAt() +" - "+ p.getEndAt()).collect(Collectors.toList());
+        SimpleDateFormat sdF = new SimpleDateFormat("HH:mm");
+        List<String> shiftPeriods = shifts.stream().map(p -> sdF.format(p.getStartAt()) +" - "+ sdF.format(p.getEndAt())).collect(Collectors.toList());
 
         shiftComboBox.setModel(new DefaultComboBoxModel<>(shiftPeriods.toArray()));
     }

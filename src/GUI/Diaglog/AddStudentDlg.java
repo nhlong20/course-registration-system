@@ -1,5 +1,6 @@
 package GUI.Diaglog;
 
+import GUI.Tabs.ClazzTabMod;
 import GUI.Tabs.StudentTabMod;
 import com.toedter.calendar.JDateChooser;
 import dao.ClazzDAO;
@@ -72,7 +73,6 @@ public class AddStudentDlg extends JDialog {
         dateChooser.setDateFormatString("dd/MM/yyyy");
         dobPanel.add(dateChooser);
     }
-
     private void initStudentData(Student student) {
         studentIdTextField.setEnabled(false);
         studentIdTextField.setText(student.getStudentId());
@@ -133,6 +133,7 @@ public class AddStudentDlg extends JDialog {
             // Refresh table
             StudentTabMod.mTableManager.refresh(StudentTabMod.currentShownClass);
             JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+            ClazzTabMod.mTableManager.refresh();
             dispose();
         }
     }
@@ -142,6 +143,7 @@ public class AddStudentDlg extends JDialog {
             // Refresh current table
             if (StudentTabMod.currentShownClass.equals(newStudent.getClazz().getClassCode())) {
                 StudentTabMod.mTableManager.addRow(newStudent);
+                ClazzTabMod.mTableManager.refresh();
             }
             JOptionPane.showMessageDialog(this, "Thêm mới thành công");
             dispose();

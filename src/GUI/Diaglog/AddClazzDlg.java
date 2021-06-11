@@ -1,8 +1,10 @@
 package GUI.Diaglog;
 
 import GUI.Tabs.ClazzTabMod;
+import GUI.Tabs.StudentTabMod;
 import dao.ClazzDAO;
 import pojo.Clazz;
+import pojo.Student;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -54,6 +56,8 @@ public class AddClazzDlg extends JDialog {
 
         if(ClazzDAO.add(newClass)){
             ClazzTabMod.mTableManager.addRow(newClass);
+            StudentTabMod.initClassData();
+            JOptionPane.showMessageDialog(null, "Thêm mới thành công","Thành công", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         }
     }

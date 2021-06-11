@@ -59,9 +59,14 @@ public class ClazzTabMod {
             Object curId = mTable.getValueAt(mTable.getSelectedRow(), 1);
 
             // Remove Row from DB
-            ClazzDAO.delete(String.valueOf(curId.toString()));
+            if(!ClazzDAO.delete(String.valueOf(curId.toString()))){
+                JOptionPane.showMessageDialog(null, "Xoá thất bại", "Thất bại", JOptionPane.ERROR_MESSAGE);
+                return;
+            };
             // Remove Row from UI
             mTableManager.removeRow(mTable.getSelectedRow());
+            JOptionPane.showMessageDialog(null, "Xoá thành công","Thành công", JOptionPane.INFORMATION_MESSAGE);
+            StudentTabMod.initClassData();
             return;
         }
         if (mTable.getRowCount() == 0) {
