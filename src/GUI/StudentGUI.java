@@ -96,9 +96,7 @@ public class StudentGUI extends JFrame {
     }
 
     private void initComponentData() {
-        // TODO - remove comment of the following line
-        currentAccount = AccountDAO.getAccount("18120449", "18120449");
-//        currentAccount = MainApp.getCurrentAccount();
+        currentAccount = MainApp.getCurrentAccount();
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());
         Semester semester = SemesterDAO.getCurrent();
         if (semester != null)

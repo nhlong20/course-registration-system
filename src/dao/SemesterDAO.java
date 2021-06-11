@@ -124,7 +124,6 @@ public class SemesterDAO {
         }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            // TODO - Remove all course of this semester
             session.remove(semester);
             session.getTransaction().commit();
         } catch (HibernateException ex) {
