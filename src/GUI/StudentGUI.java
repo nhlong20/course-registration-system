@@ -7,6 +7,8 @@ import com.toedter.calendar.JDateChooser;
 import dao.*;
 import main.MainApp;
 import pojo.Account;
+import pojo.CourseRegistrationSession;
+import pojo.Semester;
 import pojo.Student;
 
 import javax.swing.*;
@@ -14,6 +16,8 @@ import java.awt.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * GUI
@@ -45,7 +49,8 @@ public class StudentGUI extends JFrame {
 
     private JPanel studentDobPanel;
     private JTextField clazzTextField;
-    private JTextField currentSe;
+    private JLabel registerTimeLabel;
+    private JLabel currentSemLabel;
 
     Calendar calendar;
     private JDateChooser dateChooser;
@@ -95,6 +100,24 @@ public class StudentGUI extends JFrame {
         currentAccount = AccountDAO.getAccount("18120449", "18120449");
 //        currentAccount = MainApp.getCurrentAccount();
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());
+        Semester semester = SemesterDAO.getCurrent();
+        if(semester != null)
+            currentSemLabel.setText(semester.getSemName() + " - " + semester.getSemYear());
+        // Get and set current session
+        java.util.Date curD = Calendar.getInstance().getTime();
+        List<CourseRegistrationSession> courseRegistrationSessions = CourseRegistrationSessionDAO.getAll();
+        List<CourseRegistrationSession> curSessions = courseRegistrationSessions.stream()
+                .filter(p -> curD.after(p.getStartDate()) && curD.before(p.getEndDate())).collect(Collectors.toList());
+        CourseRegistrationSession curSession = null;
+        if(curSessions.size() >0){
+            curSession = curSessions.get(0);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String startDate = simpleDateFormat.format(curSession.getStartDate());
+            String endDate = simpleDateFormat.format(curSession.getEndDate());
+            String registerTime = "Từ " + startDate +" đến " +endDate;
+            registerTimeLabel.setText(registerTime);
+            registerTimeLabel.setForeground(Color.blue);
+        }
 
         userFullnameLabel.setText(currentUser.getFullname());
         userFullnameLabel.setForeground(Color.red);

@@ -31,6 +31,7 @@ public class CourseRegResultTableManager {
         mTable.setModel(mModel);
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment( SwingConstants.CENTER );
+        mTable.getColumnModel().getColumn(0).setMaxWidth(100);
     }
     public void loadTableData(String studentId, int curSemId){
         List<Course> courses = CourseStudentDAO.getAllCourses(studentId, curSemId);

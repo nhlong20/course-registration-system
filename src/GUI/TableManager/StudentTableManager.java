@@ -38,6 +38,7 @@ public class StudentTableManager {
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment( SwingConstants.CENTER );
         mTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        mTable.getColumnModel().getColumn(2).setMinWidth(180);
     }
 
     public void loadTableData(String classCode) {
