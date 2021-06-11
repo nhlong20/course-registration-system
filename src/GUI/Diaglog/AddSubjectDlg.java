@@ -16,15 +16,18 @@ public class AddSubjectDlg extends JDialog {
     private JTextField subjectCreditTextField;
     String command;
     int selectedRow;
+
     public AddSubjectDlg() {
         this.command = "Add";
         setTitle("Thêm mới");
         buttonOK.setText("Thêm");
         initDlgData();
     }
+
     public AddSubjectDlg(int seletedRow, Subject subject) {
         this.command = "update";
         this.selectedRow = seletedRow;
+        subjectCodeTextFeild.setEditable(false);
         subjectCodeTextFeild.setText(subject.getSubjectId());
         subjectNameTextField.setText(subject.getSubjectName());
         subjectCreditTextField.setText(String.valueOf(subject.getCredits()));
@@ -32,7 +35,8 @@ public class AddSubjectDlg extends JDialog {
         buttonOK.setText("Cập nhật");
         initDlgData();
     }
-    private void initDlgData(){
+
+    private void initDlgData() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -43,18 +47,10 @@ public class AddSubjectDlg extends JDialog {
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
-    private void addEventListener(){
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                omCommand(command);
-            }
-        });
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+    private void addEventListener() {
+        buttonOK.addActionListener(e -> omCommand(command));
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -65,31 +61,27 @@ public class AddSubjectDlg extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    private void omCommand(String command){
+
+    private void omCommand(String command) {
         String code = subjectCodeTextFeild.getText();
         String name = subjectNameTextField.getText();
         int credits = Integer.parseInt(subjectCreditTextField.getText());
-        Subject subject = new Subject(code,name,credits);
+        Subject subject = new Subject(code, name, credits);
 
-       if(command.toLowerCase().equals("add")){
-           if(SubjectDAO.add(subject)){
-               JOptionPane.showMessageDialog(null, "Thêm mới thành công",
-                       "Thành công", JOptionPane.INFORMATION_MESSAGE);
-               dispose();
-               // Add Row to UI
-               SubjectTabMod.mTableManager.addRow(subject);
-               return;
-           }
-       }
-        if(command.toLowerCase().equals("update")){
-
-            if(SubjectDAO.update(subject)){
+        if (command.toLowerCase().equals("add")) {
+            if (SubjectDAO.add(subject)) {
+                JOptionPane.showMessageDialog(null, "Thêm mới thành công",
+                        "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+                // Add Row to UI
+                SubjectTabMod.mTableManager.addRow(subject);
+                return;
+            }
+        }
+        if (command.toLowerCase().equals("update")) {
+            if (SubjectDAO.update(subject)) {
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công",
                         "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
@@ -100,7 +92,6 @@ public class AddSubjectDlg extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 }

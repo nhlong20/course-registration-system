@@ -152,7 +152,7 @@ public class StudentGUI extends JFrame {
         // Get DOB
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date dob = Date.valueOf(simpleDateFormat.format(dateChooser.getDate()));
-
+        userFullnameLabel.setText(nameTextField.getText());
         currentUser.setFullname(nameTextField.getText());
         currentUser.setStuAddress(addressTextField.getText());
         currentUser.setDob(dob);

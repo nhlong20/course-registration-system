@@ -91,9 +91,6 @@ public class SubjectTabMod {
         AddSubjectDlg addSubjectDlg = new AddSubjectDlg();
     }
     private void onUpdate(){
-        System.out.println(SubjectDAO.get("OOP").getCourses().size());
-        if(true) return;
-
         if(mTable.getSelectedRowCount() == 1){
             String code =  String.valueOf(mTable.getValueAt(mTable.getSelectedRow(),1));
             String name =  String.valueOf(mTable.getValueAt(mTable.getSelectedRow(),2));

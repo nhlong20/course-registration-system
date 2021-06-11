@@ -160,6 +160,8 @@ INSERT INTO public.subject VALUES ('HDH', 'Hệ điều hành', 4);
 INSERT INTO public.subject VALUES ('MMT', 'Mạng máy tính', 4);
 INSERT INTO public.subject VALUES ('DAAS', 'Thiết kế và phân tích phần mềm', 4);
 INSERT INTO public.subject VALUES ('NMHM', 'Nhập môn học máy', 4);
+INSERT INTO public.subject VALUES ('XLA', 'Xử lý ảnh', 4);
+INSERT INTO public.subject VALUES ('LTUDW', 'Lập trình ứng dụng Web', 4);
 
 INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK1', 2017, '2017-08-20', '2018-01-20');
 INSERT INTO semester(semester_id, sem_name, sem_year, startdate, enddate) VALUES (default, 'HK2', 2017, '2018-02-03', '2018-06-28');
@@ -199,6 +201,17 @@ INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, sem
 INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2051', 'CTDLGT', 1, 'Thứ 3', 4, 2, 'E305',100);
 INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('SE2111', 'DAAS', 2, 'Thứ 4', 2, 2, 'E204',120);
 INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2121', 'NMHM', 4, 'Thứ 6', 3, 2, 'G102',100);
+
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3001', 'OOP', 1, 'Thứ 2', 1, 6, 'F102',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3002', 'CTDLGT', 2, 'Thứ 3', 2, 6, 'E102',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3003', 'HDH', 3, 'Thứ 4', 3, 6, 'G102',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3004', 'OOP', 4, 'Thứ 5', 4, 6, 'H102',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3005', 'DAAS', 5, 'Thứ 6', 1, 6, 'E302',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3006', 'CSDL', 1, 'Thứ 7', 2, 6, 'G302',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3007', 'CTDLGT', 2, 'Thứ 2', 3, 6, 'G101',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3008', 'XLA', 3, 'Thứ 6', 4, 6, 'G105',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3009', 'LTUDW', 4, 'Thứ 2', 2, 6, 'E202',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS3010', 'DAAS', 5, 'Thứ 2', 2, 6, 'C102',100);
 
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120449', 'Nguyễn Hoàng Long', 'Nam', '2000-04-01', 'Nghệ An', '18CTT4', 1);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120460', 'Lê Danh Lưu', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 2);

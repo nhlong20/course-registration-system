@@ -145,4 +145,19 @@ public class CourseStudentDAO {
         }
         return true;
     }
+    public static boolean deleteByCourse(String courseId){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            String hql = "delete from CourseStudent cs where cs.course.courseId = :courseId";
+            Query query = session.createQuery(hql);
+            query.setParameter("courseId", courseId);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thực hiện xoá",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 }

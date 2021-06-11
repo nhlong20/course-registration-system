@@ -94,12 +94,18 @@ public class CourseDAO {
                     "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // Delete courseStudent first
+        if(!CourseStudentDAO.deleteByCourse(curId)){
+            JOptionPane.showMessageDialog(null, "Cõ lỗi trong quá trình xoá",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.remove(course);
             session.getTransaction().commit();
         } catch (HibernateException ex) {
-            JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thực hiện xoá",
+            JOptionPane.showMessageDialog(new JFrame(), "Có lỗi trong quá trình xoá",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
