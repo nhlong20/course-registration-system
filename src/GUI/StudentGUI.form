@@ -7,7 +7,7 @@
     </constraints>
     <properties>
       <minimumSize width="719" height="343"/>
-      <preferredSize width="719" height="504"/>
+      <preferredSize width="719" height="420"/>
     </properties>
     <border type="none"/>
     <children>
@@ -307,7 +307,7 @@
                   <component id="2c3fd" class="javax.swing.JLabel" binding="regTimeLabel">
                     <constraints/>
                     <properties>
-                      <text value="&lt;TỪ X đến X&gt;"/>
+                      <text value="Đã kết thúc"/>
                     </properties>
                   </component>
                 </children>

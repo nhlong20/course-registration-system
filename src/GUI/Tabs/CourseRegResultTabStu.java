@@ -2,12 +2,10 @@ package GUI.Tabs;
 
 import GUI.TableManager.CourseRegResultTableManager;
 import dao.CourseDAO;
+import dao.CourseRegistrationSessionDAO;
 import dao.CourseStudentDAO;
 import dao.SemesterDAO;
-import pojo.Course;
-import pojo.CourseStudent;
-import pojo.Semester;
-import pojo.Student;
+import pojo.*;
 
 import javax.swing.*;
 
@@ -45,6 +43,11 @@ public class CourseRegResultTabStu {
     }
 
     private void onRemove() {
+        CourseRegistrationSession curSession = CourseRegistrationSessionDAO.getCurrentSession();
+        if(curSession == null){
+            JOptionPane.showMessageDialog(null, "Đã hết thời gian đăng ký học phần", "Huỷ thất bại", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (mTable.getSelectedRowCount() == 1) {
             Object courseId = mTable.getValueAt(mTable.getSelectedRow(), 1);
             Course course = CourseDAO.get(String.valueOf(courseId));

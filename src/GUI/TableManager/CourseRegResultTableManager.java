@@ -35,18 +35,7 @@ public class CourseRegResultTableManager {
     }
     public void loadTableData(String studentId, int curSemId){
         List<Course> courses = CourseStudentDAO.getAllCourses(studentId, curSemId);
-        for(int i = 0; i < courses.size(); i++){
-            String courseId = courses.get(i).getCourseId();
-            String name = courses.get(i).getSubject().getSubjectName();
-            int credits = courses.get(i).getSubject().getCredits();
-            String teacherName = courses.get(i).getTeacher().getFullname();
-            String room = courses.get(i).getRoom();
-            String dayOfWeek = courses.get(i).getDayOfWeek();
-            Shift shift = courses.get(i).getShift();
-            int shiftTime = shift.getShiftId() ;
-            int maxSlots = courses.get(i).getMaximumSlots();
-            mModel.addRow(new Object[]{i + 1, courseId,name,credits,teacherName,room,dayOfWeek,shiftTime,maxSlots});
-        }
+        CourseTableManager.loadCourseToTable(courses, mModel);
     }
     public void addRow(Course course){
 

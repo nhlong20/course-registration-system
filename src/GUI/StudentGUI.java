@@ -67,17 +67,17 @@ public class StudentGUI extends JFrame {
         this.initComponents();
     }
 
+    private void linkRegCourseHandler() {
+        RegCourseTabStu regCourseTabStu = new RegCourseTabStu(regTimeLabel, searchCourseTextField, searchCourseBtn, regCourseBtn, courseTable);
+        regCourseTabStu.initUIData();
+        regCourseTabStu.addModActionlistener();
+    }
     private void linkCourseRegResultHandler() {
         CourseRegResultTabStu courseRegResultTabStu = new CourseRegResultTabStu(resRegTable, cancelCourseBtn, currentUser);
         courseRegResultTabStu.initUIData();
         courseRegResultTabStu.addModActionlistener();
     }
 
-    private void linkRegCourseHandler() {
-        RegCourseTabStu regCourseTabStu = new RegCourseTabStu(regTimeLabel, searchCourseTextField, searchCourseBtn, regCourseBtn, courseTable);
-        regCourseTabStu.initUIData();
-        regCourseTabStu.addModActionlistener();
-    }
 
     private void addEventListener() {
         updateInfoBtn.addActionListener(e -> onUpdateInfo());
@@ -101,23 +101,10 @@ public class StudentGUI extends JFrame {
 //        currentAccount = MainApp.getCurrentAccount();
         currentUser = StudentDAO.getByStudentId(currentAccount.getUsername());
         Semester semester = SemesterDAO.getCurrent();
-        if(semester != null)
+        if (semester != null)
             currentSemLabel.setText(semester.getSemName() + " - " + semester.getSemYear());
         // Get and set current session
-        java.util.Date curD = Calendar.getInstance().getTime();
-        List<CourseRegistrationSession> courseRegistrationSessions = CourseRegistrationSessionDAO.getAll();
-        List<CourseRegistrationSession> curSessions = courseRegistrationSessions.stream()
-                .filter(p -> curD.after(p.getStartDate()) && curD.before(p.getEndDate())).collect(Collectors.toList());
-        CourseRegistrationSession curSession = null;
-        if(curSessions.size() >0){
-            curSession = curSessions.get(0);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String startDate = simpleDateFormat.format(curSession.getStartDate());
-            String endDate = simpleDateFormat.format(curSession.getEndDate());
-            String registerTime = "Từ " + startDate +" đến " +endDate;
-            registerTimeLabel.setText(registerTime);
-            registerTimeLabel.setForeground(Color.blue);
-        }
+        setRegTimeLabel(registerTimeLabel);
 
         userFullnameLabel.setText(currentUser.getFullname());
         userFullnameLabel.setForeground(Color.red);
@@ -134,6 +121,18 @@ public class StudentGUI extends JFrame {
         dateChooser.setDate(currentUser.getDob());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         studentDobPanel.add(dateChooser);
+    }
+
+    public static void setRegTimeLabel(JLabel registerTimeLabel) {
+        CourseRegistrationSession curSession = CourseRegistrationSessionDAO.getCurrentSession();
+        if(curSession!=null){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String startDate = simpleDateFormat.format(curSession.getStartDate());
+            String endDate = simpleDateFormat.format(curSession.getEndDate());
+            String registerTime = "Từ " + startDate + " đến " + endDate;
+            registerTimeLabel.setText(registerTime);
+            registerTimeLabel.setForeground(Color.blue);
+        }
     }
 
     private void onChangePassword() {

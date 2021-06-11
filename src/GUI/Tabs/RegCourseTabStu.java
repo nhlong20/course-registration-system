@@ -1,14 +1,9 @@
 package GUI.Tabs;
 
+import GUI.StudentGUI;
 import GUI.TableManager.CourseTableManager;
-import dao.CourseDAO;
-import dao.CourseStudentDAO;
-import dao.SemesterDAO;
-import dao.StudentDAO;
-import pojo.Course;
-import pojo.CourseStudent;
-import pojo.Semester;
-import pojo.Student;
+import dao.*;
+import pojo.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +11,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 
 /**
  * GUI.Tabs
@@ -50,7 +46,7 @@ public class RegCourseTabStu {
         Semester semester = SemesterDAO.getCurrent();
         if (semester == null) return;
         mTableManager.loadTableData(semester.getSemesterId());
-        regTimeLabel.setText(semester.getSemName() + " - " + semester.getSemYear());
+        StudentGUI.setRegTimeLabel(regTimeLabel);
     }
 
     public void addModActionlistener() {

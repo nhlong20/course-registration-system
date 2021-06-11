@@ -30,9 +30,14 @@ public class CourseTableManager {
         mTable.setModel(mModel);
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)mTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment( SwingConstants.CENTER );
+        mTable.getColumnModel().getColumn(2).setMinWidth(180);
     }
     public void loadTableData(int curSemId){
         List<Course> courses = CourseDAO.getAll(curSemId);
+        loadCourseToTable(courses, mModel);
+    }
+
+    static void loadCourseToTable(List<Course> courses, DefaultTableModel mModel) {
         for(int i = 0; i < courses.size(); i++){
             String courseId = courses.get(i).getCourseId();
             String name = courses.get(i).getSubject().getSubjectName();
@@ -46,6 +51,7 @@ public class CourseTableManager {
             mModel.addRow(new Object[]{i + 1, courseId,name,credits,teacherName,room,dayOfWeek,shiftTime,maxSlots});
         }
     }
+
     public void addRow(Course course){
 
         Object[] row = new Object[9];

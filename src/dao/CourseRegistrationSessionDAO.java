@@ -7,7 +7,9 @@ import pojo.CourseRegistrationSession;
 import util.HibernateUtil;
 
 import javax.swing.*;
+import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * dao
@@ -57,6 +59,22 @@ public class CourseRegistrationSessionDAO {
         }
         return courseRegistrationSession;
     }
+    public static CourseRegistrationSession getCurrentSession() {
+        CourseRegistrationSession curSession = null;
+        java.util.Date curD = Calendar.getInstance().getTime();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "select regsession from CourseRegistrationSession regsession where regsession.startDate <= :curDate and regsession.endDate >= :curDate";
+            Query query = session.createQuery(hql);
+            query.setParameter("curDate", curD);
+            List<CourseRegistrationSession> l = query.list();
+            if(l.size() == 0) return null;
+            curSession = l.get(0);
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        }
+        return curSession;
+    }
+
     public static Boolean add(CourseRegistrationSession regsession){
         if (get(regsession.getRegistrationSessionId()) != null) {
             JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
