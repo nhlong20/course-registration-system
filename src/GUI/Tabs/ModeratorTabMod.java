@@ -21,10 +21,8 @@ import java.awt.event.*;
  * @Description
  */
 public class ModeratorTabMod {
-    private static ModeratorTabMod instance;
-
-    public static ModeratorTableManager mTableManager;
     public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên";
+    public static ModeratorTableManager mTableManager;
     private JTextField mSearchTextField;
     private JTable mTable;
     private JButton mSearchBtn;
@@ -44,18 +42,6 @@ public class ModeratorTabMod {
         this.mAddBtn = addModBtn;
         this.mUpdateBtn = updateModBtn;
         this.mResetBtn = resetModBtn;
-    }
-
-
-    public static ModeratorTabMod getInstance(JTextField searchModTextField, JTable modTable, JButton searchModBtn, JButton deleteModBtn, JButton addModBtn, JButton updateModBtn, JButton resetModBtn) {
-        if (instance == null) {
-            synchronized (ModeratorTabMod.class) {
-                if (instance == null) {
-                    instance = new ModeratorTabMod(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, updateModBtn, resetModBtn);
-                }
-            }
-        }
-        return instance;
     }
 
     public void addModActionlistener() {

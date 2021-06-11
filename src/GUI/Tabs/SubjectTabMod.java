@@ -17,8 +17,6 @@ import java.awt.event.*;
  * @Description
  */
 public class SubjectTabMod {
-    private static SubjectTabMod instance;
-
     public static SubjectTableManager mTableManager;
     public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên";
     private JTextField mSearchTextField;
@@ -37,18 +35,6 @@ public class SubjectTabMod {
         this.mDeleteBtn = deleteBtn;
         this.mAddBtn = addBtn;
         this.mUpdateBtn = updateBtn;
-    }
-
-
-    public static SubjectTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn, JButton updateBtn) {
-        if (instance == null) {
-            synchronized (SubjectTabMod.class) {
-                if (instance == null) {
-                    instance = new SubjectTabMod(searchTextField, table, searchBtn, deleteBtn, addBtn, updateBtn);
-                }
-            }
-        }
-        return instance;
     }
 
     public void initUIData() {

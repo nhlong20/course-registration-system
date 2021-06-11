@@ -143,43 +143,43 @@ public class ModeratorGUI extends JFrame {
     }
 
     private void linkModeratorTabHandler() {
-        ModeratorTabMod moderatorTabMod = ModeratorTabMod.getInstance(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, updateModBtn, resetModPassBtn);
+        ModeratorTabMod moderatorTabMod = new ModeratorTabMod(searchModTextField, modTable, searchModBtn, deleteModBtn, addModBtn, updateModBtn, resetModPassBtn);
         moderatorTabMod.initUIModData();
         moderatorTabMod.addModActionlistener();
     }
 
     private void linkSubjectTabHandler() {
-        SubjectTabMod subjectTabMod = SubjectTabMod.getInstance(searchSubjectTextField, subjectTable, searchSubjectBtn, deleteSubjectBtn, addSubjectBtn, updateSubjectBtn);
+        SubjectTabMod subjectTabMod = new SubjectTabMod(searchSubjectTextField, subjectTable, searchSubjectBtn, deleteSubjectBtn, addSubjectBtn, updateSubjectBtn);
         subjectTabMod.initUIData();
         subjectTabMod.addModActionlistener();
     }
 
     private void linkSemesterTabHandler() {
-        SemesterTabMod semesterTabMod = SemesterTabMod.getInstance(searchSemesterTextField, semesterTable, searchSemesterBtn, deleteSemesterBtn, addSemesterBtn, setAsCurrentSemesterBtn, currentSemesterLabel);
+        SemesterTabMod semesterTabMod = new SemesterTabMod(searchSemesterTextField, semesterTable, searchSemesterBtn, deleteSemesterBtn, addSemesterBtn, setAsCurrentSemesterBtn, currentSemesterLabel);
         semesterTabMod.initUIData();
         semesterTabMod.addModActionlistener();
     }
 
     private void linkClazzTabHandler() {
-        ClazzTabMod clazzTabMod = ClazzTabMod.getInstance(classTable, deleteClassBtn, addClassBtn);
+        ClazzTabMod clazzTabMod = new ClazzTabMod(classTable, deleteClassBtn, addClassBtn);
         clazzTabMod.initUIData();
         clazzTabMod.addModActionlistener();
     }
 
     private void linkStudentHandler() {
-        StudentTabMod studentTabMod = StudentTabMod.getInstance(searchStudentTextField, studentTable, searchStudentBtn, classBomboBox, addStudentBtn, updateStudentbtn, resetStudentPwdBtn);
+        StudentTabMod studentTabMod = new StudentTabMod(searchStudentTextField, studentTable, searchStudentBtn, classBomboBox, addStudentBtn, updateStudentbtn, resetStudentPwdBtn);
         studentTabMod.initUIData();
         studentTabMod.addModActionlistener();
     }
 
     private void linkCourseRegistrationSessionHandler() {
-        CourseRegistrationSessionTabMod courseRegistrationSessionTabMod = CourseRegistrationSessionTabMod.getInstance(sessionTable, openSessionBtn, currentSemLabel2);
+        CourseRegistrationSessionTabMod courseRegistrationSessionTabMod = new CourseRegistrationSessionTabMod(sessionTable, openSessionBtn, currentSemLabel2);
         courseRegistrationSessionTabMod.initUIData();
         courseRegistrationSessionTabMod.addModActionlistener();
     }
 
     private void linkCourseHandler() {
-        CourseTabMod courseTabMod = CourseTabMod.getInstance(searchCourseTextField, courseTable, searchCourseBtn, currentSemLabel, listRegistrationBtn, addCourseBtn, deleteCourseBtn);
+        CourseTabMod courseTabMod = new CourseTabMod(searchCourseTextField, courseTable, searchCourseBtn, currentSemLabel, listRegistrationBtn, addCourseBtn, deleteCourseBtn);
         courseTabMod.initUIData();
         courseTabMod.addModActionlistener();
 

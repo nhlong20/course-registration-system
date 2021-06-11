@@ -22,7 +22,7 @@ import java.util.Calendar;
  * @Date 6/4/2021 - 9:41 PM
  * @Description
  */
-public class StudentGUI extends JFrame{
+public class StudentGUI extends JFrame {
     private JPanel panel;
     private JTabbedPane tabbedPane1;
     private JButton logoutBtn;
@@ -59,7 +59,6 @@ public class StudentGUI extends JFrame{
         this.linkRegCourseHandler();
         this.linkCourseRegResultHandler();
         this.addEventListener();
-
         this.initComponents();
     }
 
@@ -76,13 +75,13 @@ public class StudentGUI extends JFrame{
     }
 
     private void addEventListener() {
-        updateInfoBtn.addActionListener(e-> onUpdateInfo());
-        changePassBtn.addActionListener(e->onChangePassword());
-        logoutBtn.addActionListener(e ->onLogout());
+        updateInfoBtn.addActionListener(e -> onUpdateInfo());
+        changePassBtn.addActionListener(e -> onChangePassword());
+        logoutBtn.addActionListener(e -> onLogout());
     }
 
 
-    private void initComponents(){
+    private void initComponents() {
         this.setContentPane(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -90,7 +89,8 @@ public class StudentGUI extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    private void initComponentData(){
+
+    private void initComponentData() {
         // TODO - remove comment of the following line
         currentAccount = AccountDAO.getAccount("18120449", "18120449");
 //        currentAccount = MainApp.getCurrentAccount();
@@ -100,7 +100,7 @@ public class StudentGUI extends JFrame{
         userFullnameLabel.setForeground(Color.red);
         studentIdTextField.setText(currentUser.getStudentId());
         nameTextField.setText(currentUser.getFullname());
-        genderComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Nam", "Nữ"}));
+        genderComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Nam", "Nữ"}));
         genderComboBox.setSelectedItem(currentUser.getGender());
 
         addressTextField.setText(currentUser.getStuAddress());
@@ -115,7 +115,7 @@ public class StudentGUI extends JFrame{
 
     private void onChangePassword() {
         ChangPasswordDlg changPasswordDlg = new ChangPasswordDlg(currentAccount);
-        if(changPasswordDlg.isSucess()){
+        if (changPasswordDlg.isSucess()) {
             JOptionPane.showMessageDialog(this, "Cập nhật mật khẩu thành công, vui lòng đăng nhập để tiếp tục");
             onLogout();
         }
@@ -126,6 +126,7 @@ public class StudentGUI extends JFrame{
         dispose();
         MainApp.invokeGUI(MainApp.ViewControl.LOGIN);
     }
+
     private void onUpdateInfo() {
         // Get DOB
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -136,7 +137,7 @@ public class StudentGUI extends JFrame{
         currentUser.setDob(dob);
         currentUser.setGender(String.valueOf(genderComboBox.getSelectedItem()));
 
-        if(StudentDAO.update(currentUser)){
+        if (StudentDAO.update(currentUser)) {
             JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công");
         }
     }

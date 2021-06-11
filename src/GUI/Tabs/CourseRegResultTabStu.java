@@ -19,12 +19,10 @@ import javax.swing.*;
  * @Description
  */
 public class CourseRegResultTabStu {
-    private static CourseRegResultTabStu instance;
-
+    public static CourseRegResultTableManager mTableManager;
     private JTable mTable;
     private JButton mCancel;
     private static Student currentUser;
-    public static CourseRegResultTableManager mTableManager;
 
     public CourseRegResultTabStu() {
     }
@@ -33,18 +31,6 @@ public class CourseRegResultTabStu {
         this.mCancel = cancelCourseBtn;
         this.mTable = resRegTable;
         this.currentUser = currentUser;
-    }
-
-
-    public static CourseRegResultTabStu getInstance(JTable resRegTable, JButton cancelCourseBtn, Student currentUser) {
-        if (instance == null) {
-            synchronized (SubjectTabMod.class) {
-                if (instance == null) {
-                    instance = new CourseRegResultTabStu(resRegTable, cancelCourseBtn, currentUser);
-                }
-            }
-        }
-        return instance;
     }
 
     public void initUIData() {

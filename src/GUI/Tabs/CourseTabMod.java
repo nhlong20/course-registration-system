@@ -23,17 +23,16 @@ import java.awt.event.KeyEvent;
  * @Description
  */
 public class CourseTabMod {
-    private static CourseTabMod instance;
-
+    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID, tên học phần hoặc tên giáo viên";
+    public static CourseTableManager mTableManager;
+    private static JLabel mSemLabel;
     private JTextField mSearchTextField;
     private JTable mTable;
     private JButton mSearchBtn;
-    private static JLabel mSemLabel;
     private JButton mAddBtn;
     private JButton mListBtn;
     private JButton mDeleteBtn;
-    public static CourseTableManager mTableManager;
-    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID, tên học phần hoặc tên giáo viên";
+
     public CourseTabMod() {
     }
 
@@ -45,18 +44,6 @@ public class CourseTabMod {
         this.mListBtn = listBtn;
         this.mAddBtn = addBtn;
         this.mDeleteBtn = deleteBtn;
-    }
-
-
-    public static CourseTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JLabel currentSemLabel, JButton listBtn, JButton addBtn, JButton deleteBtn) {
-        if (instance == null) {
-            synchronized (SubjectTabMod.class) {
-                if (instance == null) {
-                    instance = new CourseTabMod(searchTextField, table, searchBtn, currentSemLabel, listBtn, addBtn, deleteBtn);
-                }
-            }
-        }
-        return instance;
     }
 
     public void initUIData() {
@@ -102,18 +89,20 @@ public class CourseTabMod {
             }
         });
     }
-    public static void refreshUIData(){
+
+    public static void refreshUIData() {
         Semester curSem = SemesterDAO.getCurrent();
         mTableManager.refresh(curSem.getSemesterId());
         mSemLabel.setText(curSem.getSemName() + " - " + curSem.getSemYear());
     }
+
     private void onSearch() {
         String userQuery = mSearchTextField.getText();
         if (userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
         mTableManager.filterData(userQuery);
     }
 
-    private void onList(){
+    private void onList() {
         if (mTable.getSelectedRowCount() == 1) {
             Object courseId = mTable.getValueAt(mTable.getSelectedRow(), 1);
             Course course = CourseDAO.get(String.valueOf(courseId));

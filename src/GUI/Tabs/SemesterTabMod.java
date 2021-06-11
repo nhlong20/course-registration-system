@@ -20,10 +20,8 @@ import java.awt.event.KeyEvent;
  * @Description
  */
 public class SemesterTabMod {
-    private static SemesterTabMod instance;
-
-    public static SemesterTableManager mTableManager;
     public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc năm học";
+    public static SemesterTableManager mTableManager;
     private JTextField mSearchTextField;
     private JTable mTable;
     private JButton mSearchBtn;
@@ -44,18 +42,6 @@ public class SemesterTabMod {
         this.mAddBtn = addBtn;
         this.mSetAsCurrentSemBtn = updateBtn;
         this.mCurrentSemesterLabel = currentSemesterLabel;
-    }
-
-
-    public static SemesterTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JButton deleteBtn, JButton addBtn, JButton updateBtn, JLabel currentSemesterLabel) {
-        if (instance == null) {
-            synchronized (SubjectTabMod.class) {
-                if (instance == null) {
-                    instance = new SemesterTabMod(searchTextField, table, searchBtn, deleteBtn, addBtn, updateBtn, currentSemesterLabel);
-                }
-            }
-        }
-        return instance;
     }
 
     public void initUIData() {

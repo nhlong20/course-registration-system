@@ -26,7 +26,9 @@ import java.util.List;
  * @Description
  */
 public class StudentTabMod {
-    private static StudentTabMod instance;
+    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên sinh viên";
+    public static StudentTableManager mTableManager;
+    public static String currentShownClass;
     private JTextField mSearchTextField;
     private JTable mTable;
     private JButton mSearchBtn;
@@ -34,9 +36,6 @@ public class StudentTabMod {
     private JButton mAddBtn;
     private JButton mUpdateBtn;
     private JButton mResetBtn;
-    public static StudentTableManager mTableManager;
-    public static String currentShownClass;
-    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên sinh viên";
 
     public StudentTabMod() {
     }
@@ -51,25 +50,13 @@ public class StudentTabMod {
         this.mResetBtn = resetBtn;
     }
 
-
-    public static StudentTabMod getInstance(JTextField searchTextField, JTable table, JButton searchBtn, JComboBox comboBox, JButton addBtn, JButton updateBtn, JButton resetBtn) {
-        if (instance == null) {
-            synchronized (SubjectTabMod.class) {
-                if (instance == null) {
-                    instance = new StudentTabMod(searchTextField, table, searchBtn, comboBox, addBtn, updateBtn, resetBtn);
-                }
-            }
-        }
-        return instance;
-    }
-
     public void initUIData() {
         mTableManager = new StudentTableManager(mTable);
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         currentShownClass = String.valueOf(mComboBox.getSelectedItem());
         List<Clazz> clazzes = ClazzDAO.getAll();
         List<String> clazzNames = new ArrayList<>();
-        for(Clazz clazz : clazzes){
+        for (Clazz clazz : clazzes) {
             clazzNames.add(clazz.getClassCode());
         }
         mComboBox.setModel(new DefaultComboBoxModel<>(clazzNames.toArray()));
@@ -77,9 +64,9 @@ public class StudentTabMod {
     }
 
     public void addModActionlistener() {
-        mComboBox.addActionListener(e ->onChange());
-        mSearchBtn.addActionListener(e->onSearch());
-        mAddBtn.addActionListener(e-> onAdd());
+        mComboBox.addActionListener(e -> onChange());
+        mSearchBtn.addActionListener(e -> onSearch());
+        mAddBtn.addActionListener(e -> onAdd());
         mUpdateBtn.addActionListener(e -> onUpdate());
         mResetBtn.addActionListener(e -> onReset());
         mSearchTextField.addKeyListener(new KeyAdapter() {
@@ -111,51 +98,54 @@ public class StudentTabMod {
             }
         });
     }
-    private void onChange(){
+
+    private void onChange() {
         currentShownClass = String.valueOf(mComboBox.getSelectedItem());
         mTableManager.loadTableData(currentShownClass);
     }
 
     private void onSearch() {
         String userQuery = mSearchTextField.getText();
-        if(userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
+        if (userQuery.equals(SEARCH_PLACEHOLDER_TEXT)) userQuery = "";
         mTableManager.filterData(userQuery);
     }
 
     private void onAdd() {
         AddStudentDlg addStudentDlg = new AddStudentDlg();
     }
-    private void onReset(){
-        if(mTable.getSelectedRowCount() == 1){
-            String studentId =  String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
+
+    private void onReset() {
+        if (mTable.getSelectedRowCount() == 1) {
+            String studentId = String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
             Student student = StudentDAO.getByStudentId(studentId);
             Account account = AccountDAO.getAccount(student.getStudentId());
-            if(account == null){
+            if (account == null) {
                 JOptionPane.showMessageDialog(null, "Tài khoản ứng với MSSV này không tồn tại");
                 return;
             }
             account.setPasswd(student.getStudentId());
-            if(AccountDAO.update(account)){
+            if (AccountDAO.update(account)) {
                 JOptionPane.showMessageDialog(null, "Reset mật khẩu thành công");
             }
             return;
         }
-        if(mTable.getRowCount() == 0){
+        if (mTable.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
         }
     }
+
     private void onUpdate() {
-        if(mTable.getSelectedRowCount() == 1){
-            String studentId =  String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
+        if (mTable.getSelectedRowCount() == 1) {
+            String studentId = String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
             Student student = StudentDAO.getByStudentId(studentId);
             AddStudentDlg addStudentDlg = new AddStudentDlg(student);
             return;
         }
-        if(mTable.getRowCount() == 0){
+        if (mTable.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng");
         }
     }

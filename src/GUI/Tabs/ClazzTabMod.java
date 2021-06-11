@@ -15,8 +15,6 @@ import java.awt.event.*;
  * @Description
  */
 public class ClazzTabMod {
-    private static ClazzTabMod instance;
-
     public static ClazzTableManager mTableManager;
     private JTable mTable;
     private JButton mDeleteBtn;
@@ -29,18 +27,6 @@ public class ClazzTabMod {
         this.mTable = table;
         this.mDeleteBtn = deleteBtn;
         this.mAddBtn = addBtn;
-    }
-
-
-    public static ClazzTabMod getInstance(JTable table, JButton deleteBtn, JButton addBtn) {
-        if (instance == null) {
-            synchronized (SubjectTabMod.class) {
-                if (instance == null) {
-                    instance = new ClazzTabMod(table, deleteBtn, addBtn);
-                }
-            }
-        }
-        return instance;
     }
 
     public void initUIData() {
@@ -69,8 +55,8 @@ public class ClazzTabMod {
     }
 
     private void onDelete() {
-        if(mTable.getSelectedRowCount() == 1){
-            Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
+        if (mTable.getSelectedRowCount() == 1) {
+            Object curId = mTable.getValueAt(mTable.getSelectedRow(), 1);
 
             // Remove Row from DB
             ClazzDAO.delete(String.valueOf(curId.toString()));
@@ -78,9 +64,9 @@ public class ClazzTabMod {
             mTableManager.removeRow(mTable.getSelectedRow());
             return;
         }
-        if(mTable.getRowCount() == 0){
+        if (mTable.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Bảng không có dữ liệu để thực hiện thao tác này");
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn chỉ 1 hàng để xoá");
         }
     }

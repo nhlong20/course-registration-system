@@ -25,15 +25,13 @@ import java.awt.event.KeyEvent;
  * @Description
  */
 public class RegCourseTabStu {
-    private static RegCourseTabStu instance;
-
+    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên học phần";
+    public static CourseTableManager mTableManager;
     private JLabel regTimeLabel;
     private JTextField searchCourseTextField;
     private JButton searchCourseBtn;
     private JButton regCourseBtn;
     private JTable courseTable;
-    public static CourseTableManager mTableManager;
-    public static String SEARCH_PLACEHOLDER_TEXT = "Tìm kiếm bằng ID hoặc tên học phần";
 
     public RegCourseTabStu() {
     }
@@ -44,18 +42,6 @@ public class RegCourseTabStu {
         this.searchCourseTextField = searchCourseTextField;
         this.regCourseBtn = regCourseBtn;
         this.courseTable = courseTable;
-    }
-
-
-    public static RegCourseTabStu getInstance(JLabel regTimeLabel, JTextField searchCourseTextField, JButton searchCourseBtn, JButton regCourseBtn, JTable courseTable) {
-        if (instance == null) {
-            synchronized (SubjectTabMod.class) {
-                if (instance == null) {
-                    instance = new RegCourseTabStu(regTimeLabel, searchCourseTextField, searchCourseBtn, regCourseBtn, courseTable);
-                }
-            }
-        }
-        return instance;
     }
 
     public void initUIData() {
