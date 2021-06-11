@@ -37,14 +37,13 @@ public class SemesterTableManager {
     }
     public void loadTableData(){
         List<Semester> semesters = SemesterDAO.getAll();
-        int semSize = semesters.size();
-        for(int i = semSize - 1; i >=0; i--){
+        for(int i = 0; i < semesters.size(); i++){
             int semesterId = semesters.get(i).getSemesterId();
             String semName = semesters.get(i).getSemName();
             int semYear = semesters.get(i).getSemYear();
             String startDate = String.valueOf(semesters.get(i).getStartdate());
             String endDate = String.valueOf(semesters.get(i).getEnddate());
-            mModel.addRow(new Object[]{semSize - i, semesterId,semName,semYear, startDate, endDate});
+            mModel.addRow(new Object[]{i+1, semesterId,semName,semYear, startDate, endDate});
         }
 
     }

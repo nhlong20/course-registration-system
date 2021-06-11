@@ -99,11 +99,15 @@ public class ModeratorTabMod {
 
     private void onDelete() {
         if (mTable.getSelectedRowCount() == 1) {
-            // Remove Row from UI
             Object curId = mTable.getValueAt(mTable.getSelectedRow(), 1);
-            mTableManager.removeRow(mTable.getSelectedRow());
             // Remove Row from DB
-            ModeratorDAO.delete(String.valueOf(curId));
+            if(!ModeratorDAO.delete(String.valueOf(curId))){
+                JOptionPane.showMessageDialog(null, "Xoá người dùng thất bại","Thất bại", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "Xoá người dùng thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            // Remove Row from UI
+            mTableManager.removeRow(mTable.getSelectedRow());
             return;
         }
         if (mTable.getRowCount() == 0) {

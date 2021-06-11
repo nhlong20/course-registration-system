@@ -103,7 +103,7 @@ public class AddModertatorDlg extends JDialog {
         String date = simpleDateFormat.format(dateChooser.getDate());
         moderator.setDob(Date.valueOf(date));
 
-        if (ModeratorDAO.addModerator(moderator)) {
+        if (ModeratorDAO.add(moderator)) {
             ModeratorTabMod.mTableManager.addRow(moderator);
             JOptionPane.showMessageDialog(null, "Thêm mới thành công",
                     "Thành công", JOptionPane.INFORMATION_MESSAGE);

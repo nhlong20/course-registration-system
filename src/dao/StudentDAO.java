@@ -20,9 +20,9 @@ import java.util.List;
 public class StudentDAO {
     private static String ACCOUNT_TYPE = "Student";
 
-    public static List<Student> getAll(){
+    public static List<Student> getAll() {
         List<Student> students = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select sv from Student sv";
             Query query = session.createQuery(hql);
             students = query.list();
@@ -32,10 +32,10 @@ public class StudentDAO {
         return students;
     }
 
-    public static List<Student> getAll(String classCode){
+    public static List<Student> getAll(String classCode) {
         List<Student> students = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "select sv from Student sv where sv.clazz.classCode = :classCode";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "select sv from Student sv where sv.clazz.classCode = :classCode order by  sv.studentId asc ";
             Query query = session.createQuery(hql);
             query.setParameter("classCode", classCode);
             students = query.list();
@@ -45,14 +45,14 @@ public class StudentDAO {
         return students;
     }
 
-    public static Student getByStudentId(String studentID){
+    public static Student getByStudentId(String studentID) {
         Student student = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select sv from Student sv where sv.studentId = :studentID";
             Query query = session.createQuery(hql);
             query.setParameter("studentID", studentID);
             List<Student> l = query.list();
-            if(l.size() >0)
+            if (l.size() > 0)
                 student = l.get(0);
         } catch (HibernateException ex) {
             System.err.println(ex);
@@ -60,7 +60,7 @@ public class StudentDAO {
         return student;
     }
 
-    public static boolean add(Student student){
+    public static boolean add(Student student) {
         if (getByStudentId(student.getStudentId()) != null) {
             JOptionPane.showMessageDialog(null, "Dữ liệu đã tồn tại",
                     "Trùng dữ liệu", JOptionPane.ERROR_MESSAGE);
@@ -85,7 +85,7 @@ public class StudentDAO {
         return true;
     }
 
-    public static boolean update(Student student){
+    public static boolean update(Student student) {
         if (getByStudentId(student.getStudentId()) == null) {
             JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -122,18 +122,19 @@ public class StudentDAO {
         }
         return true;
     }
-    public static int countStudentWithGender(String classCode, int gender){
+
+    public static int countStudentWithGender(String classCode, int gender) {
         int count = 0;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select count(id)" +
                     "from Student s " +
                     "where s.clazz.classCode = :classCode and s.gender = :gender";
             Query query = session.createQuery(hql);
             query.setParameter("classCode", classCode);
-            if(gender == 0) query.setParameter("gender", "Nữ");
-            if(gender == 1) query.setParameter("gender", "Nam");
+            if (gender == 0) query.setParameter("gender", "Nữ");
+            if (gender == 1) query.setParameter("gender", "Nam");
             List l = query.list();
-            if(l.size() >0){
+            if (l.size() > 0) {
                 Number res = (Number) l.get(0);
                 count = res.intValue();
             }

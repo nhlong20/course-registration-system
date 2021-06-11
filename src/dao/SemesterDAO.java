@@ -19,34 +19,32 @@ import java.util.List;
 public class SemesterDAO {
     public static List<Semester> getAll() {
         List<Semester> semesters = null;
-        try(Session session = HibernateUtil.getSessionFactory()
-                .openSession()) {
-            String hql = "select semester from Semester semester order by semester.id asc";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "select semester from Semester semester order by semester.id desc";
             Query query = session.createQuery(hql);
             semesters = query.list();
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return semesters;
     }
+
     public static Semester get(int semesterId) {
         Semester semester = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "select semester from Semester semester where semester.id = :semesterId";
             Query query = session.createQuery(hql);
             query.setParameter("semesterId", semesterId);
             List<Semester> l = query.list();
-            if(l.size()>0){
-                semester = l.get(0);
-            }
+            if (l.size() == 0) return null;
+            semester = l.get(0);
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return semester;
     }
-    public static Boolean add(Semester semester){
+
+    public static Boolean add(Semester semester) {
         if (get(semester.getSemesterId()) != null) {
             JOptionPane.showMessageDialog(null, "Bản ghi đã tồn tại, vui lòng thử lại",
                     "Duplicate value error", JOptionPane.ERROR_MESSAGE);
@@ -63,25 +61,24 @@ public class SemesterDAO {
         }
         return true;
     }
-    public static Semester getCurrent(){
+
+    public static Semester getCurrent() {
         Semester semester = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "select semester from Semester semester where semester.isCurrentSem = :value";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "select semester from Semester semester where semester.isCurrentSem = true";
             Query query = session.createQuery(hql);
-            query.setParameter("value", true);
             List<Semester> l = query.list();
-            if(l.size()>0){
-                semester = l.get(0);
-            }
+            if (l.size() == 0) return null;
+            semester = l.get(0);
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return semester;
     }
-    public static void setAsCurrent(int curId){
+
+    public static void setAsCurrent(int curId) {
         Semester semester = getCurrent();
-        if(semester != null){
+        if (semester != null) {
             semester.setIsCurrentSem(false);
             update(semester);
         }
@@ -100,9 +97,9 @@ public class SemesterDAO {
             JOptionPane.showMessageDialog(null, "Có lỗi khi cập nhật",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
-    public static void update(Semester semester){
+
+    public static void update(Semester semester) {
         if (get(semester.getSemesterId()) == null) {
             JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -117,6 +114,7 @@ public class SemesterDAO {
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     public static boolean delete(int curId) {
         Semester semester = SemesterDAO.get(curId);
         if (semester == null) {
@@ -129,11 +127,11 @@ public class SemesterDAO {
             // TODO - Remove all course of this semester
             session.remove(semester);
             session.getTransaction().commit();
-            return true;
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thực hiện xoá",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
     }
 }

@@ -102,10 +102,11 @@ public class SemesterTabMod {
     private void onUpdate() {
         if(mTable.getSelectedRowCount() == 1){
             Object curId =  mTable.getModel().getValueAt(mTable.getSelectedRow(),1);
-            // Remove Row from DB
+            // Update current Semester
             SemesterDAO.setAsCurrent(Integer.parseInt(curId.toString()));
-            // Remove Row from UI
+            // Update UI
             currentSem = SemesterDAO.getCurrent();
+            if(currentSem == null) System.out.println("XXX");
             mCurrentSemesterLabel.setText(currentSem.getSemName() + " - " + currentSem.getSemYear());
             mTableManager.refresh();
             // Refresh course registration tab
@@ -123,11 +124,14 @@ public class SemesterTabMod {
 
     private void onDelete() {
         if(mTable.getSelectedRowCount() == 1){
-            // Remove Row from UI
             Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
-            mTableManager.removeRow(mTable.getSelectedRow());
             // Remove Row from DB
-            SemesterDAO.delete(Integer.parseInt(curId.toString()));
+            if(!SemesterDAO.delete(Integer.parseInt(curId.toString()))){
+                JOptionPane.showMessageDialog(null, "Xoá dữ liệu thành công", "Thất bại khi xoá học kì", JOptionPane.ERROR_MESSAGE);
+                return;
+            };
+            // Remove Row from UI
+            mTableManager.removeRow(mTable.getSelectedRow());
             JOptionPane.showMessageDialog(null, "Xoá dữ liệu thành công");
             return;
         }

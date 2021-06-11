@@ -50,28 +50,28 @@ public class ModeratorDAO {
         return moderator;
     }
 
-    public static Boolean addModerator(Moderator moderator) {
+    public static Boolean add(Moderator moderator) {
         if (get(moderator.getModeratorId()) != null) {
-            JOptionPane.showMessageDialog(null, "Giáo vụ đã tồn tại",
+            JOptionPane.showMessageDialog(null, "Mã giáo vụ đã tồn tại",
                     "Duplicate value error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // Add new account corresponding to new student
+        Account account = new Account(ACCOUNT_TYPE, moderator.getModeratorId(), moderator.getModeratorId());
+        AccountDAO.addAccount(account);
+        moderator.setAccount(account);
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-
-            // Add new account corresponding to new student
-            Account account = new Account(ACCOUNT_TYPE, moderator.getModeratorId(), moderator.getModeratorId());
-            AccountDAO.addAccount(account);
-            moderator.setAccount(account);
-
             session.save(moderator);
             session.getTransaction().commit();
-            return true;
         } catch (HibernateException ex) {
+            AccountDAO.delete(moderator.getModeratorId());
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thêm Thêm giáo vụ",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
     }
 
     public static boolean update(Moderator moderator) {
@@ -107,7 +107,7 @@ public class ModeratorDAO {
             session.getTransaction().commit();
 
             // Then remove account from db
-            AccountDAO.removeAccount(modId);
+            AccountDAO.delete(modId);
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi xoá giáo vụ",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);

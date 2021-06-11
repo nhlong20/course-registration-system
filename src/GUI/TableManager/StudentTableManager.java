@@ -22,9 +22,9 @@ public class StudentTableManager {
     TableRowSorter<DefaultTableModel> sorter;
     private static String[] columnSemesterNames = {"STT", "ID", "MSSV", "Họ và tên", "Giới tính", "Ngày sinh", "Địa chỉ", "Lớp"};
 
-    public StudentTableManager(JTable table){
+    public StudentTableManager(JTable table) {
         mTable = table;
-        mModel = new DefaultTableModel(columnSemesterNames, 0){
+        mModel = new DefaultTableModel(columnSemesterNames, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -36,10 +36,10 @@ public class StudentTableManager {
         mTable.removeColumn(colToDelete);
     }
 
-    public void loadTableData(String classCode){
+    public void loadTableData(String classCode) {
         mModel.setRowCount(0);
         List<Student> students = StudentDAO.getAll(classCode);
-        for(int i = 0; i < students.size(); i++){
+        for (int i = 0; i < students.size(); i++) {
             int id = students.get(i).getId();
             String studentId = students.get(i).getStudentId();
             String studentName = students.get(i).getFullname();
@@ -47,13 +47,13 @@ public class StudentTableManager {
             String studentDOB = String.valueOf(students.get(i).getDob());
             String studentAddress = students.get(i).getStuAddress();
             String studentClass = students.get(i).getClazz().getClassCode();
-            mModel.addRow(new Object[]{i+1, id,studentId,studentName,studentGender, studentDOB, studentAddress, studentClass});
+            mModel.addRow(new Object[]{i + 1, id, studentId, studentName, studentGender, studentDOB, studentAddress, studentClass});
         }
     }
 
-    public void addRow(Student newStudent){
+    public void addRow(Student newStudent) {
         Object[] row = new Object[8];
-        row[0] = mTable.getRowCount()+1;
+        row[0] = mTable.getRowCount() + 1;
         row[1] = newStudent.getId();
         row[2] = newStudent.getStudentId();
         row[3] = newStudent.getFullname();
@@ -64,20 +64,19 @@ public class StudentTableManager {
         mModel.addRow(row);
     }
 
-    public void removeRow(int row){
+    public void removeRow(int row) {
         mModel.removeRow(row);
     }
 
-    public void filterData(String query){
+    public void filterData(String query) {
         if (query.length() == 0) {
             sorter.setRowFilter(null);
         } else {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)"+ query,2,3));
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query, 2, 3));
         }
     }
 
-    public void refresh(String classCode){
-        mModel.setRowCount(0);
+    public void refresh(String classCode) {
         loadTableData(classCode);
     }
 }

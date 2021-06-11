@@ -56,7 +56,7 @@ public class AccountDAO {
             System.err.println(ex);
         }
     }
-    public static void removeAccount(String username) {
+    public static void delete(String username) {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();

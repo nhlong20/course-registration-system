@@ -17,6 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * GUI.Tabs
@@ -55,11 +56,8 @@ public class StudentTabMod {
         mSearchTextField.setText(SEARCH_PLACEHOLDER_TEXT);
         currentShownClass = String.valueOf(mComboBox.getSelectedItem());
         List<Clazz> clazzes = ClazzDAO.getAll();
-        List<String> clazzNames = new ArrayList<>();
-        for (Clazz clazz : clazzes) {
-            clazzNames.add(clazz.getClassCode());
-        }
-        mComboBox.setModel(new DefaultComboBoxModel<>(clazzNames.toArray()));
+        List<String> clazzCode = clazzes.stream().map(p -> p.getClassCode()).collect(Collectors.toList());
+        mComboBox.setModel(new DefaultComboBoxModel<>(clazzCode.toArray()));
         mTableManager.loadTableData(String.valueOf(mComboBox.getSelectedItem()));
     }
 
@@ -137,6 +135,7 @@ public class StudentTabMod {
     }
 
     private void onUpdate() {
+        currentShownClass = String.valueOf(mComboBox.getSelectedItem());
         if (mTable.getSelectedRowCount() == 1) {
             String studentId = String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
             Student student = StudentDAO.getByStudentId(studentId);

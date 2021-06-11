@@ -50,7 +50,7 @@ public class CourseRegistrationSessionTableManager {
             String startDate = simpleDateFormat.format(startD);
             String endDate = simpleDateFormat.format(endD);
 
-            mModel.addRow(new Object[]{i,startDate, endDate, curSessionStatus});
+            mModel.addRow(new Object[]{i + 1,startDate, endDate, curSessionStatus});
         }
     }
     public void addRow(CourseRegistrationSession newSession){

@@ -42,6 +42,7 @@ public class AddStudentDlg extends JDialog {
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
+
     public AddStudentDlg(Student student) {
         this.setTitle("Cập nhật thông tin sinh viên");
         this.updateCommand = true;
@@ -55,7 +56,8 @@ public class AddStudentDlg extends JDialog {
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
-    private void initComponents(){
+
+    private void initComponents() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -64,13 +66,14 @@ public class AddStudentDlg extends JDialog {
         List<String> clazzNames = clazzes.stream().map(p -> p.getClassCode()).collect(Collectors.toList());
         clazzComboBox.setModel(new DefaultComboBoxModel<>(clazzNames.toArray()));
 
-        genderComboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Nam", "Nữ"}));
+        genderComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Nam", "Nữ"}));
         calendar = Calendar.getInstance();
         dateChooser = new JDateChooser(calendar.getTime());
         dateChooser.setDateFormatString("dd/MM/yyyy");
         dobPanel.add(dateChooser);
     }
-    private void initStudentData(Student student){
+
+    private void initStudentData(Student student) {
         studentIdTextField.setEnabled(false);
         studentIdTextField.setText(student.getStudentId());
         nameTextField.setText(student.getFullname());
@@ -79,8 +82,9 @@ public class AddStudentDlg extends JDialog {
         genderComboBox.setSelectedItem(student.getGender());
         clazzComboBox.setSelectedItem(student.getClazz().getClassCode());
     }
-    private void addEventListener(){
-        buttonOK.addActionListener(e-> onOK());
+
+    private void addEventListener() {
+        buttonOK.addActionListener(e -> onOK());
 
         buttonCancel.addActionListener(e -> onCancel());
 
@@ -93,12 +97,9 @@ public class AddStudentDlg extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+
     private void onOK() {
         String studentId = studentIdTextField.getText();
         String name = nameTextField.getText();
@@ -110,12 +111,12 @@ public class AddStudentDlg extends JDialog {
         Date dob = Date.valueOf(simpleDateFormat.format(dateChooser.getDate()));
 
         Clazz clazz = ClazzDAO.get(classCode);
-        if(clazz==null){
+        if (clazz == null) {
             JOptionPane.showMessageDialog(this, "Lớp học không tồn tại, vui lòng thử lại");
             return;
         }
-        if(!updateCommand){
-            Student newStudent = new Student(studentId,name,gender,dob,address,clazz);
+        if (!updateCommand) {
+            Student newStudent = new Student(studentId, name, gender, dob, address, clazz);
             onAdd(newStudent);
         } else {
             student.setFullname(name);
@@ -126,24 +127,27 @@ public class AddStudentDlg extends JDialog {
             onUpdate(student);
         }
     }
-    private void onUpdate(Student student){
-        if(StudentDAO.update(student)){
+
+    private void onUpdate(Student student) {
+        if (StudentDAO.update(student)) {
             // Refresh table
             StudentTabMod.mTableManager.refresh(StudentTabMod.currentShownClass);
             JOptionPane.showMessageDialog(this, "Cập nhật thành công");
             dispose();
         }
     }
-    private void onAdd(Student newStudent){
-        if(StudentDAO.add(newStudent)){
+
+    private void onAdd(Student newStudent) {
+        if (StudentDAO.add(newStudent)) {
             // Refresh current table
-            if(StudentTabMod.currentShownClass.equals(newStudent.getClazz().getClassCode())){
+            if (StudentTabMod.currentShownClass.equals(newStudent.getClazz().getClassCode())) {
                 StudentTabMod.mTableManager.addRow(newStudent);
             }
             JOptionPane.showMessageDialog(this, "Thêm mới thành công");
             dispose();
         }
     }
+
     private void onCancel() {
         dispose();
     }
