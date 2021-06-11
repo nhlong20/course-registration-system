@@ -3,6 +3,7 @@ package GUI.Tabs;
 import GUI.StudentGUI;
 import GUI.TableManager.CourseTableManager;
 import dao.*;
+import main.MainApp;
 import pojo.*;
 
 import javax.swing.*;
@@ -83,11 +84,16 @@ public class RegCourseTabStu {
     }
 
     private void onRegist() {
+        CourseRegistrationSession curSession = CourseRegistrationSessionDAO.getCurrentSession();
+        if(curSession == null){
+            JOptionPane.showMessageDialog(null, "Đã hết thời gian đăng ký học phần", "Đăng ký thất bại", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (courseTable.getSelectedRowCount() == 1) {
             Object courseId = courseTable.getValueAt(courseTable.getSelectedRow(), 1);
             Course course = CourseDAO.get(String.valueOf(courseId));
-            Student student = StudentDAO.getByStudentId("18120449");
-
+            Account account = MainApp.getCurrentAccount();
+            Student student = StudentDAO.getByStudentId(account.getUsername());
             CourseStudent courseStudent = new CourseStudent();
             courseStudent.setStudent(student);
             courseStudent.setCourse(course);

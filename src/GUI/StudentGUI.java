@@ -4,7 +4,9 @@ import GUI.Diaglog.ChangPasswordDlg;
 import GUI.Tabs.CourseRegResultTabStu;
 import GUI.Tabs.RegCourseTabStu;
 import com.toedter.calendar.JDateChooser;
-import dao.*;
+import dao.CourseRegistrationSessionDAO;
+import dao.SemesterDAO;
+import dao.StudentDAO;
 import main.MainApp;
 import pojo.Account;
 import pojo.CourseRegistrationSession;
@@ -13,11 +15,11 @@ import pojo.Student;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * GUI
@@ -72,19 +74,18 @@ public class StudentGUI extends JFrame {
         regCourseTabStu.initUIData();
         regCourseTabStu.addModActionlistener();
     }
+
     private void linkCourseRegResultHandler() {
         CourseRegResultTabStu courseRegResultTabStu = new CourseRegResultTabStu(resRegTable, cancelCourseBtn, currentUser);
         courseRegResultTabStu.initUIData();
         courseRegResultTabStu.addModActionlistener();
     }
 
-
     private void addEventListener() {
         updateInfoBtn.addActionListener(e -> onUpdateInfo());
         changePassBtn.addActionListener(e -> onChangePassword());
         logoutBtn.addActionListener(e -> onLogout());
     }
-
 
     private void initComponents() {
         this.setContentPane(panel);
@@ -123,7 +124,7 @@ public class StudentGUI extends JFrame {
 
     public static void setRegTimeLabel(JLabel registerTimeLabel) {
         CourseRegistrationSession curSession = CourseRegistrationSessionDAO.getCurrentSession();
-        if(curSession!=null){
+        if (curSession != null) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String startDate = simpleDateFormat.format(curSession.getStartDate());
             String endDate = simpleDateFormat.format(curSession.getEndDate());

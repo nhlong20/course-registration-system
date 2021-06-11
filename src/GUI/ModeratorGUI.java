@@ -12,6 +12,8 @@ import pojo.Account;
 import pojo.Moderator;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -106,11 +108,14 @@ public class ModeratorGUI extends JFrame {
         this.linkStudentHandler();
         this.linkCourseHandler();
 
+        this.addEventListener();
+        this.initUIProperty();
+    }
+
+    private void addEventListener() {
         updateUserInfoBtn.addActionListener(e -> editInfoHandler());
         changePasswordBtn.addActionListener(e -> changePasswordHanlder());
         logoutBtn.addActionListener(e -> logoutHandler());
-
-        this.initUIProperty();
     }
 
     private void initData() {
