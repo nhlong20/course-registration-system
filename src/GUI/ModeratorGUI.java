@@ -119,8 +119,7 @@ public class ModeratorGUI extends JFrame {
     }
 
     private void initData() {
-        currentAcc = AccountDAO.getAccount("MOD002", "MOD002");
-//        currentAcc = MainApp.getCurrentAccount();
+        currentAcc = MainApp.getCurrentAccount();
         currentUser = ModeratorDAO.get(currentAcc.getUsername());
         accountName.setText(currentUser.getFullname());
 

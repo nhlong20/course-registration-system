@@ -63,14 +63,13 @@ public class LoginGUI extends JFrame {
             errorHandler("Lỗi đăng nhập", "Tên đăng nhập hoặc mật khẩu không đúng");
             return;
         }
-
+        MainApp.setCurrentAccount(account);
         String accountType = account.getAccType();
         if(accountType.toLowerCase().equals("moderator")){
             MainApp.invokeGUI(MainApp.ViewControl.MODERATOR);
         } else if (accountType.toLowerCase().equals("student")){
             MainApp.invokeGUI(MainApp.ViewControl.STUDENT);
         }
-        MainApp.setCurrentAccount(account);
         this.dispose();
     }
     public void errorHandler(String type, String err_msg){

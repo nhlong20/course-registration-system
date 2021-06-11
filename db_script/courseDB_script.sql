@@ -99,7 +99,7 @@ CREATE TABLE public.course_student (
                                        id SERIAL PRIMARY KEY,
                                        student_id integer NOT NULL,
                                        course_id varchar(20) NOT NULL,
-                                        created_at timestamp without time zone default CURRENT_TIMESTAMP NOT NULL
+                                       created_at timestamp without time zone default CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -134,21 +134,24 @@ COMMIT;
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120449', '18120449', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120460', '18120460', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120461', '18120461', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'MOD001', 'giaovu', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'mod001', 'mod001', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV001', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV002', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV003', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV004', 'giangvien', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Teacher', 'GV005', 'giangvien', default);
-INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'MOD002', 'giaovu', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Moderator', 'mod002', 'mod002', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120462', '18120462', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120463', '18120463', default);
 INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120464', '18120464', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120500', '18120500', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120020', '18120020', default);
+INSERT INTO account (account_id, acc_type, username, passwd, created_at) VALUES (default, 'Student', '18120023', '18120023', default);
 
 INSERT INTO moderator(moderator_id, fullname, gender,dob, phone, mod_address,  account_id)
-    VALUES ('MOD001', 'Văn Chí Nam', 'Nam', '1984-07-06', '0942020222', 'Hồ Chí Minh', 4);
+VALUES ('mod001', 'Văn Chí Nam', 'Nam', '1984-07-06', '0942020222', 'Hồ Chí Minh', 4);
 INSERT INTO moderator(moderator_id, fullname, gender,dob, phone, mod_address,  account_id)
-    VALUES ('MOD002', 'Thái Lê Vinh', 'Nam', '1987-07-06', '0564859274', 'Hồ Chí Minh', 10);
+VALUES ('mod002', 'Thái Lê Vinh', 'Nam', '1987-07-06', '0564859274', 'Hồ Chí Minh', 10);
 
 INSERT INTO public.subject VALUES ('OOP', 'Lập trình hướng đối tượng', 4);
 INSERT INTO public.subject VALUES ('CTDLGT', 'Cấu trúc dữ liệu và giải thuật', 4);
@@ -175,7 +178,6 @@ VALUES (default, '2019-08-24', '2019-08-28', 3);
 INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT4');
 INSERT INTO class(class_year, class_code) VALUES (2018, '18CTT5');
 INSERT INTO class(class_year, class_code) VALUES (2018, '18CNTN');
-INSERT INTO class(class_year, class_code) VALUES (2019, '19CNTN');
 INSERT INTO class(class_year, class_code) VALUES (2019, '19CTT1');
 
 INSERT INTO shift(shift_id, start_at, end_at) VALUES (1, '07:30:00', '09:30:00');
@@ -191,19 +193,22 @@ INSERT INTO teacher(teacher_id, fullname, gender, account_id) VALUES (default, '
 
 INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2011', 'OOP', 1, 'Thứ 4', 3, 3, 'F102',100);
 INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2021', 'CSDL', 3, 'Thứ 5', 1, 2,'F106', 100);
-INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2012', 'OOP', 1, 'Thứ 4', 3, 3, 'F103',100);
-INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2031', 'HDH', 3, 'Thứ 2', 3, 1, 'E104',120);
-INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2041', 'MMT', 3, 'Thứ 7', 1, 2, 'F202',110);
-INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2051', 'CTDLGT', 3, 'Thứ 3', 4, 2, 'E304',100);
-INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('SE2111', 'DAAS', 3, 'Thứ 4', 2, 2, 'E202',120);
-INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2121', 'NMHM', 3, 'Thứ 6', 3, 2, 'G101',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2012', 'OOP', 2, 'Thứ 4', 3, 3, 'F103',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2031', 'HDH', 4, 'Thứ 2', 3, 1, 'E104',120);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2041', 'MMT', 5, 'Thứ 7', 1, 2, 'F202',110);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2051', 'CTDLGT', 1, 'Thứ 3', 4, 2, 'E305',100);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('SE2111', 'DAAS', 2, 'Thứ 4', 2, 2, 'E204',120);
+INSERT INTO course(course_id, subject_id, teacher_id, day_of_week, shift_id, semester_id, room, maximum_slots) VALUES ('CS2121', 'NMHM', 4, 'Thứ 6', 3, 2, 'G102',100);
 
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120449', 'Nguyễn Hoàng Long', 'Nam', '2000-04-01', 'Nghệ An', '18CTT4', 1);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120460', 'Lê Danh Lưu', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 2);
-INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120461', 'Nguyễn Khắc Luân', 'Nam', '2000-05-21', 'Bình Thuận','18CTT5', 3);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120461', 'Trần Nhật Quang', 'Nam', '2000-05-21', 'Bình Thuận','18CTT5', 3);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120462', 'Trần Hoàng Minh', 'Nam', '2000-04-01', 'Nghệ An', '18CTT5', 11);
 INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120463', 'Lê Phan Công Minh', 'Nam', '2000-09-06', 'Đắk Lắk','18CTT4', 12);
-INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120464', 'Nguyễn Hữu Trí', 'Nam', '2000-05-21', 'Bình Thuận','18CTT4', 13);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120464', 'Nguyễn Hữu Trí', 'Nam', '2000-07-11', 'Hồ Chí Minh','18CNTN', 13);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120500', 'Lô Thị Mỹ Nương', 'Nữ', '2000-04-01', 'Lâm Đồng', '18CTT5', 14);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120020', 'Phan Thái Dương', 'Nam', '2000-09-06', 'Vũng Tàu','18CNTN', 15);
+INSERT INTO student(id, student_id, fullname, gender, dob, stu_address, class_code, account_id) VALUES (default, '18120023', 'Nguyễn Thị Hằng', 'Nữ', '2000-03-29', 'Bình Phước','18CNTN', 16);
 
 INSERT INTO course_student(id, student_id, course_id) VALUES (default, 1, 'CS2031');
 

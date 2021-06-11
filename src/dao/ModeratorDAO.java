@@ -37,13 +37,14 @@ public class ModeratorDAO {
     public static Moderator get(String modId) {
         Moderator moderator = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "select moderator from Moderator moderator where moderator.id = :modId";
+            String hql = "select moderator from Moderator moderator where moderator.moderatorId = :modId";
             Query query = session.createQuery(hql);
             query.setParameter("modId", modId);
             List<Moderator> l = query.list();
             if (l.size() > 0) {
                 moderator = l.get(0);
             }
+
         } catch (HibernateException ex) {
             System.err.println(ex);
         }
