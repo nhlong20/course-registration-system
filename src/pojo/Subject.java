@@ -1,18 +1,20 @@
 package pojo;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * images
+ * pojo
  *
  * @created by ASUS - StudentID : 18120449
- * @Date 5/30/2021 - 2:36 AM
+ * @Date 6/11/2021 - 11:27 PM
  * @Description
  */
 public class Subject {
     private String subjectId;
     private String subjectName;
     private int credits;
+    private Set<Course> courses;
 
     public Subject() {
     }
@@ -46,7 +48,13 @@ public class Subject {
     public void setCredits(int credits) {
         this.credits = credits;
     }
+    public Set<Course> getCourses() {
+        return courses;
+    }
 
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

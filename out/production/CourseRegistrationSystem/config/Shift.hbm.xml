@@ -14,5 +14,10 @@
         <property name="endAt">
             <column name="end_at" sql-type="time"/>
         </property>
+        <set name="courses"
+             inverse="true">
+            <key column="course_id"/>
+            <one-to-many class="pojo.Course"/>
+        </set>
     </class>
 </hibernate-mapping>

@@ -33,7 +33,6 @@ public class Student {
     }
 
 
-
     public int getId() {
         return id;
     }
@@ -89,6 +88,7 @@ public class Student {
     public void setAccount(Account account) {
         this.account = account;
     }
+
     public Clazz getClazz() {
         return clazz;
     }

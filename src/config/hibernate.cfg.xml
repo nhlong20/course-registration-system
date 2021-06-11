@@ -15,9 +15,9 @@
         <mapping resource="config/Course.hbm.xml"/>
         <mapping resource="config/CourseRegistrationSession.xml"/>
         <mapping resource="config/Moderator.hbm.xml"/>
+        <mapping resource="config/Subject.hbm.xml"/>
         <mapping resource="config/Semester.hbm.xml"/>
         <mapping resource="config/Student.hbm.xml"/>
-        <mapping resource="config/Subject.hbm.xml"/>
         <mapping resource="config/Teacher.hbm.xml"/>
         <mapping resource="config/Shift.hbm.xml"/>
         <mapping resource="config/CourseStudent.hbm.xml"/>

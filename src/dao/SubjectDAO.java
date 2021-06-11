@@ -3,6 +3,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import pojo.Course;
 import pojo.Subject;
 import util.HibernateUtil;
 
@@ -33,16 +34,10 @@ public class SubjectDAO {
     public static Subject get(String subjectId) {
         Subject subject = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "select subject from Subject subject where subject.id = :subjectId";
-            Query query = session.createQuery(hql);
-            query.setParameter("subjectId", subjectId);
-            List<Subject> l = query.list();
-            if(l.size()>0){
-                subject = l.get(0);
-            }
-            return subject;
+            session.beginTransaction();
+            subject = session.get(Subject.class, subjectId);
+            session.getTransaction().commit();
         } catch (HibernateException ex) {
-            //Log the exception
             System.err.println(ex);
         }
         return subject;
@@ -81,13 +76,16 @@ public class SubjectDAO {
         }
         return true;
     }
-    public static boolean delete(String curId) {
-        Subject subject = get(curId);
-        if (get(curId) == null) {
+    public static boolean delete(String subjectId) {
+        Subject subject = get(subjectId);
+        if (subject == null) {
             JOptionPane.showMessageDialog(null, "Dữ liệu không tồn tại",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // Remove all course first of this subject
+        CourseDAO.deleteAll(subjectId);
+        // Remove subject
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.remove(subject);

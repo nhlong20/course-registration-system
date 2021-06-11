@@ -14,5 +14,12 @@
         <property name="credits">
             <column name="credits" sql-type="integer"/>
         </property>
+        <set name="courses"
+             inverse="true"
+             fetch="join"
+             lazy="false">
+            <key column="course_id"/>
+            <one-to-many class="pojo.Course"/>
+        </set>
     </class>
 </hibernate-mapping>

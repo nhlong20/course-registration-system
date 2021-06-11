@@ -117,6 +117,8 @@ public class StudentTabMod {
     }
 
     private void onReset() {
+
+
         if (mTable.getSelectedRowCount() == 1) {
             String studentId = String.valueOf(mTable.getModel().getValueAt(mTable.getSelectedRow(), 2));
             Student student = StudentDAO.getByStudentId(studentId);

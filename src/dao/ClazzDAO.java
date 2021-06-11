@@ -32,13 +32,9 @@ public class ClazzDAO {
     public static Clazz get(String classCode){
         Clazz clazz = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "select clazz from Clazz clazz where clazz.classCode = :classCode";
-            Query query = session.createQuery(hql);
-            query.setParameter("classCode", classCode);
-            List<Clazz> l = query.list();
-            if(l.size() >0){
-                clazz = l.get(0);
-            }
+            session.beginTransaction();
+            clazz = session.get(Clazz.class, classCode);
+            session.getTransaction().commit();
         } catch (HibernateException ex) {
             System.err.println(ex);
         }
@@ -63,15 +59,15 @@ public class ClazzDAO {
         }
     }
     public static boolean delete(String classCode) {
-        Clazz clazz = null;
+        Clazz clazz = get(classCode);
+        if (clazz == null) {
+            JOptionPane.showMessageDialog(null, "Bản ghi không tồn tại",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            clazz = get(classCode);
-            if (clazz == null) {
-                JOptionPane.showMessageDialog(null, "Bản ghi không tồn tại",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
+
             session.remove(clazz);
             session.getTransaction().commit();
         } catch (HibernateException ex) {

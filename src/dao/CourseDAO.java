@@ -3,6 +3,7 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import pojo.Clazz;
 import pojo.Course;
 import util.HibernateUtil;
 
@@ -43,12 +44,9 @@ public class CourseDAO {
     public static Course get(String courseId){
         Course course = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "select cs from Course cs where cs.courseId = :courseId";
-            Query query = session.createQuery(hql);
-            query.setParameter("courseId", courseId);
-            List<Course> l = query.list();
-            if(l.size() == 0) return null;
-            course = l.get(0);
+            session.beginTransaction();
+            course = session.get(Course.class, courseId);
+            session.getTransaction().commit();
         } catch (HibernateException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi lấy dữ liệu",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
@@ -69,6 +67,22 @@ public class CourseDAO {
             JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thêm Thêm giáo vụ",
                     "Unexpected error", JOptionPane.ERROR_MESSAGE);
             System.err.println(ex);
+            return false;
+        }
+        return true;
+    }
+    public static boolean deleteAll(String subjectId){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            // Remove all course first of this subject
+            String hql = "delete from Course cs where cs.subject.subjectId = :subjectId";
+            Query query = session.createQuery(hql);
+            query.setParameter("subjectId", subjectId);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Có lỗi khi thực hiện xoá",
+                    "Unexpected error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

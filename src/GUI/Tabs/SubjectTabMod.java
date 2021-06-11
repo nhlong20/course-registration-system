@@ -2,6 +2,7 @@ package GUI.Tabs;
 
 import GUI.Diaglog.AddSubjectDlg;
 import GUI.TableManager.SubjectTableManager;
+import dao.ClazzDAO;
 import dao.SubjectDAO;
 import pojo.Subject;
 
@@ -44,19 +45,11 @@ public class SubjectTabMod {
     }
 
     public void addModActionlistener() {
-        mAddBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onAdd();
-            }
-        });
+        mAddBtn.addActionListener(e-> onAdd());
 
-        mSearchBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onSearch();
-            }
-        });
+        mSearchBtn.addActionListener(e -> onSearch());
+        mUpdateBtn.addActionListener(e->onUpdate());
+        mDeleteBtn.addActionListener(e -> onDelete());
         mSearchTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -64,18 +57,6 @@ public class SubjectTabMod {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     onSearch();
                 }
-            }
-        });
-        mUpdateBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onUpdate();
-            }
-        });
-        mDeleteBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onDelete();
             }
         });
         mSearchTextField.addFocusListener(new FocusAdapter() {
@@ -110,6 +91,9 @@ public class SubjectTabMod {
         AddSubjectDlg addSubjectDlg = new AddSubjectDlg();
     }
     private void onUpdate(){
+        System.out.println(SubjectDAO.get("OOP").getCourses().size());
+        if(true) return;
+
         if(mTable.getSelectedRowCount() == 1){
             String code =  String.valueOf(mTable.getValueAt(mTable.getSelectedRow(),1));
             String name =  String.valueOf(mTable.getValueAt(mTable.getSelectedRow(),2));
@@ -126,10 +110,15 @@ public class SubjectTabMod {
     }
 
     private void onDelete() {
+
         if(mTable.getSelectedRowCount() == 1){
             Object curId =  mTable.getValueAt(mTable.getSelectedRow(),1);
             // Remove Row from DB
-            SubjectDAO.delete(String.valueOf(curId));
+            if(!SubjectDAO.delete(curId.toString())){
+                JOptionPane.showMessageDialog(null, "Xoá thất bại");
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "Xoá thành công");
             // Remove Row from UI
             mTableManager.removeRow(mTable.getSelectedRow());
             return;

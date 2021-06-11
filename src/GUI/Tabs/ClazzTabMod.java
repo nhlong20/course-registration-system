@@ -35,19 +35,8 @@ public class ClazzTabMod {
     }
 
     public void addModActionlistener() {
-        mAddBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onAdd();
-            }
-        });
-
-        mDeleteBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onDelete();
-            }
-        });
+        mAddBtn.addActionListener(e -> onAdd());
+        mDeleteBtn.addActionListener(e -> onDelete());
     }
 
     private void onAdd() {
@@ -59,7 +48,7 @@ public class ClazzTabMod {
             Object curId = mTable.getValueAt(mTable.getSelectedRow(), 1);
 
             // Remove Row from DB
-            if(!ClazzDAO.delete(String.valueOf(curId.toString()))){
+            if(!ClazzDAO.delete(curId.toString())){
                 JOptionPane.showMessageDialog(null, "Xoá thất bại", "Thất bại", JOptionPane.ERROR_MESSAGE);
                 return;
             };

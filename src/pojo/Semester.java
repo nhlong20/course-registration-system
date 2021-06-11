@@ -2,6 +2,7 @@ package pojo;
 
 import java.sql.Date;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * pojo
@@ -17,6 +18,8 @@ public class Semester {
     private boolean isCurrentSem;
     private Date startdate;
     private Date enddate;
+    private Set<Course> courses;
+
 
     public Semester() {
     }
@@ -67,12 +70,21 @@ public class Semester {
     public void setEnddate(Date enddate) {
         this.enddate = enddate;
     }
+
     public boolean getIsCurrentSem() {
         return isCurrentSem;
     }
 
     public void setIsCurrentSem(boolean isCurrentSem) {
         this.isCurrentSem = isCurrentSem;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

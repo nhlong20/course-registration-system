@@ -2,6 +2,7 @@ package pojo;
 
 import java.sql.Time;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * pojo
@@ -14,6 +15,15 @@ public class Shift {
     private int shiftId;
     private Time startAt;
     private Time endAt;
+    private Set<Course> courses;
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 
     public int getShiftId() {
         return shiftId;
