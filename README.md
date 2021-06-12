@@ -15,7 +15,7 @@ java -jar ./out/artifacts/CourseRegistrationSystem.jar
 ```
 
 ## Video demo
-- [Course Registration System]()
+- [Course Registration System](https://www.youtube.com/watch?v=VIht7XYtjJE)
 
 ## Feature
 
